@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="wizard_pos_x_report_form_view" model="ir.ui.view">
+            <field name="name">wizard.pos.x.report.form.view</field>
+            <field name="model">wizard.pos.x.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="session_ids" widget="many2many_tags" required="1"
+                            domain="[('state', 'in', ['opened'])]"/>
+                    </group>
+                    <group>
+                        <field name="report_type" invisible='1'/>
+                    </group>
+                    <group attrs="{'invisible':[('report_type' ,'!=','thermal')]}">
+                        <field name="proxy_ip" 
+                               placeholder="http://1.1.1.1:8069" 
+                               attrs="{'required':[('report_type' ,'=','thermal')]}"/>
+                    </group>
+                    <footer>
+                        <button type="dummy" id="main_print_button" name="print_x_report" string="Print" class="print_x_report" style="height:100%;"/>
+                            or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

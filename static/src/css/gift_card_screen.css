@@ -1,0 +1,311 @@
+/*The Gift Card OrderList List Screen */
+.pos .orderlist-screen .giftcard-list {
+	font-size: 16px;
+	width: 100%;
+	line-height: 40px;
+}
+
+.pos .orderlist-screen .giftcard-list th, .pos .orderlist-screen .giftcard-list td
+	{
+	padding: 0px 5px;
+}
+
+.pos .orderlist-screen .giftcard-list tr {
+	transition: all 150ms linear;
+	border-bottom: 1px solid;
+}
+
+.pos .orderlist-screen .giftcard-list thead>tr, .pos .orderlist-screen .giftcard-list tr:nth-child(even)
+	{
+	/*background: rgb(247, 247, 247);*/
+	
+}
+
+.pos .orderlist-screen .giftcard-list tr.highlight {
+	transition: all 150ms linear;
+	background: rgb(110, 200, 155) !important;
+	color: white;
+}
+
+.pos .orderlist-screen .giftcard-list tr.lowlight {
+	transition: all 150ms linear;
+	background: rgb(216, 238, 227);
+}
+
+.pos .orderlist-screen .giftcard-list tr.lowlight:nth-child(even) {
+	transition: all 150ms linear;
+	background: rgb(227, 246, 237);
+}
+
+.screen .top-content .filter {
+	margin-left: 10px;
+	margin-top: 15px;
+}
+
+.screen .top-content .button.create {
+	/* left: 0px;*/
+	/*float: left;*/
+	position: relative;
+	padding: 9px 7px;
+}
+
+.screen .top-content .button.draft {
+	left: 0px;
+	margin-left: 236px;
+}
+
+.screen .top-content .button.posted {
+	left: 0px;
+	margin-left: 336px;
+}
+
+.screen .top-content .button.date {
+	left: 0px;
+	margin-left: 536px;
+	z-index: 100;
+}
+
+.screen .top-content .button.not-selected {
+	background: rgb(230, 230, 230);
+	color: #000;
+}
+
+.screen .top-content .button.selected {
+	background: #088000;
+	color: #FFF;
+}
+
+.screen .top-content .button.not-selected {
+	background: rgb(230, 230, 230);
+}
+
+.pos .orderlist-screen .searchbox input {
+	width: 147px;
+}
+
+.screen .top-content .date-filter i {
+	height: 20px;
+}
+
+#pagination {
+	margin-bottom: 20px;
+	float: center;
+	position: fixed;
+}
+
+#pagination div {
+	display: inline-block;
+}
+
+.popup-reorder-product {
+	padding: 3px !important;
+	border-radius: 5px !important;
+	background: rgba(255, 255, 255, 0.5);
+	width: 819px !important;
+}
+
+.popup-reorder-product .title {
+	margin: 0;
+	padding: 20px;
+	border-radius: 3px 3px 0px 0px;
+	/*border-bottom: solid 3px rgba(110, 200, 155, 1) !important;*/
+}
+
+.popup-reorder-product .popup-product-list {
+	border-spacing: 0.5rem;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.popup-reorder-product .popup-product-list thead tr {
+	font-size: 18px;
+}
+
+.popup-reorder-product .popup-product-list table {
+	overflow-y: auto;
+}
+
+.popup-reorder-product .popup-product-list tbody tr {
+	font-size: 14px;
+	font-weight: normal !important;
+	line-height: 3rem;
+}
+
+.popup-reorder-product .popup-product-list tbody tr:nth-child(even) {
+	background: rgb(230, 230, 230);
+}
+
+.popup-reorder-product .header .btn {
+	cursor: pointer;
+	float: right;
+	border: none !important;
+	background: none !important;
+	height: 40px;
+	line-height: 30px;
+	text-align: center;
+	border-radius: 2px;
+	margin-top: 10px;
+	margin-right: 10px;
+	font-size: 20px;
+}
+
+.popup-reorder-product .footer .save .icon {
+	float: left;
+}
+
+.popup-reorder-product .footer .save .text {
+	float: left;
+	margin-left: 8px;
+	margin-top: -5px;
+}
+
+.rotate {
+	transform: rotate(-360deg);
+	transition: .7s;
+}
+
+.rotate-reset {
+	transform: rotate(0deg);
+	transition: .7s;
+}
+
+.pos .popup-textinput.common {
+	font-size: 18px;
+	font-weight: normal;
+	font-family: 'Lato';
+	font-family: Lato;
+	color: #555555;
+}
+
+.pos .popup-textinput.common .title {
+	margin-bottom: 20px;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.pos .popup .button.commonbutton {
+	float: right;
+	width: 110px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	border-radius: 2px;
+	margin-top: 10px;
+	margin-right: 10px;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;
+	border: solid 1px rgba(60, 60, 60, 0.1);
+}
+
+.disable_tag {
+	pointer-events: none;
+}
+
+.ui-autocomplete {
+	max-height: 150px !important;
+	height: auto;
+	min-height: 0px;
+	width: 150px;
+	background: #ffffff;
+	overflow-y: auto;
+	overflow-x: hidden;
+	z-index: 1000 !important;
+}
+
+object {
+	margin-left: 0px !important;
+}
+
+.gift_card table {
+	border-spacing: 10px;
+	border-collapse: separate;
+}
+
+.gift_card table tr td {
+	font-weight: normal;
+	text-align: left !important;
+	font-size: 18px;
+}
+
+.gift_card table tr td input {
+	min-height: 0px !important;
+	height: 30px !important;
+	font-size: 18px !important;
+	padding: 0px !important;
+	padding-left: 10px !important;
+}
+
+.create_gift_card {
+	width: 500px !important;
+	height: 435px !important;
+}
+
+.edit_gift_card {
+	height: 365px !important;
+}
+
+.edit_gift_card table {
+	border-spacing: 28px;
+}
+
+.recharge_gift_card table {
+	border-spacing: 22px;
+}
+
+.recharge_gift_card table tr td input {
+	font-size: 18px !important;
+}
+
+.exchange_gift_card {
+	width: 400px !important;
+	height: 271px !important;
+}
+
+.exchange_gift_card table {
+	border-spacing: 22px;
+}
+
+.redeem_gift_card table {
+	border-spacing: 22px;
+}
+
+.button.reload {
+	margin-left: 18px;
+	padding: 7px 10px;
+}
+
+.Search_giftCard {
+	width: 164px;
+	margin-top: 3px;
+}
+
+.date-filter_set {
+	position: absolute;
+	margin: 0 auto;
+}
+
+.date-filter_set1 {
+	position: relative;
+	float: left;
+	margin: 0 3px;
+}
+
+.date-filter_set2 {
+	position: relative;
+	margin: 0 auto;
+	float: left;
+}
+
+.create_set {
+	
+}
+
+.reload_set {
+	
+}
+
+.gift_search {
+	float: right;
+	right: 0px !important;
+}

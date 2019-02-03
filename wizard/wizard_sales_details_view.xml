@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="wizard_sales_details_form_view" model="ir.ui.view">
+            <field name="name">wizard.sales.details.form.view</field>
+            <field name="model">wizard.sales.details</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="start_date" required="1"/>
+                        </group>
+                        <group>
+                            <field name="end_date" required="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="report_type" invisible='1'/>
+                        </group>
+                        <group>
+                            <field name="proxy_ip" 
+                                   placeholder="http://1.1.1.1:8069"
+                                   attrs="{'invisible':[('report_type' ,'!=','thermal')],'required':[('report_type' ,'=','thermal')]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="only_summary"/>
+                    </group>
+                    <notebook attrs="{'invisible':[('only_summary' ,'=',True)]}">
+                        <page string="Salesperson">
+                            <group>
+                                <field name="user_ids" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <!--<button type="dummy" id="main_sales_details" name="print_sales_details" string="Print" class="print_sales_details" style="height:100%;"/>-->
+                        <!--<button type="dummy" id="main_sales_details" name="print_sales_details" string="Print" class="print_sales_details" style="height:100%;"/>-->
+                        <button type="object" id="main_sales_details" name="print_sales_details"
+                                string="Print" class="oe_highlight" style="height:100%;"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_sales_details" model="ir.actions.act_window">
+            <field name="name">Sales Summary</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.sales.details</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="action_wizard_sales_details" id="menu_print_sales_details"
+                  name="Sales Summary" parent="point_of_sale.menu_point_rep" sequence='7'/>
+
+    </data>
+</openerp>

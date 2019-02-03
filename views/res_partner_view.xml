@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="aspl_view_customer_form" model="ir.ui.view">
+            <field name="name">Customer Form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="lang" position="after">
+                    <field name="remaining_credit_amount"/>
+                    <field name = "remaining_amount"/>
+                </field>
+                <field name="category_id" position="after">
+	            	<field name="debit_limit"/>
+	                <field name="remaining_debit_amount"/>
+	            </field>
+                <notebook>
+                    <page string = "Cards">
+                        <field name = "card_ids"/>
+                    </page>
+                    <page string = "Used Cards">
+                        <field name = "used_ids"/> 
+                    </page>
+                    <page string = "Recharged Cards">
+                        <field name = "recharged_ids"/> 
+                    </page>
+                    <page string="Wallet">
+                        <group>
+                            <field name="remaining_wallet_amount"/>
+                        </group>
+                        <group>
+                            <field name="wallet_lines" nolabel='1'>
+                                <tree create="true">
+                                    <field name="order_id"/>
+                                    <field name="cashier_id"/>
+                                    <field name="type"/>
+                                    <field name="debit"/>
+                                    <field name="credit"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</openerp>

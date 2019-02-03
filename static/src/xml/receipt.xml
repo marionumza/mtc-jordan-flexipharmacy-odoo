@@ -1,0 +1,1817 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<!-- **** Receipt related Code Here **** -->
+	<t t-extend="ReceiptScreenWidget">
+		<t t-jquery="div.top-content" t-operation="replace">
+			<div class="top-content">
+				<h1>Total: <span class='total-value'>0.00</span> &amp;nbsp; Change: <span class='change-value'>0.00</span></h1>
+    	        <span class='button next'>
+        	        Next Order
+            	    <i class='fa fa-angle-double-right'></i>
+            	</span>
+           	</div>
+		</t>
+	</t>
+
+
+	<t t-extend="PosTicket">
+	    <!-- POS Reorder start here -->
+	    <t t-jquery="[t-esc='order.name']" t-operation="replace">
+            <t t-esc="order.get_pos_reference() ? order.get_pos_reference() : order.name" />
+            <t t-esc="order.get_date_order() ? order.get_date_order() : moment().format('L LT')" />
+        </t>
+        <t t-jquery="div.receipt-phone" t-operation="replace">
+            <div class="pos-center-align">
+                <div class="receipt-phone">
+                    <t t-set="store_detail" t-value="false"/>
+                    <t t-if="widget.pos.config.multi_shop_id and widget.pos.config.multi_shop_id[0]">
+                        <t t-if="widget.pos.config.header_info == 'store'">
+                            <t t-if="widget.pos.pos_session.shop_id and widget.pos.shop_by_id[widget.pos.pos_session.shop_id[0]]">
+                                <t t-set="store_detail" t-value="widget.pos.shop_by_id[widget.pos.pos_session.shop_id[0]]"/>
+                                <t t-if="store_detail and store_detail.phone">
+                                    Phone: <t t-esc="store_detail.phone || ''"/><br />
+                                </t>
+                            </t>
+                        </t>
+                        <t t-if="widget.pos.config.header_info == 'company'">
+                            Phone: <t t-esc="widget.pos.company.phone || ''"/><br />
+                        </t>
+                    </t>
+                    <t t-if="!widget.pos.config.multi_shop_id">
+                        Phone: <t t-esc="widget.pos.company.phone || ''"/><br />
+                    </t>
+                </div>
+            </div>
+        </t>
+        <t t-jquery="div.receipt-user" t-operation="replace">
+            <div class="pos-center-align">
+                <div class="receipt-user">
+                     User: <t t-esc="widget.pos.get_cashier().name"/><br />
+                </div>
+            </div>
+        </t>
+        <t t-jquery="[t-esc='widget.pos.company.name']" t-operation="replace">
+            <div class="pos-center-align">
+                <t t-set="store_detail" t-value="false"/>
+                <t t-if="widget.pos.config.multi_shop_id and widget.pos.config.multi_shop_id[0]">
+                    <t t-if="widget.pos.config.header_info == 'store'">
+                        <t t-if="widget.pos.pos_session.shop_id and widget.pos.shop_by_id[widget.pos.pos_session.shop_id[0]]">
+                            <t t-set="store_detail" t-value="widget.pos.shop_by_id[widget.pos.pos_session.shop_id[0]]"/>
+                            Shop: <t t-esc="store_detail.display_name || ''"/><br />
+                        </t>
+                    </t>
+                    <t t-if="widget.pos.config.header_info == 'company'">
+                        <t t-esc="widget.pos.company.name"/><br />
+                    </t>
+                </t>
+                <t t-if="!widget.pos.config.multi_shop_id">
+                    <t t-esc="widget.pos.company.name"/><br />
+                </t>
+            </div>
+        </t>
+        <t t-jquery="[t-foreach='orderlines']" t-operation="replace">
+            <tr t-foreach="orderlines" t-as="orderline">
+                <t t-if="!orderline.bag_color and !orderline.get_delivery_charges_flag()">
+                    <td>
+                        <t t-esc="orderline.get_product().display_name"/>
+                         <t t-if="orderline.get_discount() > 0">
+                            <div class="pos-disc-font">
+                                With a <t t-esc="orderline.get_discount()"/>% discount
+                            </div>
+                        </t>
+                        <t t-if="orderline.get_deliver_info()">
+                           <div class="pos-disc-font">
+                               To Be Deliver...
+                           </div>
+                       </t>
+                    </td>
+                    <td class="pos-right-align">
+                        <t t-esc="orderline.get_quantity_str_with_unit()"/>
+                    </td>
+                    <td class="pos-right-align">
+                        <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+                    </td>
+                </t>
+            </tr>
+            <tr t-foreach="orderlines" t-as="orderline">
+                <t t-if="orderline.bag_color or orderline.get_delivery_charges_flag()">
+                    <td style="font-weight: bold;">
+                        <t t-esc="orderline.get_product().display_name"/>
+                        <t t-if="orderline.get_discount() > 0">
+                            <div class="pos-disc-font">
+                                With a <t t-esc="orderline.get_discount()"/>% discount
+                            </div>
+                        </t>
+                        <t t-if="orderline.get_deliver_info()">
+                            <div class="pos-disc-font">
+                                To Be Deliver...
+                            </div>
+                        </t>
+                    </td>
+                    <td class="pos-right-align">
+                        <t t-esc="orderline.get_quantity_str_with_unit()"/>
+                    </td>
+                    <td class="pos-right-align">
+                        <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+                    </td>
+                </t>
+            </tr>
+        </t>
+        <t t-jquery="[t-if='orderline.get_discount() > 0']" t-operation="after">
+            <t t-if="widget.pos.config.use_pricelist and order.pricelist != widget.pos.default_pricelist
+                    and orderline.get_display_price() != orderline.get_original_price()">
+                <div class="pos-disc-font">
+                    Original Price <t t-esc="widget.format_currency(orderline.get_original_price())"/>
+                </div>
+            </t>
+        </t>
+        <t t-jquery="div.receipt-user" t-operation="after">
+            <t t-if="widget.pos.config.use_pricelist">
+                <div class="receipt-pricelist">
+                    Pricelist: <t t-esc="order.pricelist.name"/><br />
+                </div>
+            </t>
+        </t>
+        <t t-jquery="[t-foreach='paymentlines']" t-operation="after">
+			<t t-if="order.get_journal()">
+				<tr t-foreach="order.get_journal()" t-as="line">
+				    <td>
+				        <t t-esc="line.journal"/>
+				    </td>
+				    <td class="pos-right-align">
+				        <t t-esc="widget.format_currency(line.amount)"/>
+				    </td>
+				</tr>
+			</t>
+        </t>
+        <t t-jquery="[t-esc='widget.format_currency(order.get_change())']" t-operation="replace">
+            <t t-if="order.get_amount_return()">
+                <t t-esc="widget.format_currency(order.get_amount_return())"/>
+            </t>
+            <t t-if="!order.get_amount_return()">
+                <t t-esc="widget.format_currency(order.get_change())"/>
+            </t>
+        </t>
+        <!-- POS Reorder end here -->
+        <t t-jquery="div.pos-sale-ticket" t-operation="append">
+        	<t t-if="widget.pos.config.enable_pos_loyalty and widget.pos.get_cashier().access_pos_loyalty and order.get_client()">
+		        <hr/>
+		        <div class="pos-center-align">Loyalty Points</div>
+			    <table>
+			        <t t-if="order.get_client() and order.get_client().total_remaining_points">
+                        <tr>
+                            <td>Your Points:</td>
+                            <td class="pos-right-align">
+                                <t t-esc="order.get_client().total_remaining_points.toFixed(2)"/>
+                            </td>
+                        </tr>
+                    </t>
+					<t t-if="order.get_loyalty_earned_point() and order.get_client()">
+					    <tr>
+			                <td>Earned Points:</td>
+			                <td class="pos-right-align">
+			                    <t t-esc="order.get_loyalty_earned_point()"/>
+			                </td>
+			            </tr>
+		            </t>
+		            <t t-if="order.get_loyalty_redeemed_point() and order.get_client()">
+		                <tr>
+		                    <td>Redeemed Points:</td>
+		                    <td class="pos-right-align">
+		                        <t t-esc="order.get_loyalty_redeemed_point()"/>
+		                    </td>
+		                </tr>
+		            </t>
+		            <t t-if="order.get_client()">
+			            <tr class="emph">
+			                <td>Total Points:</td>
+			                <td class="pos-right-align">
+			                    <t t-esc="order.get_total_loyalty_points()"/>
+			                </td>
+			            </tr>
+		            </t>
+	            </table>
+	            <hr/>
+            </t>
+            <t t-if="order.get_order_note()">
+                <br />
+                <div style='text-align:left'>
+                    <span>Note:</span><span><pre><t t-esc="order.get_order_note()" /></pre></span>
+                </div>
+            </t>
+            <t t-if="order.get_giftcard().length &gt; 0">
+                <br />
+                <div>
+                    <hr/>
+                    <div class="pos-center-align"> Card Details </div>
+                    <hr/>
+                    <table>
+                        <t t-foreach="order.get_giftcard()" t-as="giftcard">
+                            <tr>
+                                <t t-if="giftcard['giftcard_customer_name']">
+                                    <td>Customer:</td>
+                                    <td class="pos-right-align">
+                                        <t t-esc="giftcard['giftcard_customer_name']" />
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr>
+                                <td>Card No.:</td>
+                                <td class="pos-right-align">
+                                    <t t-esc="giftcard['giftcard_card_no']" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Expire Date:</td>
+                                <td class="pos-right-align">
+                                    <t t-esc="giftcard['giftcard_expire_date']" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Card Balance:</td>
+                                <td class="pos-right-align">
+                                    <t t-esc="widget.format_currency(giftcard['giftcard_amount'])" />
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+                </div><br/>
+            </t>
+            <t t-if="order.get_recharge_giftcard().length &gt; 0">
+                <br />
+                <div>
+                    <hr/>
+                    <div class="pos-center-align"> Card Details </div>
+                    <hr/>
+                    <table>
+                        <t t-foreach="order.get_recharge_giftcard()" t-as="recharge">
+                            <tr>
+                                <t t-if="recharge['customer_name']">
+                                    <td>Customer:</td>
+                                    <td class="pos-right-align">
+                                        <t t-esc="recharge['customer_name']" />
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr>
+                                <td>Card No.:</td>
+                                <td class="pos-right-align">
+                                    <t t-esc="recharge['recharge_card_no']" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Total Card Balance:</td>
+                                <td class="pos-right-align">
+                                    <t t-esc="widget.format_currency(recharge['total_card_amount'])" />
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+                </div><br/>
+            </t>
+            <t t-if="order.get_redeem_giftcard().length &gt; 0">
+                <br />
+                <div>
+                    <hr/>
+                    <div class="pos-center-align"> Card Details </div>
+                    <hr/>
+                    <table>
+                        <t t-foreach="order.get_redeem_giftcard()" t-as="redeem">
+                            <tr>
+                                <t t-if="redeem['customer_name']">
+                                    <td>Customer:</td>
+                                    <td class="pos-right-align">
+                                        <t t-esc="redeem['customer_name']" />
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr>
+                                <td>Card No.:</td>
+                                <td class="pos-right-align">
+                                    <t t-esc="redeem['redeem_card']" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Card Balance:</td>
+                                <td class="pos-right-align">
+                                    <t t-esc="widget.format_currency(redeem['redeem_remaining'])" />
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+                </div><br/>
+            </t>
+            <table>
+                <tbody>
+                    <tr id="barcode_giftcard" align="center"></tr>
+                    <tr align="center">
+                        <td id="barcode_val_giftcard"></td>
+                    </tr>
+                    <tr id="barcode_recharge" align="center"></tr>
+                    <tr align="center">
+                        <td id="barcode_val_recharge"></td>
+                    </tr>
+                    <tr id="barcode_redeem" align="center"></tr>
+                    <tr align="center">
+                        <td id="barcode_val_redeem"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </t>
+        <t t-jquery="[t-esc='orderline.get_product().display_name']" t-operation="append">
+            <t t-if="orderline.get_line_note()">
+                <div class="pos-disc-font">
+                    <t t-esc="orderline.get_line_note()"/>
+                </div>
+            </t>
+            <t t-if="orderline.get_promotion_data() and orderline.get_promotion_data().promotion_code">
+                <div class="pos-disc-font">
+                    <t t-esc="orderline.get_promotion_data().promotion_code"/>
+                </div>
+            </t>
+            <t t-if="orderline.lots and orderline.is_print_serial()">
+                <div class="pos-disc-font">
+                    <t t-esc="orderline.lots"/>
+                </div>
+            </t>
+        </t>
+        <t t-jquery="table.receipt-change" t-operation="after">
+            <t t-if="order.get_discount_price() and order.get_discount_price() > 0">
+                <br />
+                <div style='text-align:left'>
+                    <span>Total Discount:<t t-esc="widget.format_currency(order.get_discount_price())"/></span>
+                </div>
+            </t>
+        </t>
+        <t t-jquery="table.receipt-change tr td:first" t-operation="replace">
+            <t t-if="order.get_change_amount_for_wallet()">
+                <td>Added to Wallet:</td>
+            </t>
+            <t t-if="!order.get_change_amount_for_wallet()">
+                <td>Change:</td>
+            </t>
+        </t>
+        <t t-jquery="table.receipt-change" t-operation="after">
+            <br/><table style="margin-left: 54px;"><tbody><tr id="barcode1"></tr></tbody></table>
+        </t>
+        <t t-jquery=".receipt-total" t-operation="after">
+            <t t-if="widget.pos.config.enable_rounding">
+                <table>
+                    <t t-if="order.get_rounding()">
+                        <tr style="font-size: 20px;"><td>Rounding:</td><td class="pos-right-align">
+                            <t t-esc="widget.format_currency(order.get_rounding())"/>
+                            </td></tr>
+                     </t>
+                    <tr style="font-size: 20px;"><td>Net Total:</td><td class="pos-right-align">
+                        <t t-esc="widget.format_currency(order.getNetTotalTaxIncluded())"/>
+                        </td></tr>
+                </table>
+            </t>
+            <br />
+        </t>
+        <t t-jquery="[t-if='receipt.footer']" t-operation="before">
+            <t t-if="widget.final_order_category_list and widget.pos.config.enable_print_valid_days
+                    and widget.pos.get_cashier().access_print_valid_days">
+                <hr/>
+                <div class="pos-center-align">Return Valid Days</div>
+                <hr/>
+                <table>
+                    <t t-foreach="widget.final_order_category_list" t-as="item">
+                        <tr>
+                            <td><t t-esc="item.name" /></td>
+                            <td class="pos-right-align"><t t-esc="item.return_valid_days" /></td>
+                        </tr>
+                    </t>
+                </table>
+                <hr/>
+            </t>
+            <t t-if="widget.pos.config.enable_gift_voucher">
+                <br />
+                <t t-if="order.get_voucher().length > 0 and order.get_remaining_redeemption()">
+                    <hr/>
+                    <div class="pos-center-align"> Voucher Information </div>
+                    <hr/>
+                    <table>
+                        <colgroup>
+                            <col width='80%' />
+                            <col width='20%' />
+                        </colgroup>
+                        <th>Name</th>
+                        <th>Remaining Uses</th>
+                        <t t-foreach="order.get_remaining_redeemption()" t-as="voucher">
+                            <tr>
+                                <td>
+                                    <t t-esc="voucher.voucher_name" />(<t t-esc="voucher.voucher_code" />)
+                                </td>
+                                <td>
+                                    <t t-esc="voucher.remaining_redeemption" />
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+                </t>
+            </t>
+        </t>
+    </t>
+
+	<t t-extend="XmlReceipt">
+	    <!-- POS Reorder start here -->
+	    <t t-jquery="[t-esc='receipt.name']" t-operation="replace">
+            <t t-esc="receipt.ref ? receipt.ref : receipt.name" />
+        </t>
+        <t t-jquery="[t-esc='receipt.date.localestring']" t-operation="replace">
+            <t t-esc="receipt.date_order ? receipt.date_order : receipt.date.localestring" />
+        </t>
+        <t t-jquery="[t-if='line.discount !== 0']" t-operation="after">
+            <t t-if="order.pricelist != widget.pos.default_pricelist and widget.pos.config.use_pricelist
+                    and line.price_display != line.original_price()">
+                <t t-if="line.original_price">
+                    <line indent='1'><left>Orignal Price: <value t-att-value-decimals='pos.currency.decimals'><t t-esc='line.original_price' /></value></left></line>
+                </t>
+            </t>
+        </t>
+        <t t-jquery="[t-foreach='paymentlines']" t-operation="replace">
+            <t t-if="receipt.reprint_payment">
+                <t t-foreach='receipt.reprint_payment' t-as='line'>
+                    <line>
+                        <left><t t-esc='line.journal' /></left>
+                        <right>
+                            <value><t t-esc='line.amount'/></value>
+                        </right>
+                    </line>
+                </t>
+            </t>
+            <t t-if="!receipt.reprint_payment">
+                <t t-foreach='paymentlines' t-as='line'>
+                    <line>
+                        <left><t t-esc='line.name' /></left>
+                        <right><value><t t-esc='line.get_amount()'/></value></right>
+                    </line>
+                </t>
+            </t>
+            <br/> 
+        </t>
+        <!-- POS Reorder end here -->
+		<t t-jquery="receipt" t-operation="append">
+			<t t-if="widget.pos.config.enable_pos_loyalty and widget.pos.get_cashier().access_pos_loyalty">
+			    <t t-if="receipt.client_points or receipt.earned_points or receipt.redeem_points or receipt.total_points > 0">
+				    <div>-------------------------------------------</div>
+				    <div>Loyalty Points</div>
+					<t t-if="receipt.client_points">
+						<line>
+			                <left><pre>Your Points</pre></left>
+			                <right><value><t t-esc='receipt.client_points' /></value></right>
+			            </line>
+					</t>
+					<t t-if="receipt.earned_points">
+		                <line>
+		                    <left><pre>Earned Points</pre></left>
+		                    <right><value><t t-esc='receipt.earned_points' /></value></right>
+		                </line>
+		            </t>
+		            <t t-if="receipt.redeem_points">
+		                <line>
+		                    <left><pre>Redeemed Points</pre></left>
+		                    <right><value><t t-esc='receipt.redeem_points' /></value></right>
+		                </line>
+		            </t>
+		            <t t-if="receipt.total_points">
+		                <line>
+		                    <left><pre>Total Points</pre></left>
+		                    <right><value><t t-esc='receipt.total_points' /></value></right>
+		                </line>
+		            </t>
+		            <div>-------------------------------------------</div>
+	            </t>
+            </t>
+		
+		    <t t-if="receipt.order_note">
+				<line>
+					<left>Note: </left>
+				</line>
+				<div font='b'>
+	                <div><t t-esc='receipt.order_note' /></div>
+	            </div>
+            </t>
+            <br/>
+            <t t-if='receipt.order_no'>
+                <br/>
+                    <barcode encoding="CODE39">*<t t-esc='receipt.order_no' />*</barcode>
+                <br/>
+            </t>
+		</t>
+		<t t-jquery="[t-if='simple']" t-operation="append">
+			<t t-if="line.line_note">
+				<line indent='1'><left><t t-esc='line.line_note' /></left></line>
+			</t>
+			<t t-if="line.promotion_data and line.promotion_data.promotion_code">
+                <line indent='1'><left><t t-esc='line.promotion_data.promotion_code' /></left></line>
+            </t>
+			<t t-if="order.pricelist != widget.pos.default_pricelist and widget.pos.config.use_pricelist
+                    and line.price_display != line.original_price()">
+                <t t-if="line.original_price">
+                    <line indent='1'><left>Orignal Price: <value t-att-value-decimals='pos.currency.decimals'><t t-esc='line.original_price' /></value></left></line>
+                </t>
+            </t>
+		</t>
+		<t t-jquery="[t-if='!simple']" t-operation="append">
+			<t t-if="line.line_note">
+				<line indent='1'><left><t t-esc='line.line_note' /></left></line>
+			</t>
+			<t t-if="line.promotion_data and line.promotion_data.promotion_code">
+                <line indent='1'><left><t t-esc='line.promotion_data.promotion_code' /></left></line>
+            </t>
+            <t t-if='line.serials and line.is_print'>
+                <div align='left' font='b'>
+                    <t t-esc='line.serials' />
+                </div>
+            </t>
+		</t>
+		<t t-jquery="[t-esc='receipt.cashier']" t-operation="after">
+            <div>Pricelist: <t t-esc='order.pricelist.name' /></div>
+        </t>
+        <t t-jquery="div.before-footer" t-operation="after">
+            <t t-if="widget.final_order_category_list and widget.pos.config.enable_print_valid_days
+                    and widget.pos.get_cashier().access_print_valid_days">
+                <div>-------------------------------------------</div>
+                <div>Return Valid Days</div>
+                <div>-------------------------------------------</div>
+
+                <t t-foreach="widget.final_order_category_list" t-as="item">
+                    <line>
+                        <left><t t-esc="item.name" /></left>
+                        <right><t t-esc="item.return_valid_days" /></right>
+                    </line>
+                </t>
+            </t>
+            <div>-------------------------------------------</div>
+        </t>
+		<t t-jquery="div.before-footer" t-operation="before">
+            <t t-if="widget.pos.config.enable_gift_card">
+                <t t-if="receipt.giftcard and receipt.giftcard.length > 0">
+                    -------------------------------------------
+	                <div> Card Details </div>
+	                -------------------------------------------
+                    <t t-foreach="receipt.giftcard" t-as="giftcard">
+                        <line>
+                            <left>Customer:</left>
+                            <right><t t-esc="giftcard['giftcard_customer_name']" /></right>
+                        </line>
+                        <line>
+                            <left>Card No.:</left>
+                            <right><t t-esc="giftcard['giftcard_card_no']" /></right>
+                        </line>
+                        <line>
+                            <left>Expire Date:</left>
+                            <right><t t-esc="giftcard['giftcard_expire_date']" /></right>
+                        </line>
+                        <line>
+                            <left>Card Balance:</left>
+                            <right><t t-esc="giftcard['giftcard_amount']" /></right>
+                        </line>
+                        <barcode encoding="CODE39">
+                            *<t t-esc="giftcard['giftcard_card_no']" />*
+                        </barcode>
+                    </t>
+                </t>
+                <t t-if="receipt.recharge and receipt.recharge.length &gt; 0">
+                    <t t-foreach="receipt.recharge" t-as="recharge">
+                        <line>
+                            <left>Customer:</left>
+                            <right><t t-esc="recharge['customer_name']" /></right>
+                        </line>
+                        <line>
+                            <left>Card No.:</left>
+                            <right><t t-esc="recharge['recharge_card_no']" /></right>
+                        </line>
+                        <line>
+                            <left>Total Card Balances:</left>
+                            <right><t t-esc="recharge['total_card_amount']" /></right>
+                        </line>
+                        <barcode encoding="CODE39">
+                            *<t t-esc="recharge['recharge_card_no']" />*
+                        </barcode>
+                    </t>
+                </t>
+                <t t-if="receipt.redeem and receipt.redeem.length &gt; 0">
+                    <t t-foreach="receipt.redeem" t-as="redeem">
+                        <line>
+                            <left>Customer:</left>
+                            <right><t t-esc="redeem['customer_name']" /></right>
+                        </line>
+                        <line>
+                            <left>Card No.:</left>
+                            <right><t t-esc="redeem['redeem_card']" /></right>
+                        </line>
+                         <line>
+                            <left>Card Balance:</left>
+                            <right><t t-esc="redeem['redeem_remaining']" /></right>
+                        </line>
+                        <barcode encoding="CODE39">
+                            *<t t-esc="redeem['redeem_card']" />*
+                        </barcode>
+                        <br/>
+                    </t>
+                </t>
+            </t>
+            <t t-if="widget.pos.config.enable_gift_voucher">
+                <t t-if="receipt.remaining_redeemption and receipt.remaining_redeemption.length > 0">
+                    <div line-ratio='0.8'>
+                    -------------------------------------------
+                    <div> Voucher Information </div>
+                    -------------------------------------------
+                    <t t-foreach="receipt.remaining_redeemption" t-as="voucher">
+                        <line>
+                            <left><t t-esc="voucher.voucher_name" />(<t t-esc="voucher.voucher_code" />)</left>
+                            <right><t t-esc="voucher.remaining_redeemption" /></right>
+                        </line>
+                    </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+	</t>
+
+    <t t-name="FreeTicket">
+        <div class="pos-sale-ticket"> 
+            <div class="pos_free_ticket">
+              ------------------------------------------
+              <div class="pos-center-align"> Card Details </div>
+              ------------------------------------------
+                 <table>
+                     <tr>
+                        <t t-if="order.get_free_data().giftcard_customer_name">
+                            <td>Customer:</td>
+                             <td class="pos-right-align">
+                                 <t t-esc="order.get_free_data().giftcard_customer_name" />
+                             </td>
+                        </t>
+                     </tr>
+                     <tr>
+                         <td>Card No.:</td>
+                         <td class="pos-right-align">
+                             <t t-esc="order.get_free_data().giftcard_card_no" />
+                         </td>
+                     </tr>
+                     <tr>
+                         <td>Card Amount:</td>
+                         <td class="pos-right-align">
+                             <t t-esc="widget.format_currency(order.get_free_data().giftcard_amount)" />
+                         </td>
+                     </tr>
+                     <tr>
+                         <td>Expire Date:</td>
+                         <td class="pos-right-align">
+                             <t t-esc="order.get_free_data().giftcard_expire_date" />
+                         </td>
+                     </tr>
+                 </table><br/>
+                 <table>
+                    <tbody>
+                        <tr id="barcode_free" align="center"></tr>
+                        <tr align="center">
+                            <td id="barcode_val_free"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="XmlFreeTicket">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <t t-if='receipt.company.logo'>
+                <img t-att-src='receipt.company.logo' />
+                <br/>
+            </t>
+            <t t-if='!receipt.company.logo'>
+                <h1><t t-esc='receipt.company.name' /></h1>
+                <br/>
+            </t>
+            <div font='b'>
+                <t t-if='receipt.company.contact_address'>
+                    <div><t t-esc='receipt.company.contact_address' /></div>
+                </t>
+                <t t-if='receipt.company.phone'>
+                    <div>Tel:<t t-esc='receipt.company.phone' /></div>
+                </t>
+                <t t-if='receipt.company.vat'>
+                    <div>VAT:<t t-esc='receipt.company.vat' /></div>
+                </t>
+                <t t-if='receipt.company.email'>
+                    <div><t t-esc='receipt.company.email' /></div>
+                </t>
+                <t t-if='receipt.company.website'>
+                    <div><t t-esc='receipt.company.website' /></div>
+                </t>
+                <t t-if='receipt.header_xml'>
+                    <t t-raw='receipt.header_xml' />
+                </t>
+                <t t-if='!receipt.header_xml and receipt.header'>
+                    <div><t t-esc='receipt.header' /></div>
+                </t>
+                <t t-if='receipt.cashier'>
+                    <div class='cashier'>
+                        <div>--------------------------------</div>
+                        <div>Served by <t t-esc='receipt.cashier' /></div>
+                    </div>
+                </t>
+                ----------------------------------------------
+                <div class="pos-center-align"> Card Details </div>
+                ----------------------------------------------
+            </div>
+                <line>
+                    <left>Customer:</left>
+                    <right><t t-esc="receipt.free.giftcard_customer_name"/></right>
+                </line>
+                <line>
+                    <left>Card No.:</left>
+                    <right><t t-esc="receipt.free.giftcard_card_no"/></right>
+                </line>
+                <line>
+                    <left>Card Amount.:</left>
+                    <right><t t-esc="receipt.free.giftcard_amount"/></right>
+                </line>
+                <line>
+                    <left>Expire Date:</left>
+                    <right><t t-esc="receipt.free.giftcard_expire_date"/></right>
+                </line>
+                <barcode encoding="CODE39">
+                    *<t t-esc="receipt.free['giftcard_card_no']" />*
+                </barcode>
+        </receipt>
+    </t>
+
+	<!-- 	Cash In/out Receipt and statement receipt of In/Out -->
+	<t t-name="MoneyInOutTicket">
+        <div class="pos-sale-ticket">
+            <div class="pos-center-align">
+               <t t-esc="moment().format('LL')"/>
+           </div>
+            <div class="pos-center-align"></div>
+            <t t-if="widget.pos.config.receipt_header">
+                <div style='text-align:center'>
+                    <t t-esc="widget.pos.config.receipt_header" />
+                </div>
+                <br />
+            </t>
+            <br />
+            <t t-esc="widget.pos.company.name"/><br />
+            Phone: <t t-esc="widget.pos.company.phone || ''"/><br />
+            Cashier: <t t-esc="widget.pos.cashier ? widget.pos.cashier.name : widget.pos.user.name"/><br />
+            Operation: <t t-esc="money_data.operation"/><br />
+            Purpose: <t t-esc="money_data.reason"/><br />
+            Amount: <t t-esc="widget.format_currency(money_data.amount)"/><br />
+            <br /><br /><br /><br /><br /><br />
+            <div style="text-align: center;">---------------------------------</div>
+            <div style="text-align: center;">Signature</div><br /><br /><br />
+            <t t-if="widget.pos.config.receipt_footer">
+                <br />
+                <div style='text-align:center'>
+                    <t t-esc="widget.pos.config.receipt_footer" />
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="CashInOutStatementReceipt">
+        <div class="pos-sale-ticket">
+            <div class="pos-center-align">
+               <t t-esc="moment().format('LL')"/>
+           </div>
+            <t t-if="widget.pos.config.receipt_header">
+                <div style='text-align:center'>
+                    <t t-esc="widget.pos.config.receipt_header" />
+                </div>
+                <br />
+            </t>
+            <br />
+            <t t-esc="widget.pos.company.name"/><br />
+
+            <t t-if="order.get_statement_cashier(user_id)">
+                Cashier: <t t-esc="order.get_statement_cashier(user_id)"/><br />
+                    ------------------------------------------
+
+                <table>
+                    <th class="pos-left-align">Date</th>
+                    <th class="pos-center-align">Amount (<t t-esc="widget.format_currency('')"/> )</th>
+                    <th class="pos-right-align">Dr/Cr</th>
+                    <tr t-foreach="statements" t-as="record">
+                        <td class="pos-left-align">
+                            <t t-esc="record.create_date.split(' ')[0]" type="date"/>
+                        </td>
+                        <td class="pos-center-align" style="text-align: right;">
+                            <t t-esc="record.amount.toFixed(2)"/>
+                        </td>
+                        <td class="pos-right-align">
+                            <t t-esc="record.operation"/><br/>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <t t-set="Total" t-value="0" />
+                        <td class="pos-left-align">
+                            <b>Total Credit:</b>
+                            <t t-foreach="statements" t-as="record">
+                                <t t-if="record.operation == 'Cr'">
+                                    <t t-set="Total" t-value="Total + record.amount" />
+                                </t>
+                            </t>
+                        </td>
+                        <td><t t-esc="widget.format_currency(Total.toFixed(2))" /></td>
+                    </tr>
+                    <tr>
+                        <t t-set="Total" t-value="0" />
+                        <td class="pos-left-align">
+                            <b>Total Debit:</b>
+                            <t t-foreach="statements" t-as="record">
+                                <t t-if="record.operation == 'Dr'">
+                                    <t t-set="Total" t-value="Total + record.amount" />
+                                </t>
+                            </t>
+                        </td>
+                        <td><t t-esc="widget.format_currency(Total.toFixed(2))" /></td>
+                    </tr>
+                    <br />
+                </table>
+                <br/>
+                <br/>
+                <br/>
+            </t>
+            <t t-if='!order.get_statement_cashier(user_id)'>
+                <t t-foreach="widget.pos.users" t-as="user">
+                    <t t-if="statements[user.id].length > 0">
+                        Cashier: <t t-esc="user.name"/><br />
+                        ------------------------------------------
+                        <table>
+                            <th class="pos-left-align">Date</th>
+                            <th class="pos-center-align" style="text-align: right;">Amount (<t t-esc="widget.format_currency('')"/> )</th>
+                            <th class="pos-right-align">Dr/Cr</th>
+                            <tr t-foreach="statements[user.id]" t-as="record">
+                                <td class="pos-left-align">
+                                    <t t-esc="record.create_date.split(' ')[0]" type="date"/>
+                                </td>
+                                <td class="pos-center-align" style="text-align: right;">
+                                    <t t-esc="record.amount.toFixed(2)"/>
+                                </td>
+                                <td class="pos-right-align">
+                                    <t t-esc="record.operation"/><br/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <t t-set="Total" t-value="0" />
+                                <td class="pos-left-align">
+                                    <b>Total Credit:</b>
+                                    <t t-foreach="statements[user.id]" t-as="record">
+                                        <t t-if="record.operation == 'Cr'">
+                                            <t t-set="Total" t-value="Total + record.amount" />
+                                        </t>
+                                    </t>
+                                </td>
+                                <td><t t-esc="widget.format_currency(Total.toFixed(2))" /></td>
+                            </tr>
+                            <tr>
+                                <t t-set="Total" t-value="0" />
+                                <td class="pos-left-align">
+                                    <b>Total Debit:</b>
+                                    <t t-foreach="statements[user.id]" t-as="record">
+                                        <t t-if="record.operation == 'Dr'">
+                                            <t t-set="Total" t-value="Total + record.amount" />
+                                        </t>
+                                    </t>
+                                </td>
+                                <td><t t-esc="widget.format_currency(Total.toFixed(2))" /></td>
+                            </tr>
+                            <br />
+                        </table><br/>
+                        <br/><br/>
+                    </t>
+                </t>
+            </t>
+
+            <t t-if="widget.pos.config.receipt_footer">
+                <br />
+                <div style='text-align:center'>
+                    <t t-esc="widget.pos.config.receipt_footer" />
+                </div>
+            </t>
+        </div>
+    </t>
+<!-- Payment Summary Report POS Ticket -->
+
+	<t t-name="PaymentSummaryReport">
+        <div class="pos-sale-ticket">
+            <div class="pos-center-align"><t t-esc="moment().format('L LT')"/><br />
+                <t t-esc="widget.pos.company.name"/><br />
+                Phone: <t t-esc="widget.pos.company.phone || ''"/><br />
+                User: <t t-esc="widget.pos.cashier ? widget.pos.cashier.name : widget.pos.user.name"/><br />
+                Email: <t t-esc="widget.pos.company.email || ''"/><br /><br />
+                <b>Start Date:<t t-esc="widget.pos.from_date" /></b> <br/> 
+                <b>End Date:<t t-esc="widget.pos.to_date" /></b><br/>
+                <t t-if="journal_details">
+                    <h3 align="center">Journal Summary</h3>
+                    <t t-foreach="journal_details" t-as="journal">
+                         <h4 align="left"><b>Month : </b><t t-esc="journal"/></h4>
+                         <t t-set="total" t-value="0"/>
+                         <table class='receipt-orderlines'>
+                             <colgroup>
+                                <col width='70%' />
+                                <col width='30%' />
+                             </colgroup>
+                             <tr>
+                                <th style="border-bottom: 1px solid black;" align="left">Journal</th>
+                                <th style="border-bottom: 1px solid black;" >Amount</th>
+                             </tr>
+                             <tr  t-foreach="journal_value" t-as="value">
+                                <td align="left">
+                                    <t t-esc="value"/>
+                                </td>
+                                 <td>
+                                    <t t-esc="widget.format_currency(value_value)"/>
+                                </td>
+                                 <t t-set="total" t-value="value_value+total"/>
+                             </tr>
+                         </table>
+                         <hr />
+                         <table>
+                            <tr>
+                                <th align="left">Total</th>
+                                <td width='30%'><t t-esc="widget.format_currency(total.toFixed(2))"/></td>
+                            </tr>
+                         </table>
+                         <br/>
+                    </t>
+                    <t t-if="total_summary">
+                        <h3 align="center">Total Summary</h3>
+                        <t t-set="total_sum" t-value="0"/>
+                        <table class='receipt-orderlines'>
+                            <colgroup>
+                                <col width='70%' />
+                                <col width='30%' />
+                            </colgroup>
+                            <tr border-bottom = "5px solid">
+                                <th style="border-bottom: 1px solid black;"  align="left">Journal</th>
+                                <th style="border-bottom: 1px solid black;">Amount</th>
+                            </tr>
+                            <tr  t-foreach="total_summary" t-as="summary">
+                                <td align="left">
+                                    <t t-esc="summary"/>
+                                </td>
+                                <td>
+                                   <t t-esc="widget.format_currency(summary_value)"/>
+                                </td>
+                                <t t-set="total_sum" t-value="summary_value+total_sum"/>
+                            </tr>
+                        </table>
+                        <hr />
+                        <table>
+                            <tr>
+                                <th align="left">Total</th>
+                                <td width='30%'><t t-esc="widget.format_currency(total_sum.toFixed(2))"/></td>
+                            </tr>
+                        </table>
+                    </t>
+                </t>
+                <br/>
+                <t t-if="salesmen_details">
+                    <h3 align="center">Payment Summary</h3>
+                    <t t-foreach="salesmen_details" t-as="salesmen">
+                        <h4 align="center"><b>Salesperson : </b><t t-esc="salesmen"/></h4>
+                        <t t-foreach="salesmen_value" t-as="payment">
+                            <h4 align="left"><b>Month : </b><t t-esc="payment"/></h4>
+                             <t t-set="total" t-value="0"/>
+                             <table class='receipt-orderlines'>
+                                 <colgroup>
+                                    <col width='70%' />
+                                    <col width='30%' />
+                                 </colgroup>
+                                 <tr>
+                                    <th style="border-bottom: 1px solid black;" align="left">Journal</th>
+                                    <th style="border-bottom: 1px solid black;" >Amount</th>
+                                 </tr>
+                                 <tr  t-foreach="payment_value" t-as="value">
+                                    <td align="left">
+                                        <t t-esc="value"/>
+                                    </td>
+                                     <td>
+                                        <t t-esc="widget.format_currency(value_value)"/>
+                                    </td>
+                                     <t t-set="total" t-value="value_value+total"/>
+                                 </tr>
+                             </table>
+                             <hr />
+                             <table>
+                                <tr>
+                                    <th align="left">Total</th>
+                                    <td width='30%'><t t-esc="widget.format_currency(total.toFixed(2))"/></td>
+                                </tr>
+                             </table>
+                             <br/>
+                        </t>
+                    </t>
+                </t>
+            </div>
+        </div>
+    </t>
+
+<!-- Payment Summary XML receipt -->
+	<t t-name="PaymentSummaryReportXmlReceipt">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <h1><t t-esc='receipt.company.name' /></h1>
+            <br />
+            <b>Start Date : </b><t t-esc="widget.pos.from_date" /><br/>
+            <b>End Date : </b><t t-esc="widget.pos.to_date" />
+            <br/><br/>
+            <t t-if="journal_details">
+                <h5>Journal Summary</h5>
+                <br />
+                <t t-foreach='journal_details' t-as='journal'>
+                     <h5 align="left"><b>Month : </b><t t-esc="journal"/></h5>
+                     <t t-set="total" t-value="0"/>
+                     <line>
+                        <left>Journal</left>
+                        <right>Amount</right>
+                    </line>
+                    <line>
+                        <left>-----------------</left>
+                        <right>----------------</right>
+                    </line>
+                    <t t-foreach="journal_value" t-as="value">
+                         <line>
+                            <left><t t-esc='value' /></left>
+                            <right><t t-esc="value_value"/> </right>
+                         </line>
+                        <t t-set="total" t-value="value_value+total"/>
+                    </t>
+                    <hr />
+                    <line>
+                        <left>Total</left>
+                        <right><t t-esc="total.toFixed(2)"/></right>
+                    </line>
+                    <br/>
+                </t>
+                <t t-if="total_summary">
+                    <h3 align="center">Total Summary</h3>
+                    <br/>
+                    <t t-set="total_sum" t-value="0"/>
+                    <line>
+                        <left>Journal</left>
+                        <right>Amount</right>
+                    </line>
+                    <line>
+                        <left>-----------------</left>
+                        <right>----------------</right>
+                    </line>
+                    <t t-foreach="total_summary" t-as="summary">
+                        <line>
+                            <left><t t-esc='summary' /></left>
+                            <right><t t-esc="summary_value.toFixed(2)"/> </right>
+                        </line>
+                        <t t-set="total_sum" t-value="summary_value+total_sum"/>
+                    </t>
+                    <hr />
+                    <line>
+                        <left>Total</left>
+                        <right><t t-esc="total_sum.toFixed(2)"/></right>
+                    </line>
+                    <br/>
+                </t>
+            </t>
+            <br/>
+            <t t-if="salesmen_details">
+                <h5>Payment Summary</h5>
+                <br />
+                <t t-foreach='salesmen_details' t-as='salesmen'>
+                    <h5 align="center"><b>Salesperson : </b><t t-esc="salesmen"/></h5>
+                    <br />
+                    <t t-foreach="salesmen_value" t-as="payment">
+                         <h5 align="left"><b>Month : </b><t t-esc="payment"/></h5>
+                        <br/>
+                         <t t-set="total" t-value="0"/>
+                         <line>
+                            <left>Journal</left>
+                            <right>Amount</right>
+                        </line>
+                        <line>
+                            <left>-----------------</left>
+                            <right>----------------</right>
+                        </line>
+                        <t t-foreach="payment_value" t-as="value">
+                             <line>
+                                <left><t t-esc='value' /></left>
+                                <right><t t-esc="value_value"/> </right>
+                             </line>
+                            <t t-set="total" t-value="value_value+total"/>
+                        </t>
+                        <hr />
+                        <line>
+                            <left>Total</left>
+                            <right><t t-esc="total.toFixed(2)"/></right>
+                        </line>
+                        <br/>
+                    </t>
+                </t>
+            </t>
+            <br/>
+        </receipt>
+    </t>
+
+<!-- Product summary -->
+
+	<t t-name="ProductSummaryReport">
+        <div class="pos-sale-ticket">
+            <div class="pos-center-align"><t t-esc="moment().format('L LT')"/><br />
+                <t t-esc="widget.pos.company.name"/><br />
+                Phone: <t t-esc="widget.pos.company.phone || ''"/><br />
+                User: <t t-esc="widget.pos.cashier ? widget.pos.cashier.name : widget.pos.user.name"/><br />
+                Email: <t t-esc="widget.pos.company.email || ''"/><br /><br />
+                Start Date:<t t-esc="widget.pos.from_date" /> End Date:<t t-esc="widget.pos.to_date" />
+                <t t-if="product_details">
+                    <h3 align="center">Product Summary</h3>
+                    <table class='receipt-orderlines'>
+                        <colgroup>
+                            <col width='70%' />
+                            <col width='30%' />
+                        </colgroup>
+                        <tr border-bottom = "5px solid">
+                            <th style="border-bottom: 1px solid black;"  align="left">Product</th>
+                            <th style="border-bottom: 1px solid black;"  >Quantity</th>
+                        </tr>
+                        <tr  t-foreach="product_details" t-as="product">
+                            <td align="left">
+                                <t t-esc="product"/>
+                            </td>
+                            <td>
+                               <t t-esc="product_value"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr />
+                    <table>
+                        <tr>
+                            <th align="left">Total</th>
+                            <td width='30%'><t t-esc="widget.pos.product_total_qty"/></td>
+                        </tr>
+                    </table>
+                </t>
+                <br/>
+                <t t-if="category_details">
+                    <h3 align="center">Category Summary</h3>
+                    <table class='receipt-orderlines'>
+                        <colgroup>
+                            <col width='70%' />
+                            <col width='30%' />
+                        </colgroup>
+                        <tr>
+                            <th style="border-bottom: 1px solid black;" align="left">Category</th>
+                            <th style="border-bottom: 1px solid black;" >Quantity</th>
+                        </tr>
+                        <tr  t-foreach="category_details" t-as="category">
+                            <td align="left">
+                                <t t-esc="category"/>
+                            </td>
+                            <td>
+                               <t t-esc="category_value"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr />
+                    <table>
+                        <tr>
+                            <th align="left">Total</th>
+                            <td width='30%'><t t-esc="widget.pos.category_total_qty"/></td>
+                        </tr>
+                    </table>
+                    <br/>
+                </t>
+                <t t-if="payment_details">
+                    <h3 align="center">Payment Summary</h3>
+                    <table class='receipt-orderlines'>
+                        <colgroup>
+                            <col width='70%' />
+                            <col width='30%' />
+                        </colgroup>
+                        <tr>
+                            <th style="border-bottom: 1px solid black;" align="left">Journal</th>
+                            <th style="border-bottom: 1px solid black;">Amount</th>
+                        </tr>
+                        <tr  t-foreach="payment_details" t-as="payment">
+                            <td align="left">
+                                <t t-esc="payment"/>
+                            </td>
+                            <td>
+                               <t t-esc="widget.format_currency(payment_value)"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr />
+                    <table>
+                        <tr>
+                            <th align="left">Total</th>
+                            <td width='30%'><t t-esc="widget.format_currency(widget.pos.payment_summary_total.toFixed(2))"/></td>
+                        </tr>
+                    </table>
+                    <br/>
+                </t>
+                <t t-if="location_details">
+                    <h3 align="center">Location Summary</h3>
+                     <t t-foreach="location_details" t-as="location">
+                         <h4 align="left"><b>Location : </b><t t-esc="location"/></h4>
+                         <t t-set="total" t-value="0"/>
+                         <table class='receipt-orderlines'>
+                             <colgroup>
+                                <col width='70%' />
+                                <col width='30%' />
+                             </colgroup>
+                             <tr>
+                                <th style="border-bottom: 1px solid black;" align="left">Product</th>
+                                <th style="border-bottom: 1px solid black;" >Quantity</th>
+                             </tr>
+                             <tr  t-foreach="location_value" t-as="value">
+                                <td align="left">
+                                    <t t-esc="value"/>
+                                </td>
+                                 <td>
+                                    <t t-esc="value_value"/>
+                                </td>
+                                 <t t-set="total" t-value="value_value+total"/>
+                             </tr>
+                         </table>
+                         <hr />
+                         <table>
+                            <tr>
+                                <th align="left">Total</th>
+                                <td width='30%'><t t-esc="total"/></td>
+                            </tr>
+                         </table>
+                         <br/>
+                     </t>
+                </t>
+                <t t-if="widget.pos.signature">
+                    <div style="margin-top: 20%;">
+                        <h4 align="center" style="border-bottom: 1px dotted black;width:50%;margin-left: 25%;"/>
+                        <h4 align="center">Signature</h4>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ProductSummaryReportXmlReceipt">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <h1><t t-esc='receipt.company.name' /></h1>
+            <br />
+            <b>Start Date : </b><t t-esc="widget.pos.from_date" /><br/>
+            <b>End Date : </b><t t-esc="widget.pos.to_date" />
+            <br/><br/>
+            <t t-if="product_details">
+                <br/>
+                <h5>Product Summary</h5>
+                <line>
+                    <left>Product</left>
+                    <right>Qty</right>
+                </line>
+                <line>
+                    <left>-----------------</left>
+                    <right>----------------</right>
+                </line>
+                <t t-foreach='product_details' t-as='product'>
+                    <line>
+                        <left><t t-esc='product' /></left>
+                        <right><t t-esc="product_value"/> </right>
+                    </line>
+                </t>
+            </t>
+            <hr />
+            <line>
+                <left>Total</left>
+                <right><t t-esc="widget.pos.product_total_qty"/> </right>
+            </line>
+            <br/>
+            <t t-if="category_details">
+                <h5>Category Summary</h5>
+                <line>
+                    <left>Category</left>
+                    <right>Qty</right>
+                </line>
+                 <line>
+                    <left>-----------------</left>
+                    <right>----------------</right>
+                </line>
+                <t t-foreach='category_details' t-as='category'>
+                    <line>
+                        <left><t t-esc='category' /></left>
+                        <right><t t-esc="category_value"/> </right>
+                    </line>
+                </t>
+            </t>
+            <hr />
+            <line>
+                <left>Total</left>
+                <right><t t-esc="widget.pos.category_total_qty"/> </right>
+            </line>
+            <br/>
+            <t t-if="payment_details">
+                <h5>Payment Summary</h5>
+                <line>
+                    <left>Journal</left>
+                    <right>Amount</right>
+                </line>
+                 <line>
+                    <left>-----------------</left>
+                    <right>----------------</right>
+                </line>
+                <t t-foreach='payment_details' t-as='payment'>
+                    <line>
+                        <left><t t-esc='payment' /></left>
+                        <right><t t-esc="payment_value"/> </right>
+                    </line>
+                </t>
+            </t>
+            <br/>
+            <t t-if="location_details">
+                <h5>Location Summary</h5>
+                <br />
+                <t t-foreach='location_details' t-as='location'>
+                     <h5 align="left"><b>Location : </b><t t-esc="location"/></h5>
+                     <t t-set="total" t-value="0"/>
+                     <line>
+                        <left>Product</left>
+                        <right>Qty</right>
+                    </line>
+                    <line>
+                        <left>-----------------</left>
+                        <right>----------------</right>
+                    </line>
+                    <t t-foreach="location_value" t-as="value">
+                         <line>
+                            <left><t t-esc='value' /></left>
+                            <right><t t-esc="value_value"/> </right>
+                         </line>
+                        <t t-set="total" t-value="value_value+total"/>
+                    </t>
+                    <hr />
+                    <line>
+                        <left>Total</left>
+                        <right><t t-esc="total"/></right>
+                    </line>
+                    <br/>
+                </t>
+            </t>
+            <br/>
+            <div font='b'>
+                <div><t t-esc='receipt.date.localestring' /></div>
+            </div>
+        </receipt>
+    </t>
+
+<!-- 	Order Summary Report -->
+
+	<t t-name="CustomTicket">
+        <div class="pos-sale-ticket">
+            <div class="pos-center-align"><t t-esc="moment().format('L LT')" />
+                <t t-esc="widget.pos.company.name" /><br />
+                Email :  <t t-esc="widget.pos.company.email || ''" /><br />
+                User: <t t-esc="widget.pos.cashier ? widget.pos.cashier.name : widget.pos.user.name" /><br />
+            </div><br/>
+            Start Date:<t t-esc="widget.pos.from_date" /> End Date:<t t-esc="widget.pos.to_date" />
+            <t t-if="order_report">
+                <t t-if="widget.pos.state">
+                    <table>
+                        <h3 align="center">Order Summary</h3>
+                        <tr>
+                            <th style="border-bottom: solid 1px black">Order Ref</th>
+                            <th style="text-align:right;border-bottom: solid 1px black">Order Date</th>
+                            <th style="text-align:right;border-bottom: solid 1px black">Total</th>
+                        </tr>
+                        <tr t-foreach="order_report" t-as="order">
+                            <td align="left">
+                                <t t-esc="order.order_ref" />
+                            </td>
+                            <td align="right">
+                               <t t-esc="order.order_date" />
+                            </td>
+                            <td align="right">
+                                <t t-esc="widget.format_currency(order.total)" />
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                </t>
+                <t t-if="!widget.pos.state">
+                    <h3 align="center">Order Summary</h3>
+                     <t t-foreach="order_report" t-as="order">
+                        <h4 align="center" style="text-transform: capitalize"><t t-esc="order"/></h4>
+                         <table>
+                            <tr margin-top = "20%;padding-top:4%">
+                                <th style="border-bottom: solid 1px black">Order Ref</th>
+                                <th style="text-align:right;border-bottom: solid 1px black">Order date</th>
+                                <th style="text-align:right;border-bottom: solid 1px black">Total</th>
+                            </tr>
+                            <t t-foreach="order_value" t-as="value">
+                                <tr>
+                                 <td align="left">
+                                     <t t-esc="value_value.order_ref" />
+                                 </td>
+                                 <td align="right">
+                                     <t t-esc="value_value.order_date" />
+                                 </td>
+                                 <td align="right">
+                                     <t t-esc="widget.format_currency(value_value.total)" />
+                                 </td>
+                                </tr>
+                            </t>
+                         </table>
+                     </t>
+                </t>
+            </t>
+            <t t-if="category_report">
+                <t t-if="!widget.pos.state">
+                   <h3 align="center" style="margin-top:10%">Category Summary</h3>
+                   <t t-foreach="category_report" t-as="category">
+                      <h4 align="center" style="text-transform: capitalize"><t t-esc="category"/></h4>
+                       <table>
+                           <tr margin-top = "20%">
+                               <th style="border-bottom: solid 1px black">Category</th>
+                               <th style="text-align:right;border-bottom: solid 1px black">Qty</th>
+                               <th style="text-align:right;border-bottom: solid 1px black">Total</th>
+                           </tr>
+                           <t t-set="total" t-value="0"/>
+                           <t t-foreach="category_value" t-as="value">
+                               <tr>
+                                   <td align="left">
+                                       <t t-esc="value" />
+                                   </td>
+                                   <td align="right">
+                                       <t t-esc="value_value[0]" />
+                                   </td>
+                                   <td align="right">
+                                       <t t-esc="widget.format_currency(value_value[1].toFixed(2))" />
+                                   </td>
+                                   <t t-set="total" t-value="value_value[1]+total"/>
+                                </tr>
+                           </t>
+                       </table><br /><hr />
+                       <table>
+                          <tr>
+                              <th>Total</th>
+                              <td align="right">
+                                  <t t-esc="widget.format_currency(total.toFixed(2))"/>
+                              </td>
+                          </tr>
+                      </table>
+                   </t>
+                  <br />
+            	</t>
+	            <t t-if="widget.pos.state">
+	                <h3 align="center" style="margin-top:10%">Category Summary</h3>
+	                <table>
+	                    <tr>
+	                        <th style="border-bottom: solid 1px black">Category</th>
+	                        <th style="text-align:right;border-bottom: solid 1px black">Qty</th>
+	                        <th style="text-align:right;border-bottom: solid 1px black">Total</th>
+	                    </tr>
+	                    <tr t-foreach="category_report" t-as="category">
+	                        <td align="left">
+	                            <t t-esc="category" />
+	                        </td>
+	                        <td align="right">
+	                           <t t-esc="category_value[0]" />
+	                        </td>
+	                        <td align="right">
+	                           <t t-esc="widget.format_currency(category_value[1].toFixed(2))" />
+	                        </td>
+	                    </tr>
+	                </table>
+	                <br /><hr />
+	                <table>
+	                    <tr>
+	                        <th>Total</th>
+	                        <td align="right">
+	                             <t t-esc="widget.format_currency(widget.pos.total_categ_amount.toFixed(2))" />
+	                        </td>
+	                    </tr>
+	                </table>
+	            </t>
+        	</t>
+	        <t t-if="payment_report">
+				<t t-if="!widget.pos.state">
+				   <h3 align="center" style="margin-top:10%">Payment Summary</h3>
+				    <t t-foreach="payment_report" t-as="payment">
+				        <h4 align="center" style="text-transform: capitalize"><t t-esc="payment"/></h4>
+				        <table>
+				          <tr margin-top = "20%">
+				            <th style="border-bottom: solid 1px black">Journal Name</th>
+				            <th style="text-align:right;border-bottom: solid 1px black">Amount</th>
+				          </tr>
+				          <t t-set="total" t-value="0"/>
+				          <t t-foreach="payment_value" t-as="value">
+				                <tr>
+				                    <td align="left">
+				                        <t t-esc="value" />
+				                    </td>
+				                    <td align="right">
+				                        <t t-esc="widget.format_currency(value_value)" />
+				                    </td>
+				                    <t t-set="total" t-value="value_value+total"/>
+				                </tr>
+				          </t>
+				        </table><br /><hr />
+				        <table>
+				            <tr>
+				                <th>Total</th>
+				                <td align="right">
+				                    <t t-esc="widget.format_currency(total.toFixed(2))"/>
+				                </td>
+				            </tr>
+				        </table>
+				    </t>
+				    <br />
+				</t>
+	             <t t-if="widget.pos.state">
+	                 <h3 align="center">Payment Summary</h3>
+	                 <table>
+	                    <colgroup>
+	                            <col width='70%' />
+	                            <col width='30%' />
+	                    </colgroup>
+	                    <tr>
+	                        <th style="border-bottom: solid 1px black">Journal Name</th>
+	                        <th style="text-align:right;border-bottom: solid 1px black">Amount</th>
+	                    </tr>
+	                    <tr t-foreach="payment_report" t-as="payment">
+	                        <td align="left">
+	                            <t t-esc="payment" />
+	                        </td>
+	                        <td align="right">
+	                           <t t-esc="widget.format_currency(payment_value)" />
+	                        </td>
+	                    </tr>
+	                </table>
+	                <br /><hr />
+	                <table>
+	                    <tr>
+	                        <th>Total</th>
+	                        <td align="right">
+	                            <t t-esc="widget.format_currency(widget.pos.total_amount)" />
+	                        </td>
+	                    </tr>
+	                </table>
+	            </t>
+	        </t>
+	        <t t-if="widget.pos.signature">
+	            <div style="margin-top: 20%;">
+	                    <h4 align="center" style="border-bottom: 1px dotted black;width:50%;margin-left: 25%;"/>
+	                    <h4 align="center">Signature</h4>
+	            </div>
+	        </t>
+    	</div>
+	</t>
+
+	<t t-name="OrderXmlReceipt">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <h1><t t-esc='receipt.company.name' /></h1><br />
+            <b>Start Date:</b><t t-esc="widget.pos.from_date" /><br/>
+            <b>End Date:</b><t t-esc="widget.pos.to_date" />
+            <br/><br/>
+            <t t-if="order_report">
+                <t t-if="widget.pos.state">
+                    <div><b>Order Summary</b></div>
+                    <line>
+                        <left><b>Order Ref</b></left>
+                        <right><b>Total</b></right>
+                    </line>
+                    <line>
+                        <left>-----------------</left>
+                        <right>----------------</right>
+                    </line>
+                    <t t-foreach="order_report" t-as="order">
+                        <line>
+                            <left><t t-esc="order.order_ref" /></left>
+                        </line>
+                        <line indent="1">
+                               <left font='b'><t t-esc="order.order_date" /></left>
+                               <right><t t-esc="order.total.toFixed(2)" /></right>
+                        </line>
+                    </t>
+                </t>
+
+                <t t-if="!widget.pos.state">
+                    <div><b>Order Summary</b></div>
+                    <t t-foreach="order_report" t-as="order">
+                        <br /><div style="text-transform: capitalize;"><t t-esc="order" /></div>
+                        <line>
+                            <left><b>Order Ref</b></left>
+                            <right><b>Total</b></right>
+                        </line>
+                        <line>
+                            <left>-----------------</left>
+                            <right>----------------</right>
+                        </line>
+                        <t t-foreach="order_value" t-as="value">
+                            <line>
+                                <left><t t-esc="value_value.order_ref" /></left>
+                            </line>
+                            <line indent="1">
+                                <left font='b'><t t-esc="value_value.order_date" /></left>
+                                <right><t t-esc="value_value.total.toFixed(2)" /></right>
+                            </line>
+                        </t>
+                     </t>
+                </t>
+            </t>
+             <br />
+            <t t-if="category_report">
+                <t t-if="widget.pos.state">
+                    <div><b>Category Summary</b></div>
+                    <line>
+                        <left><b>Category</b></left>
+                        <right><b>Total</b></right>
+                    </line>
+                    <line>
+                        <left>-----------------</left>
+                        <right>----------------</right>
+                    </line>
+                    <t t-foreach="category_report" t-as="category">
+                        <line>
+                            <left><t t-esc="category" /></left>
+                        </line>
+                        <line indent="1">
+                            <left>Qty : <t t-esc="category_value[0]" /></left>
+                            <right><t t-esc="category_value[1].toFixed(2)" /></right>
+                        </line>
+                    </t><hr />
+                    <line>
+                        <left>Total</left>
+                        <right><t t-esc="widget.pos.total_categ_amount.toFixed(2)" /></right>
+                    </line>
+                </t>
+                <t t-if="!widget.pos.state">
+                    <div><b>Category Summary</b></div>
+                    <t t-foreach="category_report" t-as="category">
+                        <br /><div style="text-transform: capitalize;"><t t-esc="category" /></div>
+                        <line>
+                            <left><b>Category</b></left>
+                            <right><b>Total</b></right>
+                        </line>
+                        <line>
+                            <left>-----------------</left>
+                            <right>----------------</right>
+                        </line>
+                        <t t-set="total" t-value="0"/>
+                        <t t-foreach="category_value" t-as="value">
+                            <line>
+                                <left><t t-esc="value" /></left>
+                            </line>
+                            <line indent="1">
+                                <left>Qty : <t t-esc="value_value[0]" /></left>
+                                <right><t t-esc="value_value[1]" /></right>
+                                <t t-set="total" t-value="value_value[1]+total"/>
+                            </line>
+                        </t><hr />
+                        <line>
+                            <left>Total</left>
+                            <right><t t-esc="total.toFixed(2)"/></right>
+                        </line>
+                    </t>
+                </t>
+            </t>
+            <br />
+            <t t-if="payment_report">
+                <t t-if="widget.pos.state">
+                    <div><b>Payment Summary</b></div>
+                    <line>
+                        <left><b>Journal Name</b></left>
+                        <right><b>Amount</b></right>
+                    </line>
+                    <line>
+                        <left>-----------------</left>
+                        <right>----------------</right>
+                    </line>
+                    <t t-foreach="payment_report" t-as="payment">
+                        <line>
+                            <left><t t-esc="payment" /></left>
+                            <right><t t-esc="payment_value.toFixed(2)" /></right>
+                        </line>
+                    </t><hr />
+                    <line>
+                        <left>Total</left>
+                        <right><t t-esc="widget.pos.total_amount.toFixed(2)" /></right>
+                    </line>
+                </t>
+                <t t-if="!widget.pos.state">
+                    <div><b>Payment Summary</b></div>
+                     <t t-foreach="payment_report" t-as="payment">
+                        <br /><div style="text-transform: capitalize;"><t t-esc="payment" /></div>
+                        <line>
+                            <left><b>Journal Name</b></left>
+                            <right><b>Amount</b></right>
+                        </line>
+                        <line>
+                            <left>-----------------</left>
+                            <right>----------------</right>
+                        </line>
+                        <t t-set="total" t-value="0"/>
+                        <t t-foreach="payment_value" t-as="value">
+                            <line>
+                                <left><t t-esc="value" /></left>
+                                <right><t t-esc="value_value.toFixed(2)" /></right>
+                                <t t-set="total" t-value="value_value+total"/>
+                            </line>
+                        </t><hr />
+                         <line>
+                            <left>Total</left>
+                            <right><t t-esc="total.toFixed(2)"/></right>
+                         </line>
+                     </t>
+                </t>
+            </t>
+            <br />
+        </receipt>
+    </t>
+
+    <t t-name="OutStockPosReport">
+        <div class="pos-sale-ticket">
+            <div class="pos-center-align"><t t-esc="moment().format('L LT')"/><br />
+                <t t-esc="widget.pos.company.name"/><br />
+                Phone: <t t-esc="widget.pos.company.phone || ''"/><br />
+                User: <t t-esc="widget.pos.cashier ? widget.pos.cashier.name : widget.pos.user.name"/><br />
+                Email: <t t-esc="widget.pos.company.email || ''"/><br /><br />
+                <t t-if="location_data">
+                    Stock : <t t-esc="location_data"/>
+                </t>
+                <t t-if="product_data">
+                    <h3 align="center">List Out of Stock Products</h3>
+                    <t t-foreach="product_data" t-as="product">
+                        <span><t t-esc="product_value.display_name"/></span><br/>
+                    </t>
+                </t>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="OutStockProductXmlReceipt">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <h1><t t-esc='receipt.company.name' /></h1>
+            <br />
+
+            <t t-if="product_data">
+                <br/>
+                <h5>List of Out of Stock Products</h5>
+                <t t-foreach='product_data' t-as='product'>
+                    <line>
+                        <left><t t-esc='product_value.display_name' /></left>
+                    </line>
+                </t>
+            </t>
+        </receipt>
+    </t>
+
+    <t t-name="PayDebitReceipt">
+        <div class="pos-sale-ticket">
+            <t t-esc="widget.pos.company.name"/><br />
+            <div class="receipt-phone">
+                Phone: <t t-esc="widget.pos.company.phone || ''"/>
+            </div>
+            <div class="receipt-user">
+                User: <t t-esc="widget.pos.get_cashier().name"/>
+            </div>
+            <br />
+            <table>
+                <tr>
+                    <td class="pos-left-align" style="text-align: left;"><b>Customer Name:</b></td>
+                    <td class="pos-right-align">
+                        <t t-esc="widget.pos.db.get_partner_by_id(partner_id).name" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="pos-left-align" style="text-align: left;"><b>Journal:</b></td>
+                    <t t-foreach="widget.pos.cashregisters" t-as="journals">
+                        <t t-if="journals.journal_id[0] == get_journal_id">
+                            <td class="pos-right-align">
+                                <t t-esc="journals.journal_id[1]"/>
+                            </td>
+                        </t>
+                    </t>
+                </tr>
+                <tr>
+                    <td class="pos-left-align"><b>Amount Paid:</b></td>
+                    <td class="pos-right-align">
+                        <t t-esc="widget.format_currency((amount).toFixed(2))" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="pos-left-align" style="text-align: left;"><b>Amount Due:</b></td>
+                    <td class="pos-right-align">
+                        <t t-esc="widget.format_currency(amt_due.toFixed(2))"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+
+        <record id="pos_store_tree_view" model="ir.ui.view">
+			<field name="name">pos_store_tree_view</field>
+			<field name="model">pos.shop</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="location_id" />
+					<field name="email" />
+					<field name="phone" />
+				</tree>
+			</field>
+		</record>
+
+        <record id="pos_store_form_view" model="ir.ui.view">
+			<field name="name">pos_store_form_view</field>
+			<field name="model">pos.shop</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<field name="image" widget="image" class="oe_avatar"
+							options="{'size':[90,90]}" />
+						<group col="4">
+							<field name="name" />
+							<field name="store_manager" readonly="1"/>
+                            <field name="location_id" domain="[('usage','=','internal')]"/>
+                            <field name="street" />
+                            <field name="street2" />
+                            <field name="website" />
+                            <field name="zip" />
+                            <field name="city" />
+                            <field name="state_id" />
+                            <field name="country_id"/>
+                            <field name="email" />
+                            <field name="phone" />
+                            <field name="fax" />
+                            <field name="mobile" />
+                            <field name="description" />
+							<field name="company_id" invisible="1"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_pos_store" model="ir.actions.act_window">
+			<field name="name">Shop</field>
+			<field name="res_model">pos.shop</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem
+        id="menu_pos_store"
+        parent="point_of_sale.menu_point_of_sale"
+        action="action_pos_store"
+        groups="base.group_erp_manager"
+        sequence="3"/>
+
+    </data>
+</odoo>

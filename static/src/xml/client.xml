@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<!-- **** Client Screen related Code Here **** -->
+
+    <t t-extend="ClientDetailsEdit">
+        <t t-jquery=".client-details" t-operation="replace">
+            <section class='client-details edit'>
+            	<div class="client_first_part">
+	                <div class='client-picture'>
+	                    <t t-if='!partner.id'>
+	                        <i class='fa fa-camera'></i>
+	                    </t>
+	                    <t t-if='partner.id'>
+	                        <img t-att-src='widget.partner_icon_url(partner.id)' />
+	                    </t>
+	                    <input type='file' class='image-uploader'></input>
+	                </div>
+	                <input class='detail client-name' name='name' t-att-value='partner.name' id="autocomplete_name" placeholder='Name'></input>
+	            </div>
+            
+            
+            
+              <!--   <div class='client-picture'>
+                    <t t-if='!partner.id'>
+                        <i class='fa fa-camera'></i>
+                    </t>
+                    <t t-if='partner.id'>
+                        <img t-att-src='widget.partner_icon_url(partner.id)' />
+                    </t>
+                    <input type='file' class='image-uploader'></input>
+                </div>
+                <input class='detail client-name' name='name' t-att-value='partner.name' id="autocomplete_name" placeholder='Name'></input> -->
+                <div class='edit-buttons'>
+                    <div class='button undo'><i class='fa fa-undo' /></div>
+                    <div class='button save'><i class='fa fa-floppy-o' /></div>
+                </div>
+                <div class='client-details-box clearfix'>
+                    <div class='client-details-left'>
+                        <div class='client-detail'>
+                            <span class='label'>Street</span>
+                            <input class='detail client-address-street' id="autocomplete_address" name='street' t-att-value='partner.street || ""' placeholder='Street'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>City</span>
+                            <input class='detail client-address-city'  id="city_customer" name='city' t-att-value='partner.city || ""' placeholder='City'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Postcode</span>
+                            <input class='detail client-address-zip'  id="postal_code" name='zip' t-att-value='partner.zip || ""' placeholder='ZIP'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Country</span>
+                            <select class='detail client-address-country needsclick' id="country_customer" name='country_id'>
+                                <option value=''>None</option>
+                                <t t-foreach='widget.pos.countries' t-as='country'>
+                                    <option t-att-value='country.id' t-att-selected="partner.country_id ? ((country.id === partner.country_id[0]) ? true : undefined) : undefined"> 
+                                        <t t-esc='country.name'/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class='client-detail client_lineheightset'>
+			                <span class='label'>Credit Limit</span>
+			                <input class='detail client-credit-limit'  name='credit_limit'    type='text'    t-att-value='partner.credit_limit || ""'></input>
+			            </div>
+                    </div>
+                    <div class='client-details-right'>
+                        <div class='client-detail'>
+                            <span class='label'>Email</span>
+                            <input class='detail client-email'  name='email'    type='email'    t-att-value='partner.email || ""'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Phone</span>
+                            <input class='detail client-phone'  name='phone'    type='tel'      t-att-value='partner.phone || ""'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Barcode</span>
+                            <input class='detail barcode'       name='barcode'    t-att-value='partner.barcode || ""'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Tax ID</span>
+                            <input class='detail vat'           name='vat'     t-att-value='partner.vat || ""'></input>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </t>
+    </t>
+    
+    <t t-name="ClientHistoryLine">
+        <tr t-att-data-id="order.id">
+            <td><t t-esc="order ? order.name : ''"/></td>
+            <td><t t-esc="order ? order.date_order : ''"/></td>
+            <td><t t-esc="order ? widget.format_currency(order.amount_total) : ''"/></td>
+            <td><t t-esc="order ? widget.format_currency(order.amount_due) : ''"/></td>
+        </tr>
+    </t>
+
+    <t t-extend="ClientDetails">
+        <t t-jquery=".client-details-box " t-operation="replace">
+            <div class='client-details-box clearfix'>
+                <div class='client-details-left'>
+                    <div class='client-detail'>
+                        <span class='label'>Address</span>
+                        <t t-if='partner.address'>
+                            <span class='detail client-address'><t t-esc='partner.address' /></span>
+                        </t>
+                        <t t-if='!partner.address'>
+                            <span class='detail client-address empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Email</span>
+                        <t t-if='partner.email'>
+                            <span class='detail client-email'><t t-esc='partner.email' /></span>
+                        </t>
+                        <t t-if='!partner.email'>
+                            <span class='detail client-email empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Phone</span>
+                        <t t-if='partner.phone'>
+                            <span class='detail client-phone'><t t-esc='partner.phone' /></span>
+                        </t>
+                        <t t-if='!partner.phone'>
+                            <span class='detail client-phone empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+		                <span class='label'>Credit Limit</span>
+		                <t t-if='partner.credit_limit'>
+		                    <span class='detail credit_limit'><t t-esc='partner.credit_limit.toFixed(2)'/></span>
+		                </t>
+		                <t t-if='!partner.credit_limit'>
+		                    <span class='detail vat empty'>N/A</span>
+		                </t>
+		            </div>
+                </div>
+                <div class='client-details-right'>
+                    <div class='client-detail'>
+                        <span class='label'>Barcode</span>
+                        <t t-if='partner.barcode'>
+                            <span class='detail client-id'><t t-esc='partner.barcode'/></span>
+                        </t>
+                        <t t-if='!partner.barcode'>
+                            <span class='detail client-id empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Tax ID</span>
+                        <t t-if='partner.vat'>
+                            <span class='detail vat'><t t-esc='partner.vat'/></span>
+                        </t>
+                        <t t-if='!partner.vat'>
+                            <span class='detail vat empty'>N/A</span>
+                        </t>
+                    </div>
+                    <t t-if="widget.pos.config.enable_pos_loyalty and widget.pos.get_cashier().access_pos_loyalty">
+			            <div class='client-detail'>
+			                <span class='label'>Total loyalty Points</span>
+			                <t t-if='partner.total_remaining_points'>
+			                    <span class='detail client-loyalty'><t t-esc='partner.total_remaining_points'/></span>
+			                </t>
+			                <t t-if='!partner.total_remaining_points'>
+			                    <span class='detail client-loyalty empty'>N/A</span>
+			                </t>
+			            </div>
+		            </t>
+		            <t t-if="widget.pos.config.enable_wallet and widget.pos.get_cashier().access_wallet">
+		                <div class='client-detail'>
+		                    <span class='label'>Wallet</span>
+		                    <t t-if='partner.remaining_wallet_amount'>
+		                        <span class='detail client-remaining_wallet_amount'><t t-esc='widget.format_currency(partner.remaining_wallet_amount)'/></span>
+		                    </t>
+		                    <t t-if='!partner.remaining_wallet_amount'>
+		                        <span class='detail client-remaining_wallet_amount empty'>N/A</span>
+		                    </t>
+		                </div>
+		            </t>
+		            <t t-if="widget.pos.config.enable_order_reservation">
+			            <div class='client-detail'>
+			                <span class='label'>Remaining Credit</span>
+			                <t t-if='partner.remaining_credit_limit'>
+			                    <span class='detail remaining_credit_limit'><t t-esc='partner.remaining_credit_limit.toFixed(2)'/></span>
+			                </t>
+			                <t t-if='!partner.remaining_credit_limit'>
+			                    <span class='detail vat empty'>N/A</span>
+			                </t>
+			            </div>
+			        </t>
+                    <t t-if="widget.pos.config and widget.pos.config.enable_credit">
+		                <div class='client-detail'>
+		                    <span class='label'>Credit</span>
+		                    <t t-if='partner.remaining_credit_amount'>
+		                        <span class='detail client-remaining_credit_amount'>
+		                            <t t-esc='widget.format_currency(partner.remaining_credit_amount)'/>
+		                        </span>
+		                    </t>
+		                    <t t-if='!partner.remaining_credit_amount'>
+		                        <span class='detail client-remaining_credit_amount empty'>N/A</span>
+		                    </t>
+		                </div>
+		            </t>
+                </div>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="ClientListScreenWidget">
+    	<t t-jquery=".button.next" t-operation="before">
+            <div id="client_list_header_buttons">
+                <span id="show_client_history" class="button client_history_button oe_hidden highlight">
+                    Show History
+                </span>
+                <span id="show_customers" class="button client_history_button oe_hidden highlight">
+                    Show Customers
+                </span>
+            </div>
+        </t>
+        <t t-jquery=".window" t-operation="replace">
+            <div class='window'>
+                <div class='left-content pc50 touch-scrollable scrollable-y' style="top: 0px !important;">
+                    <div class='subwindow-container-fix client-details-contents' style="height:auto !important;"></div>
+                    <div class="map-top-header">
+                        <div style="margin-top: 5px;margin-left: 16px;float:left;">
+                            <i id="globe_cust" class="fa fa-globe" style="font-size: 35px;cursor: pointer;"/>
+                            <span style="display:none" id="map_error_msg">Map Could not load</span>
+                        </div>
+                        <div class="customer_screen_map_search">
+                            <span class="searchboxcustom">
+                                <input id="map_search" placeholder="Search Map" class="input_map_search" />
+                                <span class="map_search_clear_box" id="map_search_clear_box"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div id="map_view_edit_details" style="height: 190px;border: 2px solid;border-color: currentColor;margin: 0px 18px 0px 3px;"/>
+                </div>
+                <div class='right-content pc50 touch-scrollable scrollable-y' style="top: 0px !important;">
+                    <div class='subwindow-container'>
+                        <div class='subwindow-container-fix '>
+                            <table class='client-list'>
+                                <thead class="bgcolorset">
+                                        <tr>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>Phone</th>
+                                    </tr>
+                                </thead>
+                                <tbody class='client-list-contents'>
+                                </tbody>
+                            </table>
+                            <table id="customer_history" class='client-list oe_hidden'>
+				                <thead class="bgcolorset">
+				                    <tr>
+				                        <th>Order</th>
+				                        <th>Date</th>
+				                        <th>Total</th>
+				                        <th>Due</th>
+				                    </tr>
+				                </thead>
+				                <tbody id='client_history_contents'>
+				                </tbody>
+				            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </t>
+
+</templates>

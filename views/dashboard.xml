@@ -1,0 +1,27 @@
+<odoo>
+    <template id="assets_backend" name="Project Assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/flexipharmacy/static/src/js/dashboard.js"/>
+            <script type="text/javascript" src="/flexipharmacy/static/src/js/Chart.js"/>
+            <script type="text/javascript" src="/flexipharmacy/static/src/js/daterangepicker.min.js"/>
+            <script type="text/javascript" src="/flexipharmacy/static/src/js/moment.min.js"/>
+            <script type="text/javascript" src="/flexipharmacy/static/src/js/readmore.js"/>
+            <script type="text/javascript" src="/flexipharmacy/static/src/js/list.js"/>
+            <link rel="stylesheet" href="/flexipharmacy/static/src/css/my_style.css"/>
+            <link rel="stylesheet" href="/flexipharmacy/static/src/css/daterangepicker.css"/>
+        </xpath>
+    </template>
+
+    <record id="product_expiry_dashboard_action" model="ir.actions.client">
+        <field name="name">Product Expiry Dashboard</field>
+        <field name="tag">open_product_expiry_dashboard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <menuitem
+            action="product_expiry_dashboard_action"
+            id="stock_picking_type_menu1"
+            parent="stock.menu_stock_root" sequence="1"
+            name="Product Expiry Dashboard"/>
+</odoo>

@@ -1,0 +1,5821 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* flexipharmacy
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0alpha1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-05 09:36+0000\n"
+"PO-Revision-Date: 2018-03-05 09:36+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: flexipharmacy
+#: model:mail.template,body_html:flexipharmacy.email_template_pos_ereceipt
+msgid "\n"
+"				<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"				\n"
+"				    <p>Hello ${object.partner_id and object.partner_id.name or ''},</p>\n"
+"				\n"
+"				    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"				       &nbsp;&nbsp;<strong>REFERENCES</strong><br />\n"
+"				       &nbsp;&nbsp;Order number: <strong>${object.name}</strong><br />\n"
+"				       &nbsp;&nbsp;Order total: <strong>${object.amount_total} ${object.company_id.currency_id.name}</strong><br />\n"
+"				       &nbsp;&nbsp;Order date: ${object.date_order}<br />\n"
+"				       % if object.user_id:\n"
+"				       &nbsp;&nbsp;Cashier: ${object.user_id.name}\n"
+"				       % endif\n"
+"				    </p>\n"
+"				    <p> Product Details </p>\n"
+"				    % if object.lines:\n"
+"				        <table border=1>\n"
+"				            <tbody border=1>\n"
+"				            <tr>\n"
+"				                <th>Product Name</th>\n"
+"				                <th>Quantity</th>\n"
+"				                <th>Unit Price</th>\n"
+"				                <th>Discount %</th>\n"
+"				                <th>Total(${object.company_id.currency_id.name})</td>\n"
+"				            <tr>\n"
+"				            % for line in object.lines:\n"
+"				                <tr>\n"
+"				                    <td>${line.product_id.name}</td>\n"
+"				                    <td style=\"text-align:right\">${line.qty}</td>\n"
+"				                    <td style=\"text-align:right\">${line.price_unit}</td>\n"
+"				                    <td style=\"text-align:right\">${line.discount}</td>\n"
+"				                    <td style=\"text-align:right\">${line.price_subtotal_incl}</td>\n"
+"				                </tr>\n"
+"				             % endfor\n"
+"				             <tr>\n"
+"				                <td colspan=\"4\"><strong>Tax</strong></td>\n"
+"				                <td style=\"text-align:right\">${object.amount_tax}</td>\n"
+"				             </tr>\n"
+"				             <tr>\n"
+"				                <td colspan=\"4\"><strong>Total Amount</strong></td>\n"
+"				                <td style=\"text-align:right\">${object.amount_total}</td>\n"
+"				             </tr>\n"
+"				             </tbody>\n"
+"				        </table>\n"
+"				    % endif\n"
+"				    <br/>\n"
+"				    <p>Thank you for choosing ${object.company_id.name or 'us'} !</p>\n"
+"				    <br/>\n"
+"				    <br/>\n"
+"				    <div style=\"width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;\">\n"
+"				        <h3 style=\"margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;\">\n"
+"				            <strong style=\"text-transform:uppercase;\">${object.company_id.name}</strong></h3>\n"
+"				    </div>\n"
+"				    <div style=\"width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;\">\n"
+"				        <span style=\"color: #222; margin-bottom: 5px; display: block; \">\n"
+"				        % if object.company_id.street:\n"
+"				            ${object.company_id.street}<br/>\n"
+"				        % endif\n"
+"				        % if object.company_id.street2:\n"
+"				            ${object.company_id.street2}<br/>\n"
+"				        % endif\n"
+"				        % if object.company_id.city or object.company_id.zip:\n"
+"				            ${object.company_id.zip} ${object.company_id.city}<br/>\n"
+"				        % endif\n"
+"				        % if object.company_id.country_id:\n"
+"				            ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
+"				        % endif\n"
+"				        </span>\n"
+"				        % if object.company_id.phone:\n"
+"				            <div style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; \">\n"
+"				                Phone:&nbsp; ${object.company_id.phone}\n"
+"				            </div>\n"
+"				        % endif\n"
+"				        % if object.company_id.website:\n"
+"				            <div>\n"
+"				                Web :&nbsp;<a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
+"				            </div>\n"
+"				        %endif\n"
+"				        <p></p>\n"
+"				    </div>\n"
+"				</div>\n"
+"            "
+msgstr ""
+
+#. module: flexipharmacy
+#: model:mail.template,body_html:flexipharmacy.email_template_regarding_card_use
+msgid "\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); \">\n"
+"   <p>Hello ${object.customer_id.name}\n"
+"   <br/>\n"
+"   <p style=\"margin-left: 50px;\">\n"
+"       <p>Your card ${object.card_id.card_no} has been used at our store with following details.</p><br/>\n"
+"                                  <b>Receipt Reference </b>: ${object.pos_order_id.pos_reference}<br/>\n"
+"                                  <b>Order No</b>     : ${object.pos_order_id.name}<br/>\n"
+"                                  <b>Order Date</b>   : ${object.order_date}<br/>\n"
+"                                  <b>Order Amount</b> : ${object.pos_order_id.amount_total}<br/>\n"
+"                                  <b>Card Amount</b>  : ${object.amount}\n"
+"                                <p>Thanks for using our services.</p>\n"
+"                                <p>Regards,</p>\n"
+"                                <p> ${user.name}</p>\n"
+"   </p>\n"
+"   </p>\n"
+"</div>\n"
+"           "
+msgstr ""
+
+#. module: flexipharmacy
+#: model:mail.template,body_html:flexipharmacy.email_template_regarding_balance
+msgid "\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); \">\n"
+"   <p>Hello ${object.customer_id.name}\n"
+"   <br/>\n"
+"   <p style=\"margin-left: 50px;\">\n"
+"       Your card ${object.card_no} have balance ${object.card_value}.<br/>\n"
+"       Thanks for using our services.\n"
+"   </p>\n"
+"   </p>\n"
+"   <br/>\n"
+"   Thank You,\n"
+"   <br/>\n"
+"   ${user.name}\n"
+"</div>\n"
+"           "
+msgstr ""
+
+#. module: flexipharmacy
+#: model:mail.template,body_html:flexipharmacy.email_template_exchange_number
+msgid "\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); \">\n"
+"   <p>Hello ${object.customer_id.name}\n"
+"   <br/>\n"
+"   <p style=\"margin-left: 50px;\">\n"
+"       Your card number has been updated. It has been changed to ${object.card_no}.<br/>\n"
+"       Thanks for using our services.\n"
+"   </p>\n"
+"   </p>\n"
+"   <br/>\n"
+"   Thank You,\n"
+"   <br/>\n"
+"   ${user.name}\n"
+"</div>\n"
+"           "
+msgstr ""
+
+#. module: flexipharmacy
+#: model:mail.template,body_html:flexipharmacy.email_template_for_coupon_expire_7
+msgid "\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); \">\n"
+"   <p>Hello ${object.customer_id.name}\n"
+"   <br/>\n"
+"   <p style=\"margin-left: 50px;\">\n"
+"       Your card will be expired on ${object.expire_date}.Please renew your card ${object.card_no}.<br/>\n"
+"       Thanks for using our services.\n"
+"   </p>\n"
+"   </p>\n"
+"   <br/>\n"
+"   Thank You,\n"
+"   <br/>\n"
+"   ${user.name}\n"
+"</div>\n"
+"           "
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_type_code
+msgid " Code"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1080
+#, python-format
+msgid " have 0 points to redeem."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:227
+#, python-format
+msgid " switched successfully."
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+msgid "% Tax Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:31
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:54
+#, python-format
+msgid "% discount"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:8
+#, python-format
+msgid "&nbsp; Change:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/login.xml:140
+#, python-format
+msgid "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1383
+#, python-format
+msgid "(+)Cancellation Charge"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1391
+#, python-format
+msgid "(-)Amount Paid"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1379
+#, python-format
+msgid "(-)Cancel Order Total"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1395
+#, python-format
+msgid "(=)New Amount Due"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1387
+#, python-format
+msgid "(=)New Order Total"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1400
+#, python-format
+msgid "(=)Refund Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:197
+#, python-format
+msgid "(of"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1132
+#, python-format
+msgid ".\n"
+"	                        Are you sure you want to lock pos screen?"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:330
+#, python-format
+msgid "0% complete"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+msgid "<br/>\n"
+"	                           <strong>Salesperson :</strong>"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "<br/>\n"
+"                            <strong>Salesperson :</strong>"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+msgid "<strong>Sales Summary</strong>"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "<strong>Summary</strong>\n"
+"						<br/>"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+msgid "<strong>Summary</strong>\n"
+"	                        <br/>"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+msgid "<strong>X Report</strong>"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+msgid "<strong>Z Report</strong>"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+msgid "============================<br/>\n"
+"                            Department Sales"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+msgid "=======================================<br/>\n"
+"                            Department Sales"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+msgid "=======================================<br/>\n"
+"                        Payments Total"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:314
+#, python-format
+msgid "A Product Name Is Required"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/login.xml:138
+#, python-format
+msgid "ABC"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_is_active
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_active
+msgid "Active"
+msgstr "Activo"
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_filter
+msgid "Active Filter"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/chrome.js:101
+#, python-format
+msgid "Active sessions not found!"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:461
+#, python-format
+msgid "Add Product"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:223
+#, python-format
+msgid "Add Product Note"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:552
+#, python-format
+msgid "Add customer"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1309
+#, python-format
+msgid "Add to Cart"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1323
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1330
+#, python-format
+msgid "Add to Wallet"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:295
+#, python-format
+msgid "Added to Wallet:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:90
+#: code:addons/flexipharmacy/static/src/xml/client.xml:220
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:175
+#, python-format
+msgid "Address"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:626
+#, python-format
+msgid "All"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_res_config_inherit_form
+msgid "Allow Product EAN13 Barcode Generate"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_allow_reservation_with_no_amount
+msgid "Allow Reservation With 0 Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Allow user to show active sessions report"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:251
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:905
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:913
+#: code:addons/flexipharmacy/static/src/xml/voucher.xml:36
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_use_amount
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_voucher_amount
+#: model:ir.model.fields,field_description:flexipharmacy.field_quick_cash_payment_name
+#, python-format
+msgid "Amount"
+msgstr "Monto"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_amount_due
+msgid "Amount Due"
+msgstr "Monto Adeudado"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:60
+#, python-format
+msgid "Amount due"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:820
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1005
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1111
+#: model:ir.ui.view,arch_db:flexipharmacy.view_loyalty_config_settings_form_pos
+#, python-format
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:150
+#, python-format
+msgid "Apply Bag Charges"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_account_journal_apply_charges
+msgid "Apply Charges"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:520
+#, python-format
+msgid "Are You sure want to remove delivery process?"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Attach notes with items/product"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Attach notes with order"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_automatic_lock
+msgid "Automatic"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Automatic Lock"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1218
+#, python-format
+msgid "BLock All"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:11
+#: code:addons/flexipharmacy/static/src/xml/order.xml:228
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:56
+#: code:addons/flexipharmacy/static/src/xml/product.xml:446
+#, python-format
+msgid "Back"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_back_order
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_line_back_order
+msgid "Back Order"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:product.product,name:flexipharmacy.bags_prod
+#: model:product.template,name:flexipharmacy.bags_prod_product_template
+msgid "Bag"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_bag_charges
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_bag_charges
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Bag Charges"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:390
+#, python-format
+msgid "Bags"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Bank Card Charges"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Línea de extracto bancario"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:609
+#, python-format
+msgid "Bar Chart"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:63
+#: code:addons/flexipharmacy/static/src/xml/client.xml:128
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:65
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:66
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:150
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:152
+#, python-format
+msgid "Barcode"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1394
+#, python-format
+msgid "Barcode not found or gift card has been expired."
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+msgid "Batch #"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+msgid "Batch Status"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1259
+#, python-format
+msgid "Block/Unblock"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_order_booked
+msgid "Booked"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_product_brand
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_product_product_brand_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_template_product_brand_id
+#: model:ir.ui.view,arch_db:flexipharmacy.package_product_template_only_form_view
+#: model:ir.ui.view,arch_db:flexipharmacy.view_product_template_search_brand
+msgid "Brand"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_brand_name
+#: model:ir.ui.view,arch_db:flexipharmacy.view_product_brand_form
+msgid "Brand Name"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_open_brand_products
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_brand_product_ids
+msgid "Brand Products"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1224
+#, python-format
+msgid "Broadcast"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:pos.promotion,promotion_type:0
+msgid "Buy X Get Discount On Y"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:pos.promotion,promotion_type:0
+msgid "Buy X Get Y Free"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_cache_cache
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_cache_ids
+msgid "Cache"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_cache_compute_user_id
+msgid "Cache compute user"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:2200
+#, python-format
+msgid "Can not add more than remaining quantity."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:971
+#, python-format
+msgid "Can not redeem more than your remaining points."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:9
+#: code:addons/flexipharmacy/static/src/xml/order.xml:64
+#: code:addons/flexipharmacy/static/src/xml/order.xml:112
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:786
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:823
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:937
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:975
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1008
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1092
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1114
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1215
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1312
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1353
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1364
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1464
+#: code:addons/flexipharmacy/static/src/xml/product.xml:605
+#: code:addons/flexipharmacy/static/src/xml/voucher.xml:9
+#: model:ir.ui.view,arch_db:flexipharmacy.view_loyalty_config_settings_form_pos
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_pos_sale_report_form_view
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_pos_x_report_form_view
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_sales_details_form_view
+#, python-format
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_line_cancel_item
+msgid "Cancel Item"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_cancel_order
+msgid "Cancel Order"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_cancellation_charges
+#: model:product.product,name:flexipharmacy.product_cancellation
+#: model:product.template,name:flexipharmacy.product_cancellation_product_template
+msgid "Cancellation Charges"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_cancellation_charges_product_id
+msgid "Cancellation Charges Product"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_cancellation_charges_type
+msgid "Cancellation Charges Type"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:2618
+#, python-format
+msgid "Cannot Find Cancellation Product"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:2643
+#: code:addons/flexipharmacy/static/src/js/popup.js:2657
+#, python-format
+msgid "Cannot Find Refund Product"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/login.xml:137
+#, python-format
+msgid "Caps"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_recharge_card_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_use_card_id
+msgid "Card"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:674
+#, python-format
+msgid "Card Amount.:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:599
+#, python-format
+msgid "Card Amount:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:183
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:247
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:511
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:549
+#, python-format
+msgid "Card Balance:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_card_charges
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Card Charges"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:158
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:196
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:228
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:495
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:581
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:662
+#, python-format
+msgid "Card Details"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:39
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_card_no
+#, python-format
+msgid "Card No"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:703
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:839
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:847
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:952
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1024
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1032
+#, python-format
+msgid "Card No."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:171
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:209
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:241
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:503
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:526
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:545
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:593
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:670
+#, python-format
+msgid "Card No.:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_gift_card_form
+msgid "Card Recharge"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:748
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_card_type
+#: model:ir.ui.menu,name:flexipharmacy.aspl_gift_card_type_details
+#, python-format
+msgid "Card Type"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_gift_card_form
+msgid "Card Use"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:40
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_card_value
+#, python-format
+msgid "Card Value"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1237
+#: code:addons/flexipharmacy/static/src/js/popup.js:1690
+#, python-format
+msgid "Card already exist."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1487
+#, python-format
+msgid "Card amount should be less than or equal to Order Due Amount."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:736
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1064
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1080
+#, python-format
+msgid "Card value"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_view_customer_form
+msgid "Cards"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:59
+#, python-format
+msgid "Cart Data"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_cash_method
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Cash Payment Method"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1197
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_session_current_cashier_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_wallet_management_cashier_id
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.view_wallet_search
+#, python-format
+msgid "Cashier"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:646
+#, python-format
+msgid "Cashiers"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_above_price_product_categ_ids
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_categories_categ_ids
+msgid "Categories"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:583
+#, python-format
+msgid "Category"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:612
+#, python-format
+msgid "Category Name"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:247
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1325
+#: model:ir.ui.view,arch_db:flexipharmacy.view_wallet_search
+#: selection:wallet.management,type:0
+#, python-format
+msgid "Change"
+msgstr "Cambio"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_change_stock_locations
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_change_stock_locations
+msgid "Change Stock Locations"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Change stock location from pos front-end"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:298
+#, python-format
+msgid "Change:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:240
+#, python-format
+msgid "Choose Stock Locations"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:30
+#: code:addons/flexipharmacy/static/src/xml/client.xml:31
+#, python-format
+msgid "City"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:153
+#, python-format
+msgid "Client:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:33
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:116
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:212
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:229
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:261
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:286
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:379
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:445
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:508
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:568
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:668
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:688
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1162
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_generate_product_ean13
+#, python-format
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1155
+#, python-format
+msgid "Close POS"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_sale_report_session_ids
+msgid "Closed Session(s)"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+msgid "Closing Total"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/voucher.xml:35
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_voucher_code
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_voucher_code
+#, python-format
+msgid "Code"
+msgstr "Código"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_line_line_note
+msgid "Comment"
+msgstr "Comentario"
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Company"
+msgstr "Compañía"
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.promotion_view_id
+msgid "Condition"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_cache_config_id
+msgid "Config"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_pos_loyalty_configuration
+msgid "Configure Point of Sale Loyalty"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1019
+#, python-format
+msgid "Confirm"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_msg_before_card_pay
+msgid "Confirm Message Before Card Payment"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:3193
+#, python-format
+msgid "Connectin Lost"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:71
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:157
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:166
+#, python-format
+msgid "Consumable"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1089
+#, python-format
+msgid "Continue"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:104
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:202
+#, python-format
+msgid "Cost Price"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:275
+#: code:addons/flexipharmacy/static/src/js/popup.js:420
+#, python-format
+msgid "Could Not Read Image"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:229
+#, python-format
+msgid "Could not switch to location."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:38
+#, python-format
+msgid "Country"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:13
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:783
+#, python-format
+msgid "Create"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:145
+#, python-format
+msgid "Create Draft Order"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:699
+#, python-format
+msgid "Create Gift Card"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:44
+#, python-format
+msgid "Create Product"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Create draft orders"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_recharge_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_type_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_use_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_above_price_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_categories_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_products_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_generate_product_ean13_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_get_discount_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_lock_data_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_redeem_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_message_terminal_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_cache_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_conditions_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_brand_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_amt_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_quick_cash_payment_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_wallet_management_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_sale_report_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_x_report_create_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_sales_details_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_recharge_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_type_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_use_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_above_price_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_categories_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_products_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_generate_product_ean13_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_get_discount_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_lock_data_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_redeem_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_message_terminal_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_cache_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_conditions_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_brand_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_amt_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_quick_cash_payment_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_wallet_management_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_sale_report_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_x_report_create_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_sales_details_create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_wallet_management_credit
+msgid "Credit"
+msgstr "Haber"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:49
+#: code:addons/flexipharmacy/static/src/xml/client.xml:117
+#, python-format
+msgid "Credit Limit"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:990
+#, python-format
+msgid "Current Card No."
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_current_session_report
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Current Session Report"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_custom_msg
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Custom Message"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:41
+#: code:addons/flexipharmacy/static/src/xml/order.xml:56
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:65
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:714
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:854
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:879
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1040
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1048
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_customer_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_recharge_customer_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_use_customer_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_customer_id
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_redeem__voucher_search
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_filter
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_recharge_filter
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_use_filter
+#: model:ir.ui.view,arch_db:flexipharmacy.view_loyalty_point_filter
+#: model:ir.ui.view,arch_db:flexipharmacy.view_redeem_loyalty_point_filter
+#: model:ir.ui.view,arch_db:flexipharmacy.view_wallet_search
+#, python-format
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_customer_email
+msgid "Customer Email"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1382
+#, python-format
+msgid "Customer is required"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1355
+#, python-format
+msgid "Customer is required for using Voucher."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:164
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:202
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:234
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:499
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:522
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:541
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:586
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:666
+#, python-format
+msgid "Customer:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_wallet_management_customer_id
+msgid "Customers"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:231
+#: code:addons/flexipharmacy/static/src/xml/order.xml:250
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:161
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_redeem_redeemed_date
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+#, python-format
+msgid "Date"
+msgstr "Fecha"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_wallet_management_debit
+msgid "Debit"
+msgstr "Debe"
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_filter
+msgid "Dective Filter"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_default_exp_date
+msgid "Default Card Expire Months"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Default Expire Month"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_default_return_valid_days
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Default Return Valid Days"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Define Keyboard Shortcuts in Company Settings"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_delete_msg_log
+msgid "Delete Message Logs"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_delivery_address
+msgid "Delivery Address"
+msgstr "Dirección de entrega"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_delivery_amount
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Delivery Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_delivery_charge_amt
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+#: model:product.product,name:flexipharmacy.delivery_charge
+#: model:product.template,name:flexipharmacy.delivery_charge_product_template
+msgid "Delivery Charge"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_delivery_charges
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_delivery_charges
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Delivery Charges"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:65
+#: code:addons/flexipharmacy/static/src/xml/order.xml:119
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1344
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_delivery_date
+#, python-format
+msgid "Delivery Date"
+msgstr "Fecha de entrega"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:180
+#, python-format
+msgid "Delivery Date:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:158
+#, python-format
+msgid "Delivery Details:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:519
+#, python-format
+msgid "Delivery Process"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_delivery_product_id
+msgid "Delivery Product"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_delivery_time
+msgid "Delivery Time"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1278
+#, python-format
+msgid "Delivery information required to validate order!"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Delivery product"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "Department Sales:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:680
+#, python-format
+msgid "Describe why you take money from the cash register:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_brand_description
+#: model:ir.ui.view,arch_db:flexipharmacy.view_product_brand_form
+msgid "Description"
+msgstr "Descripción"
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+msgid "Details:"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:pos.config,rounding_options:0
+msgid "Digits"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:525
+#, python-format
+msgid "Disc"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1399
+#, python-format
+msgid "Discard Gift Card"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1407
+#, python-format
+msgid "Discard Sale Order"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_categories_categ_discount
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_products_products_discount
+msgid "Discount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_above_price_discount
+#: model:ir.model.fields,field_description:flexipharmacy.field_get_discount_discount_dis_x
+msgid "Discount (%)"
+msgstr "Descuento (%)"
+
+#. module: flexipharmacy
+#: selection:pos.promotion,promotion_type:0
+msgid "Discount (%) on Total Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "Discount Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:pos.promotion,promotion_type:0
+msgid "Discount On Above Price"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:pos.promotion,promotion_type:0
+msgid "Discount On Combination Products"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:pos.promotion,promotion_type:0
+msgid "Discount On Multiple Categories"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_discount_price_ids
+msgid "Discount Price"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_amt_discount_price
+msgid "Discount Price (Fixed)"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_discount_product
+#: model:product.product,name:flexipharmacy.discount_product
+#: model:product.template,name:flexipharmacy.discount_product_product_template
+msgid "Discount Product"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.promotion_view_id
+msgid "Discount on Above Price"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.promotion_view_id
+msgid "Discount on Categories(%)"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.promotion_view_id
+msgid "Discount on Products(%)"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_discount_dis
+msgid "Discount(%)"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_recharge_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_type_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_use_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_above_price_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_categories_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_products_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_generate_product_ean13_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_get_discount_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_lock_data_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_redeem_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_message_terminal_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_cache_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_conditions_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_brand_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_amt_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_quick_cash_payment_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_report_flexipharmacy_pos_sales_report_pdf_template_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_report_flexipharmacy_sales_details_pdf_template_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_wallet_management_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_sale_report_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_x_report_display_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_sales_details_display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_show_qty
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_show_qty
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Display Stock"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_display_warehouse_qty
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_display_warehouse_qty
+msgid "Display Warehouse Quantity"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Display warehouse wise product quantity"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1878
+#, python-format
+msgid "Do you want to create order as quotation?"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1408
+#, python-format
+msgid "Do you want to discard the payment of POS  ?"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1400
+#, python-format
+msgid "Do you want to discard the payment of gift card ?"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:226
+#, python-format
+msgid "Done"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:19
+#, python-format
+msgid "Draft"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_draft_order
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_draft_order
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Draft Order"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:233
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:242
+#, python-format
+msgid "Due"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:798
+#, python-format
+msgid "Due Amount :"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1104
+#, python-format
+msgid "Due Amount:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1807
+#, python-format
+msgid "Due amount should be equal or above to "
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:200
+#, python-format
+msgid "Due:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_ereceipt
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "E-Receipt"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_partner_form_aspl
+msgid "Earned Loyalty"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_total_loyalty_earned_amount
+msgid "Earned Loyalty Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_total_loyalty_earned_points
+msgid "Earned Loyalty Points"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:415
+#: model:ir.ui.menu,name:flexipharmacy.menu_pos_loyalty_point
+#, python-format
+msgid "Earned Points"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:123
+#, python-format
+msgid "Earned Points:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:44
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:77
+#: code:addons/flexipharmacy/static/src/xml/order.xml:68
+#: code:addons/flexipharmacy/static/src/xml/order.xml:132
+#, python-format
+msgid "Edit"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:948
+#, python-format
+msgid "Edit Gift Card"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:55
+#: code:addons/flexipharmacy/static/src/xml/client.xml:99
+#, python-format
+msgid "Email"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+msgid "Email:"
+msgstr "Correo electrónico:"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1930
+#, python-format
+msgid "Empty Cart ?"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_card_charges
+msgid "Enable Card Charges"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Enable Confirmation Message"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_journal_id
+msgid "Enable Journal"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_order_reservation
+msgid "Enable Order Reservation"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_print_valid_days
+msgid "Enable Print Product Return Valid days"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_reorder
+msgid "Enable Reorder"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_wallet
+msgid "Enable Wallet"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Enable to use Gift Card in POS Interface."
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Enable to use Gift Voucher in POS interface."
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Enable to use Loyalty Points in Sale Interface."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:636
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_sales_details_end_date
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+#, python-format
+msgid "End Date"
+msgstr "Fecha final"
+
+#. module: flexipharmacy
+#: code:addons/flexipharmacy/wizard/wizard_sales_details.py:39
+#: code:addons/flexipharmacy/wizard/wizard_sales_details.py:44
+#, python-format
+msgid "End date should be greater than start date."
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+msgid "Ended at"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:815
+#, python-format
+msgid "Enter Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:199
+#, python-format
+msgid "Enter Email Address"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/login.xml:21
+#, python-format
+msgid "Enter PIN"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/login.xml:17
+#, python-format
+msgid "Enter Username"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1668
+#, python-format
+msgid "Enter gift card number."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:46
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:87
+#, python-format
+msgid "Exchange"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:986
+#, python-format
+msgid "Exchange Gift Card"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.server,name:flexipharmacy.expiration_coupon_ir_actions_server
+#: model:ir.cron,cron_name:flexipharmacy.expiration_coupon
+#: model:ir.cron,name:flexipharmacy.expiration_coupon
+msgid "Expiration Coupon Mail"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:43
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:725
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:958
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1056
+#: code:addons/flexipharmacy/static/src/xml/voucher.xml:38
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_expire_date
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_filter
+#, python-format
+msgid "Expire Date"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:177
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:507
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:605
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:678
+#, python-format
+msgid "Expire Date:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_expiry_date
+msgid "Expiry Date"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_account_journal_fees_amount
+msgid "Fees Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_account_journal_fees_type
+msgid "Fees type"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:660
+#, python-format
+msgid "Fill in this form if you put money in the cash register:"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:pos.promotion,promotion_type:0
+msgid "Fix Discount on Quantity"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:account.journal,fees_type:0
+#: selection:pos.config,cancellation_charges_type:0
+msgid "Fixed"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "FlexiPharmacy"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.res_users_form_view_inherit
+msgid "FlexiPharmacy"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_fresh_order
+msgid "Fresh Order"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_from_date
+msgid "From"
+msgstr "De"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:298
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:307
+#: model:product.product,name:flexipharmacy.wallet_product_1
+#: model:product.template,name:flexipharmacy.wallet_product_1_product_template
+#, python-format
+msgid "From Wallet"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:pos.order,order_status:0
+#: selection:pos.order.line,line_status:0
+msgid "Fully Cancelled"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_generate_product_ean13
+msgid "Generate"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_generate_product_ean13
+msgid "Generate Ean13"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: selection:account.journal,jr_use_for:0
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:104
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:797
+#: code:addons/flexipharmacy/static/src/xml/product.xml:369
+#: model:ir.actions.act_window,name:flexipharmacy.action_aspl_gift_card_form
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_gift_card
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_gift_card
+#: model:ir.ui.menu,name:flexipharmacy.aspl_gift_card_details
+#: model:ir.ui.menu,name:flexipharmacy.aspl_gift_card_main_menu
+#, python-format
+msgid "Gift Card"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_gift_card_product_id
+#: model:product.product,name:flexipharmacy.aspl_gift_card_product
+#: model:product.template,name:flexipharmacy.aspl_gift_card_product_product_template
+msgid "Gift Card Product"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_aspl_gift_card_recharged_tree
+msgid "Gift Card Recharge"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:369
+#, python-format
+msgid "Gift Card Screen"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_aspl_gift_card_type_form
+msgid "Gift Card Type"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_aspl_gift_card_used_tree
+msgid "Gift Card Use"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: selection:account.journal,jr_use_for:0
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:125
+#: code:addons/flexipharmacy/static/src/xml/product.xml:374
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_gift_voucher
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_gift_voucher
+#: model:ir.ui.menu,name:flexipharmacy.aspl_voucher_main_menu
+#, python-format
+msgid "Gift Voucher"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_gift_voucher_journal_id
+msgid "Gift Voucher Journal"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_redeem__voucher_search
+msgid "Gift Voucher Redeem"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:374
+#, python-format
+msgid "Gift Voucher Screen"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,help:flexipharmacy.field_pos_promotion_sequence
+msgid "Gives the sequence order when displaying a list of promotions."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1131
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1156
+#, python-format
+msgid "Goodbye,"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_security_settings_view_form
+msgid "Google API Key"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_google_api_key
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_config_settings_google_api_key
+msgid "Google API key"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:393
+#, python-format
+msgid "Graph"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:pos.conditions,operator:0
+#: selection:pos.promotion,operator:0
+msgid "Greater Than Or Equal"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:loyalty.config.settings,theme_selector:0
+#: selection:res.config.settings,theme_selector:0
+msgid "Green Orange"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+msgid "Gross Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "Gross Profit"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "Gross Total"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_filter
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_recharge_filter
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_use_filter
+msgid "Group"
+msgstr "Grupo"
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_redeem__voucher_search
+#: model:ir.ui.view,arch_db:flexipharmacy.view_loyalty_point_filter
+#: model:ir.ui.view,arch_db:flexipharmacy.view_redeem_loyalty_point_filter
+#: model:ir.ui.view,arch_db:flexipharmacy.view_wallet_search
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_recharge_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_type_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_use_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_above_price_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_categories_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_products_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_generate_product_ean13_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_get_discount_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_lock_data_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_redeem_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_message_terminal_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_cache_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_conditions_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_brand_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_amt_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_quick_cash_payment_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_report_flexipharmacy_pos_sales_report_pdf_template_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_report_flexipharmacy_sales_details_pdf_template_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_wallet_management_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_sale_report_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_x_report_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_sales_details_id
+msgid "ID"
+msgstr "ID (identificación)"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:479
+#, python-format
+msgid "Image"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:434
+#, python-format
+msgid "Include Bag Charges"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:648
+#, python-format
+msgid "Income By Journals"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:812
+#, python-format
+msgid "Insufficient Balance."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:77
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:172
+#, python-format
+msgid "Internal Category"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:481
+#, python-format
+msgid "Internal Reference"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:460
+#, python-format
+msgid "Invalid Username or Pin!!!"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_config_view_form_inherit_pos_cache
+msgid "Invalidate cache"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:111
+#: model:ir.ui.view,arch_db:flexipharmacy.promotion_view_id
+#, python-format
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_product_is_dummy_product
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_template_is_dummy_product
+msgid "Is Dummy Product"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:pos.conditions,operator:0
+#: selection:pos.promotion,operator:0
+msgid "Is Equal To"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_product_is_packaging
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_template_is_packaging
+msgid "Is Packaging"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_is_rounding
+msgid "Is Rounding"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_line_deliver
+msgid "Is deliver"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:42
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_issue_date
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_filter
+#, python-format
+msgid "Issue Date"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:249
+#: model:ir.model,name:flexipharmacy.model_account_journal
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+#, python-format
+msgid "Journal"
+msgstr "Diario"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:639
+#, python-format
+msgid "Journals"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:467
+#, python-format
+msgid "Kanban View"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_keyboard_shortcut
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_keyboard_shortcut
+msgid "Keyboard Shortcut"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_last_days
+msgid "Last Days"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_recharge___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_type___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_use___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_above_price___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_categories___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_products___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_generate_product_ean13___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_get_discount___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_lock_data___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_redeem___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_message_terminal___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_cache___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_conditions___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_brand___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_amt___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_quick_cash_payment___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_report_flexipharmacy_pos_sales_report_pdf_template___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_report_flexipharmacy_sales_details_pdf_template___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_wallet_management___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_sale_report___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_x_report___last_update
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_sales_details___last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_recharge_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_type_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_use_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_above_price_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_categories_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_products_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_generate_product_ean13_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_get_discount_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_lock_data_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_redeem_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_message_terminal_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_cache_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_conditions_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_brand_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_amt_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_quick_cash_payment_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_wallet_management_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_sale_report_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_x_report_write_uid
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_sales_details_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_recharge_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_type_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_use_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_above_price_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_categories_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_products_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_generate_product_ean13_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_get_discount_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_lock_data_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_redeem_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_message_terminal_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_cache_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_conditions_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_brand_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_amt_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_quick_cash_payment_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_wallet_management_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_sale_report_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_x_report_write_date
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_sales_details_write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_pos_order_line
+msgid "Lines of Point of Sale Orders"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:464
+#, python-format
+msgid "List View"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_partner_card_ids
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_card_ids
+msgid "List of card"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_partner_recharged_ids
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_recharged_ids
+msgid "List of recharged card"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_partner_used_ids
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_used_ids
+msgid "List of used card"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Load from Last days"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/models.js:298
+#, python-format
+msgid "Loading"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:292
+#, python-format
+msgid "Loading..."
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_line_location_id
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1130
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_session_is_lock_screen
+#, python-format
+msgid "Lock Screen"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_lock_data_lock_status
+msgid "Lock State"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:18
+#: code:addons/flexipharmacy/static/src/xml/product.xml:107
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_lock_terminal
+#, python-format
+msgid "Lock Terminals"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_session_locked
+msgid "Locked"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1198
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_session_locked_by_user_id
+#, python-format
+msgid "Locked By"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_lock_data_locked_by_user_id
+msgid "Locked By User"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_lock_data_locked_user_id
+msgid "Locked User"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_login_screen
+msgid "Login Screen"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_brand_logo
+msgid "Logo File"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1168
+#, python-format
+msgid "Logout"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:account.journal,jr_use_for:0
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_pos_loyalty
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_pos_loyalty
+#: model:ir.ui.menu,name:flexipharmacy.menu_point_config_loyalty
+#: model:ir.ui.view,arch_db:flexipharmacy.order_inherited_form_view
+#: model:ir.ui.view,arch_db:flexipharmacy.view_loyalty_config_settings_form_pos
+#: model:ir.ui.view,arch_db:flexipharmacy.view_partner_form_aspl
+msgid "Loyalty"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:976
+#, python-format
+msgid "Loyalty Amount exceeding Due Amount."
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_loyalty_journal_id
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Loyalty Journal"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_category_loyalty_point
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_product_loyalty_point
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_template_loyalty_point
+msgid "Loyalty Point"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1079
+#: code:addons/flexipharmacy/static/src/xml/product.xml:579
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:111
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:406
+#: model:ir.actions.act_window,name:flexipharmacy.action_aspl_loyalty_point
+#: model:ir.ui.view,arch_db:flexipharmacy.loyalty_point_form_view
+#: model:ir.ui.view,arch_db:flexipharmacy.loyalty_point_tree_view
+#, python-format
+msgid "Loyalty Points"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_partner_loyalty_points_earned
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_loyalty_points_earned
+msgid "Loyalty Points Earned"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_aspl_loyalty_point_redeem
+msgid "Loyalty Points Redeem"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,help:flexipharmacy.field_loyalty_config_settings_points_based_on
+msgid "Loyalty points calculation can be based on products or order"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:590
+#, python-format
+msgid "Make Payment:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_manual_lock
+msgid "Manual"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_manual_card_number
+msgid "Manual Card No."
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Manual Card Number"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Manual Lock"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:201
+#, python-format
+msgid "Map Could not load"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1486
+#, python-format
+msgid "Max Credit Exceeded"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_partner_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_redeem_partner_id
+msgid "Member"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/chrome.js:116
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1269
+#: model:ir.model.fields,field_description:flexipharmacy.field_message_terminal_message
+#, python-format
+msgid "Message"
+msgstr "Mensaje"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_message_terminal_sender_user
+msgid "Message By User"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_message_terminal_receiver_user
+msgid "Message To"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_message_terminal_message_session_id
+msgid "Message To Session"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:26
+#, python-format
+msgid "Messages"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:248
+#, python-format
+msgid "Method"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_account_journal_jr_use_for
+msgid "Method Use For"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/voucher.xml:37
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_minimum_purchase
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_minimum_purchase
+#, python-format
+msgid "Minimum Purchase"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_money_in_out
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_money_in_out
+msgid "Money In/Out"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_categories_multi_categ_dis_rel
+msgid "Multi Categ Dis Rel"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_multi_categ_discount_ids
+msgid "Multi Categ Discount"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:loyalty.config.settings,theme_selector:0
+#: selection:res.config.settings,theme_selector:0
+msgid "Multi Color"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_products_multi_product_dis_rel
+msgid "Multi Product Dis Rel"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_multi_products_discount_ids
+msgid "Multi Products Discount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_picking_ids
+msgid "Multiple Picking"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:95
+#: code:addons/flexipharmacy/static/src/xml/client.xml:104
+#: code:addons/flexipharmacy/static/src/xml/client.xml:113
+#: code:addons/flexipharmacy/static/src/xml/client.xml:122
+#: code:addons/flexipharmacy/static/src/xml/client.xml:133
+#: code:addons/flexipharmacy/static/src/xml/client.xml:142
+#: code:addons/flexipharmacy/static/src/xml/client.xml:152
+#: code:addons/flexipharmacy/static/src/xml/client.xml:163
+#: code:addons/flexipharmacy/static/src/xml/client.xml:174
+#: code:addons/flexipharmacy/static/src/xml/order.xml:158
+#: code:addons/flexipharmacy/static/src/xml/order.xml:167
+#: code:addons/flexipharmacy/static/src/xml/order.xml:176
+#: code:addons/flexipharmacy/static/src/xml/order.xml:185
+#: code:addons/flexipharmacy/static/src/xml/order.xml:196
+#: code:addons/flexipharmacy/static/src/xml/order.xml:205
+#: code:addons/flexipharmacy/static/src/xml/order.xml:214
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:268
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:289
+#, python-format
+msgid "N/A"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:18
+#: code:addons/flexipharmacy/static/src/xml/client.xml:219
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:59
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1196
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:346
+#: code:addons/flexipharmacy/static/src/xml/voucher.xml:34
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_type_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_voucher_name
+#, python-format
+msgid "Name"
+msgstr "Nombre"
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+msgid "Net Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "Net Gross Profit"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:312
+#, python-format
+msgid "Net Total:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:996
+#, python-format
+msgid "New Card No."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:964
+#, python-format
+msgid "New Expire Date"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:9
+#, python-format
+msgid "Next Order"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:527
+#, python-format
+msgid "No"
+msgstr ""
+
+#. module: flexipharmacy
+#: code:addons/flexipharmacy/models/point_of_sale.py:451
+#, python-format
+msgid "No cash statement found for this session. Unable to record returned cash."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:617
+#, python-format
+msgid "No item found"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/chrome.js:305
+#, python-format
+msgid "No order to print."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:624
+#, python-format
+msgid "No result found"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:40
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:91
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:188
+#, python-format
+msgid "None"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:225
+#, python-format
+msgid "Note Added..."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:151
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:437
+#, python-format
+msgid "Note:"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:pos.order.line,line_status:0
+msgid "Nothing"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_brand_products_count
+msgid "Number of products"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:648
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:665
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:685
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1492
+#, python-format
+msgid "OK"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:13
+#, python-format
+msgid "Ok"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_oldest_cache_time
+msgid "Oldest cache time"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_gen_ean13
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_config_settings_gen_ean13
+msgid "On Product create generate EAN13"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_sales_details_only_summary
+msgid "Only Summary"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:261
+#: code:addons/flexipharmacy/static/src/js/popup.js:406
+#, python-format
+msgid "Only web-compatible Image formats such as .png or .jpeg are supported"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:137
+#, python-format
+msgid "Open Cashbox"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+msgid "Opening Total"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Operations on Order"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_conditions_operator
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_operator
+msgid "Operator"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_account_journal_optional
+msgid "Optional"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:230
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_use_pos_order_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_order_name
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_pos_order_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_redeem_redeemed_pos_order_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_wallet_management_order_id
+#: selection:loyalty.config.settings,points_based_on:0
+#, python-format
+msgid "Order"
+msgstr "Pedir"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/models.js:1636
+#: code:addons/flexipharmacy/static/src/js/popup.js:578
+#: code:addons/flexipharmacy/static/src/js/screens.js:2207
+#: code:addons/flexipharmacy/static/src/js/screens.js:2208
+#, python-format
+msgid "Order "
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_order_amount
+msgid "Order Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:57
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_use_order_date
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_use_filter
+#, python-format
+msgid "Order Date"
+msgstr "Fecha de pedido"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:171
+#, python-format
+msgid "Order Date:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_loyalty_point_filter
+#: model:ir.ui.view,arch_db:flexipharmacy.view_redeem_loyalty_point_filter
+msgid "Order Month"
+msgstr "Mes del pedido"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_order_note
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_order_note
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Order Note"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:151
+#, python-format
+msgid "Order Note:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:152
+#, python-format
+msgid "Order Notes Here"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1877
+#, python-format
+msgid "Order Quotation"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:54
+#, python-format
+msgid "Order Ref"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:mail.template,subject:flexipharmacy.email_template_pos_ereceipt
+msgid "Order Reference ${object.name or ''}"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_line_line_status
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_order_status
+msgid "Order Status"
+msgstr "Estado del pedido"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1375
+#, python-format
+msgid "Order Total"
+msgstr ""
+
+#. module: flexipharmacy
+#: code:addons/flexipharmacy/models/point_of_sale.py:151
+#, python-format
+msgid "Order is not paid."
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Order/Product Return"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:mail.template,report_name:flexipharmacy.email_template_pos_ereceipt
+msgid "Order_${object.name or ''}"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:364
+#, python-format
+msgid "Orders"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:75
+#, python-format
+msgid "Original Price"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:376
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:460
+#, python-format
+msgid "Orignal Price:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1495
+#, python-format
+msgid "Override Payment"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_generate_product_ean13_overwrite_ean13
+msgid "Overwrite Ean13"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:wizard.pos.sale.report,report_type:0
+#: selection:wizard.pos.x.report,report_type:0
+#: selection:wizard.sales.details,report_type:0
+msgid "PDF"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:89
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:185
+#, python-format
+msgid "POS Category"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_pos_graph
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_pos_graph
+msgid "POS Graph"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "POS Graph allow filter data graph wise"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "POS Lock"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:364
+#, python-format
+msgid "POS Orders"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_company_form_ace
+msgid "POS Report Configuration"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_pos_lock
+msgid "POS Screen Lock"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "POS Wallet"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:15
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:772
+#, python-format
+msgid "Paid"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:product.product,name:flexipharmacy.product_paid
+#: model:product.template,name:flexipharmacy.product_paid_product_template
+msgid "Paid Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_prod_for_payment
+msgid "Paid Amount Product"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_partial_pay
+msgid "Partial Pay"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:pos.order,order_status:0
+#: selection:pos.order.line,line_status:0
+msgid "Partially Cancelled"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_product_brand_partner_id
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:63
+#: code:addons/flexipharmacy/static/src/xml/order.xml:105
+#: code:addons/flexipharmacy/static/src/xml/order.xml:234
+#, python-format
+msgid "Pay"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:584
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_company_payment_total
+#: model:ir.ui.view,arch_db:flexipharmacy.order_inherited_form_view
+#, python-format
+msgid "Payment"
+msgstr "Pagos"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_payment_buttons
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Payment Buttons"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:245
+#, python-format
+msgid "Payment Charge"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_payment_product_id
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Payment Charge Product"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:product.product,name:flexipharmacy.acespritech_retail_payment_charge_product
+#: model:product.template,name:flexipharmacy.acespritech_retail_payment_charge_product_product_template
+msgid "Payment Charges"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:231
+#, python-format
+msgid "Payment History"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:70
+#, python-format
+msgid "Payment of"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:pos.promotion,promotion_type:0
+msgid "Percent Discount on Quantity"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:account.journal,fees_type:0
+#: selection:pos.config,cancellation_charges_type:0
+msgid "Percentage"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:59
+#: code:addons/flexipharmacy/static/src/xml/client.xml:108
+#: code:addons/flexipharmacy/static/src/xml/client.xml:221
+#, python-format
+msgid "Phone"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:613
+#, python-format
+msgid "Pie Chart"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1073
+#: code:addons/flexipharmacy/static/src/js/popup.js:1133
+#, python-format
+msgid "Please check your internet connection."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:2621
+#, python-format
+msgid "Please configure Cancellation product from Point of Sale Configuration"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:941
+#, python-format
+msgid "Please configure Journal for Loyalty in Point of sale configuration."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:2646
+#: code:addons/flexipharmacy/static/src/js/popup.js:2660
+#, python-format
+msgid "Please configure Refund product from Point of Sale Configuration"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:2238
+#, python-format
+msgid "Please enable cash control from point of sale settings."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:2041
+#: code:addons/flexipharmacy/static/src/js/screens.js:2062
+#, python-format
+msgid "Please enable cash control from pos configuration."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1479
+#, python-format
+msgid "Please enter amount below card value."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1491
+#: code:addons/flexipharmacy/static/src/js/popup.js:1575
+#, python-format
+msgid "Please enter amount."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1275
+#: code:addons/flexipharmacy/static/src/js/popup.js:1314
+#, python-format
+msgid "Please enter card value."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1216
+#, python-format
+msgid "Please enter gift card number."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:405
+#: code:addons/flexipharmacy/static/src/js/screens.js:415
+#, python-format
+msgid "Please enter username and password"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1483
+#: code:addons/flexipharmacy/static/src/js/popup.js:1571
+#, python-format
+msgid "Please enter valid amount."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1496
+#, python-format
+msgid "Please enter valid barcode."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1619
+#, python-format
+msgid "Please enter valid card no."
+msgstr ""
+
+#. module: flexipharmacy
+#: code:addons/flexipharmacy/models/voucher.py:30
+#: code:addons/flexipharmacy/models/voucher.py:37
+#, python-format
+msgid "Please make a purchase aleast voucher amount"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1622
+#, python-format
+msgid "Please select date."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1319
+#, python-format
+msgid "Please select expire date."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1915
+#, python-format
+msgid "Please set Journal for gift voucher in POS Configuration"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_pos_category
+msgid "PoS Category"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.server,name:flexipharmacy.refresh_pos_cache_cron_ir_actions_server
+#: model:ir.cron,cron_name:flexipharmacy.refresh_pos_cache_cron
+#: model:ir.cron,name:flexipharmacy.refresh_pos_cache_cron
+msgid "PoS: refresh cache"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_points
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_redeem_redeemed_point
+msgid "Point"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:550
+#, python-format
+msgid "Point ="
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_point_calculation
+msgid "Point Calculation (%)"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_company_form_ace
+msgid "Point Of Sale"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:592
+#, python-format
+msgid "Point of Sale"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "Pedidos del TPV"
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_security_settings
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_security_settings_view_form
+msgid "Point of Sale Settings"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:558
+#, python-format
+msgid "Point to Amount:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_points
+#: selection:pos.config,rounding_options:0
+msgid "Points"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_points_based_on
+msgid "Points Based On"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_partner_remaining_loyalty_amount
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_remaining_loyalty_amount
+msgid "Points to Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_pos_condition_ids
+msgid "Pos Condition"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_company_pos_discount
+msgid "Pos Discount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_company_pos_next
+msgid "Pos Next order"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_company_pos_price
+msgid "Pos Price"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.promotion_view_action_id
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_above_price_pos_promotion_id
+#: model:ir.ui.view,arch_db:flexipharmacy.promotion_view_id
+msgid "Pos Promotion"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_conditions_pos_promotion_rel
+msgid "Pos Promotion Rel"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_company_pos_quantity
+msgid "Pos Quantity"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_amt_pos_quantity_amt_rel
+msgid "Pos Quantity Amt Rel"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_get_discount_pos_quantity_dis_rel
+msgid "Pos Quantity Dis Rel"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_pos_quantity_rel
+msgid "Pos Quantity Rel"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_pos_quntity_ids
+msgid "Pos Quntity"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_pos_quntity_amt_ids
+msgid "Pos Quntity Amt"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_pos_quntity_dis_ids
+msgid "Pos Quntity Dis"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_company_pos_search
+msgid "Pos Search"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:34
+#, python-format
+msgid "Postcode"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:23
+#, python-format
+msgid "Posted"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_partner_prefer_ereceipt
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_prefer_ereceipt
+msgid "Prefer E-Receipt"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:189
+#, python-format
+msgid "Prefer E-receipt"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:524
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_above_price_price
+#, python-format
+msgid "Price"
+msgstr "Precio"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:82
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:473
+#, python-format
+msgid "Pricelist:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_pos_sale_report_form_view
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_pos_x_report_form_view
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_sales_details_form_view
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:379
+#, python-format
+msgid "Print Last Receipit"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:379
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_print_last_receipt
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_print_last_receipt
+#, python-format
+msgid "Print Last Receipt"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_print_valid_days
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Print Product Return Valid days"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:126
+#, python-format
+msgid "Print Receipt"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Print last recepit in pos front-end"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:466
+#: code:addons/flexipharmacy/static/src/xml/product.xml:360
+#: model:ir.model,name:flexipharmacy.model_product_product
+#: model:ir.model.fields,field_description:flexipharmacy.field_get_discount_product_id_dis
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_product_id_amt
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_product_id_qty
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_product_id_x_y
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+#: selection:loyalty.config.settings,points_based_on:0
+#, python-format
+msgid "Product"
+msgstr "Producto"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_product_note
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_product_note
+msgid "Product / Line Note"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_open_single_product_brand
+#: model:ir.ui.view,arch_db:flexipharmacy.product_brand_search_form_view
+msgid "Product Brand"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_above_price_product_brand_ids
+#: model:ir.ui.menu,name:flexipharmacy.menu_product_brand
+msgid "Product Brands"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_cache_product_domain
+msgid "Product Domain"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_res_config_inherit_form
+msgid "Product EAN13 Generate"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_cache_product_fields
+msgid "Product Fields"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:480
+#, python-format
+msgid "Product Name"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Product Note"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/models.js:763
+#: code:addons/flexipharmacy/static/src/js/models.js:772
+#, python-format
+msgid "Product Out of Stock"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:272
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1279
+#: code:addons/flexipharmacy/static/src/xml/product.xml:140
+#, python-format
+msgid "Product Quantity"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:10
+#, python-format
+msgid "Product Sync"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_product_sync
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_product_sync
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Product Synchronization"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:484
+#, python-format
+msgid "Product saved successfully."
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_conditions_product_x_id
+msgid "Product(X)"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_conditions_product_y_id
+msgid "Product(Y)"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:460
+#: code:addons/flexipharmacy/static/src/xml/product.xml:360
+#: model:ir.model.fields,field_description:flexipharmacy.field_discount_multi_products_product_ids
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_parent_product_ids
+#: model:ir.ui.view,arch_db:flexipharmacy.view_product_brand_form
+#: model:ir.ui.view,arch_db:flexipharmacy.view_product_brand_kanban
+#, python-format
+msgid "Products"
+msgstr "Productos"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:2596
+#, python-format
+msgid "Products is not valid for reorder."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:649
+#, python-format
+msgid "Profit/Loss"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_pos_promotion
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_pos_promotion
+#: model:ir.ui.menu,name:flexipharmacy.pos_promotion_menu
+#: model:ir.ui.menu,name:flexipharmacy.pos_promotion_sub_menu
+msgid "Promotion"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_promotion_code
+msgid "Promotion Code"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:583
+#, python-format
+msgid "Promotion Discount:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_promotion_type
+msgid "Promotion Type"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_sale_report_proxy_ip
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_x_report_proxy_ip
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_sales_details_proxy_ip
+msgid "Proxy IP"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:659
+#: code:addons/flexipharmacy/static/src/xml/product.xml:160
+#, python-format
+msgid "Put Money In"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Put money in/ Take money out"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1478
+#, python-format
+msgid "QTY:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1285
+#: code:addons/flexipharmacy/static/src/xml/product.xml:526
+#, python-format
+msgid "Qty"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:277
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:468
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1284
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_amt_quantity_amt
+#: model:ir.model.fields,field_description:flexipharmacy.field_quantity_discount_quantity_dis
+#, python-format
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.promotion_view_id
+msgid "Quantity Discount (%)"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.promotion_view_id
+msgid "Quantity discount(Amt.)"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_conditions_quantity
+msgid "Quantity(X)"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_conditions_quantity_y
+msgid "Quantity(Y)"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_quick_cash_payment
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_quick_cash_payment
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Quick Cash Payment"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Quick Pay on payment screen."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:505
+#, python-format
+msgid "Re-Order"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:67
+#, python-format
+msgid "Receipt"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:55
+#, python-format
+msgid "Receipt Ref"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:162
+#, python-format
+msgid "Receipt:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:45
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:82
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:934
+#, python-format
+msgid "Recharge"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:921
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:927
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1072
+#, python-format
+msgid "Recharge Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_recharge_recharge_date
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_recharge_filter
+msgid "Recharge Date"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:834
+#, python-format
+msgid "Recharge Gift Card"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_recharge_line
+msgid "Recharge Line"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.menu,name:flexipharmacy.aspl_gift_card_recharged_details
+msgid "Recharged Card"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_view_customer_form
+msgid "Recharged Cards"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_record_per_page
+msgid "Record Per Page"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Records Per Page"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:565
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_voucher_ids
+#, python-format
+msgid "Redeem"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_redeem__voucher_search
+msgid "Redeem Date"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1103
+#, python-format
+msgid "Redeem Gift Voucher"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:142
+#, python-format
+msgid "Redeem Loyalty"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:538
+#, python-format
+msgid "Redeem Loyalty Points"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:554
+#, python-format
+msgid "Redeem Point:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.menu,name:flexipharmacy.aspl_redeem_details
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_voucher_form
+msgid "Redeem Voucher"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_aspl_redeem_form
+msgid "Redeem voucher"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_redeem_redeemed_amount_total
+msgid "Redeemed Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_total_loyalty_redeem_amount
+msgid "Redeemed Loyalty Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_total_loyalty_redeem_points
+msgid "Redeemed Loyalty Points"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:421
+#: model:ir.ui.menu,name:flexipharmacy.menu_pos_loyalty_point_redeem
+#, python-format
+msgid "Redeemed Points"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:131
+#, python-format
+msgid "Redeemed Points:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/voucher.xml:40
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redemption_customer
+#, python-format
+msgid "Redemption Customer"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/voucher.xml:39
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redemption_order
+#, python-format
+msgid "Redemption Order"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:product.product,name:flexipharmacy.refund_amount
+#: model:product.template,name:flexipharmacy.refund_amount_product_template
+msgid "Refund Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_refund_amount_product_id
+msgid "Refund Amount Product"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.server,name:flexipharmacy.regarding_balance_ir_actions_server
+#: model:ir.cron,cron_name:flexipharmacy.regarding_balance
+#: model:ir.cron,name:flexipharmacy.regarding_balance
+msgid "Regarding Balance"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:mail.template,subject:flexipharmacy.email_template_regarding_card_use
+msgid "Regarding Card Use"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:mail.template,subject:flexipharmacy.email_template_regarding_balance
+msgid "Regarding balance of your gift card"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:mail.template,subject:flexipharmacy.email_template_exchange_number
+msgid "Regarding change gift card number"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:mail.template,subject:flexipharmacy.email_template_for_coupon_expire_7
+msgid "Regarding expired your gift card"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+msgid "Register #"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:21
+#: code:addons/flexipharmacy/static/src/xml/order.xml:33
+#: code:addons/flexipharmacy/static/src/xml/voucher.xml:16
+#, python-format
+msgid "Reload"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_partner_remaining_amount
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_partner_remaining_wallet_amount
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_remaining_amount
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_remaining_wallet_amount
+msgid "Remaining Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:169
+#, python-format
+msgid "Remaining Credit"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_partner_remaining_credit_limit
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_remaining_credit_limit
+msgid "Remaining Credit Limit"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_partner_remaining_loyalty_points
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_remaining_loyalty_points
+msgid "Remaining Loyalty Points"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:347
+#, python-format
+msgid "Remaining Uses"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:69
+#: code:addons/flexipharmacy/static/src/xml/order.xml:139
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_reorder
+#, python-format
+msgid "Reorder"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "Report Date"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "Report Date time"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "Report Time"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_sale_report_report_type
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_x_report_report_type
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_sales_details_report_type
+msgid "Report Type"
+msgstr "Tipo de Informe"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:387
+#, python-format
+msgid "Reports"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Reprint, Edit, Reorder, Cancel the specific order"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:78
+#: model:stock.location,name:flexipharmacy.aspl_reserve_stock_location
+#, python-format
+msgid "Reserve"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_reserve_delivery_date
+msgid "Reserve Delivery Date"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_reserve_stock_location_id
+msgid "Reserve Stock Location"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:28
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_reserved
+#: model:ir.ui.view,arch_db:flexipharmacy.view_pos_order_filter_inherit
+#, python-format
+msgid "Reserved"
+msgstr "Reservado"
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Restrict Order"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_restrict_order
+msgid "Restrict Order When Out Of Stock"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Restrict Order when Out of Stock"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_prod_qty_limit
+msgid "Restrict When Product Qty Remains"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Restrict when Product quantity remains"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_wallet_search
+#: selection:wallet.management,type:0
+msgid "Return"
+msgstr "Devolver"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:325
+#, python-format
+msgid "Return Order"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_parent_return_order
+msgid "Return Order ID"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_pos_return
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_pos_return
+msgid "Return Order/Products"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_line_return_process
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_return_process
+msgid "Return Process"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_line_return_qty
+msgid "Return QTY"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_return_seq
+msgid "Return Sequence"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:323
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:479
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_category_return_valid_days
+#, python-format
+msgid "Return Valid Days"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "Returns"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: selection:account.journal,jr_use_for:0
+#: code:addons/flexipharmacy/models/point_of_sale.py:573
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:72
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_rounding
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+#, python-format
+msgid "Rounding"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Rounding Journal"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_rounding_option
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Rounding Option"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_rounding_options
+msgid "Rounding Options"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_rounding_journal_id
+msgid "Rounding Payment Method"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_rounding
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_rounding
+msgid "Rounding Total"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:308
+#, python-format
+msgid "Rounding:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:245
+#, python-format
+msgid "Rule Applied..."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:121
+#, python-format
+msgid "Sale Mode"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:100
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:197
+#: code:addons/flexipharmacy/static/src/xml/product.xml:482
+#, python-format
+msgid "Sale Price"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "Sales"
+msgstr "Ventas"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:647
+#, python-format
+msgid "Sales By Location"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.report,name:flexipharmacy.report_sales_details_pdf
+msgid "Sales Details"
+msgstr "Detalles de ventas"
+
+#. module: flexipharmacy
+#: model:ir.actions.report,name:flexipharmacy.report_sales_details_thermal
+msgid "Sales Details(Thermal)"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_user_id
+msgid "Sales Person"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_wizard_sales_details
+#: model:ir.ui.menu,name:flexipharmacy.menu_print_sales_details
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "Sales Summary"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_sales_details_user_ids
+msgid "Salespeople"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_sales_details_form_view
+msgid "Salesperson"
+msgstr "Comercial"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:113
+#, python-format
+msgid "Save"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:802
+#, python-format
+msgid "Scan Barcode"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1105
+#, python-format
+msgid "Scan Voucher Barcode"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:327
+#, python-format
+msgid "Scan barcode of Order"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:304
+#: code:addons/flexipharmacy/static/src/xml/product.xml:450
+#, python-format
+msgid "Search Brand"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:300
+#: code:addons/flexipharmacy/static/src/xml/product.xml:454
+#, python-format
+msgid "Search Category"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:25
+#, python-format
+msgid "Search Gift Card"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/voucher.xml:20
+#, python-format
+msgid "Search Gift Voucher"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_loyalty_point_filter
+msgid "Search Loyalty Points"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:205
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:24
+#, python-format
+msgid "Search Map"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:458
+#, python-format
+msgid "Search Products"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_redeem_loyalty_point_filter
+msgid "Search Redeem Loyalty Points"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_filter
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_recharge_filter
+#: model:ir.ui.view,arch_db:flexipharmacy.view_giftcard_use_filter
+msgid "Search giftcard"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:40
+#, python-format
+msgid "Search orders"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:442
+#, python-format
+msgid "Select"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:752
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:762
+#, python-format
+msgid "Select Card Type"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:298
+#, python-format
+msgid "Select Operation"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,help:flexipharmacy.field_product_product_product_brand_id
+#: model:ir.model.fields,help:flexipharmacy.field_product_template_product_brand_id
+msgid "Select a brand for this product"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,help:flexipharmacy.field_product_brand_partner_id
+msgid "Select a partner for this brand if any."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1408
+#, python-format
+msgid "Select all"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_ereceipt
+msgid "Send E-Receipt"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_partner_send_loyalty_mail
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_send_loyalty_mail
+msgid "Send Loyalty Mail"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_enable_pos_welcome_mail
+msgid "Send Welcome Mail"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Send receipt via mail to customer"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:658
+#, python-format
+msgid "Served by"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:93
+#, python-format
+msgid "Server Down..."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:72
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:160
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:167
+#, python-format
+msgid "Service"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:582
+#: model:ir.model.fields,field_description:flexipharmacy.field_lock_data_session_id
+#, python-format
+msgid "Session"
+msgstr "Sesión"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:593
+#, python-format
+msgid "Session ID"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_pos_x_report_session_ids
+msgid "Session(s)"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:30
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1350
+#, python-format
+msgid "Set"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.menu,name:flexipharmacy.menu_pos_global_loyalty_settings
+#: model:ir.ui.menu,name:flexipharmacy.point_of_sale_settings
+msgid "Settings"
+msgstr "Ajustes"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_account_journal_shortcut_key
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_open_pricelist_popup
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Shortcut Key"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_company_form_ace
+msgid "Shortcuts Key"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:189
+#, python-format
+msgid "Show Customers"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:186
+#, python-format
+msgid "Show History"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1333
+#, python-format
+msgid "Skip"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1837
+#, python-format
+msgid "Sorry, This operation not allow to add bag!"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1853
+#, python-format
+msgid "Sorry, This operation not allow to create draft order!"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1958
+#, python-format
+msgid "Sorry, This operation not allow to use delivery operation!"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:590
+#, python-format
+msgid "Sorry, You can not return unpaid/cancel order"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:635
+#: model:ir.model.fields,field_description:flexipharmacy.field_wizard_sales_details_start_date
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+#, python-format
+msgid "Start Date"
+msgstr "Fecha de inicio"
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+msgid "Start Time"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+msgid "Started at"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:209
+#, python-format
+msgid "Status:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:73
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:168
+#, python-format
+msgid "Stockable"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:163
+#, python-format
+msgid "Stockable Product"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:26
+#: code:addons/flexipharmacy/static/src/xml/client.xml:27
+#, python-format
+msgid "Street"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:258
+#, python-format
+msgid "Switch"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:679
+#: code:addons/flexipharmacy/static/src/xml/product.xml:163
+#, python-format
+msgid "Take Money Out"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:67
+#: code:addons/flexipharmacy/static/src/xml/client.xml:137
+#, python-format
+msgid "Tax ID"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_template
+msgid "Taxes"
+msgstr "Impuestos"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:591
+#, python-format
+msgid "Taxes:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:638
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+#, python-format
+msgid "Tel:"
+msgstr "Tel.:"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:243
+#, python-format
+msgid "Tendered"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1183
+#, python-format
+msgid "Terminals"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:276
+#: code:addons/flexipharmacy/static/src/js/popup.js:421
+#, python-format
+msgid "The provided file could not be read due to an unknown error"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_security_settings_view_form
+msgid "Theme"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_theme_selector
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_config_settings_theme_selector
+msgid "Theme Selector"
+msgstr ""
+
+#. module: flexipharmacy
+#: code:addons/flexipharmacy/models/point_of_sale.py:469
+#: code:addons/flexipharmacy/models/point_of_sale.py:1780
+#: code:addons/flexipharmacy/models/point_of_sale.py:1799
+#, python-format
+msgid "There is no cash register for this PoS Session"
+msgstr ""
+
+#. module: flexipharmacy
+#: selection:wizard.pos.sale.report,report_type:0
+#: selection:wizard.pos.x.report,report_type:0
+#: selection:wizard.sales.details,report_type:0
+msgid "Thermal"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_company_report_ip_address
+msgid "Thermal Printer Proxy IP"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:621
+#, python-format
+msgid "This Month"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:620
+#, python-format
+msgid "This Week"
+msgstr ""
+
+#. module: flexipharmacy
+#: sql_constraint:quick.cash.payment:0
+msgid "This amount already selected"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:product.product,description:flexipharmacy.refund_amount
+#: model:product.template,description:flexipharmacy.refund_amount_product_template
+msgid "This is a dummy product used as a refund amount product."
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,help:flexipharmacy.field_pos_config_prod_for_payment
+#: model:product.product,description:flexipharmacy.product_cancellation
+#: model:product.product,description:flexipharmacy.product_paid
+#: model:product.template,description:flexipharmacy.product_cancellation_product_template
+#: model:product.template,description:flexipharmacy.product_paid_product_template
+msgid "This is a dummy product used when a customer pays partially. This is a workaround to the fact that Odoo needs to have at least one product on the order to validate the transaction."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:2612
+#, python-format
+msgid "This order is done"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:2608
+#, python-format
+msgid "This order is paid"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,help:flexipharmacy.field_account_journal_jr_use_for
+msgid "This payment method reserve for particular feature, that accounting entry will manage based on assigned features."
+msgstr ""
+
+#. module: flexipharmacy
+#: code:addons/flexipharmacy/models/point_of_sale.py:675
+#: code:addons/flexipharmacy/models/point_of_sale.py:780
+#, python-format
+msgid "This transfer has been created from the point of sale session: <a href=# data-oe-model=pos.order data-oe-id=%d>%s</a>"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:167
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+#, python-format
+msgid "Time"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Time Interval"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_time_interval
+msgid "Time Interval (Minutes)"
+msgstr ""
+
+#. module: flexipharmacy
+#: code:addons/flexipharmacy/models/point_of_sale.py:30
+#, python-format
+msgid "Time Interval Not Valid"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Time interval calculate based on minute"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:132
+#, python-format
+msgid "Tip"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_to_date
+msgid "To"
+msgstr "Para"
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_config_settings_to_amount
+msgid "To Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:230
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:35
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:58
+#, python-format
+msgid "To Be Deliver..."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:619
+#, python-format
+msgid "Today"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:579
+#: code:addons/flexipharmacy/static/src/xml/product.xml:399
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_today_sale_report
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_today_sale_report
+#, python-format
+msgid "Today Sale Report"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:645
+#, python-format
+msgid "Top Category"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:643
+#, python-format
+msgid "Top Customers"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:644
+#, python-format
+msgid "Top Products"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:232
+#: code:addons/flexipharmacy/static/src/xml/order.xml:58
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:281
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:594
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:613
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:640
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1303
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.loyalty_point_tree_view
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+#: model:ir.ui.view,arch_db:flexipharmacy.sales_details_pdf_template
+#, python-format
+msgid "Total"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_loyalty_point_amount_total
+msgid "Total Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:215
+#, python-format
+msgid "Total Card Balance:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:530
+#, python-format
+msgid "Total Card Balances:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_total_discount
+msgid "Total Discount(%)"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:289
+#, python-format
+msgid "Total Discount:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_promotion_total_amount
+msgid "Total Invoice Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_partner_total_remaining_points
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_total_remaining_points
+msgid "Total Loyalty Points"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:427
+#, python-format
+msgid "Total Points"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:139
+#, python-format
+msgid "Total Points:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_pdf_template
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+msgid "Total Tax"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:147
+#, python-format
+msgid "Total loyalty Points"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:191
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:8
+#, python-format
+msgid "Total:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1068
+#: code:addons/flexipharmacy/static/src/js/popup.js:1128
+#, python-format
+msgid "Transaction successful."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:69
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:155
+#: model:ir.model.fields,field_description:flexipharmacy.field_wallet_management_type
+#, python-format
+msgid "Type"
+msgstr "Tipo"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1221
+#, python-format
+msgid "Unblock All"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:467
+#, python-format
+msgid "Unit Price"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:81
+#, python-format
+msgid "Unlock"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_order_unreserved
+msgid "Unreserved"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:260
+#: code:addons/flexipharmacy/static/src/js/popup.js:405
+#, python-format
+msgid "Unsupported File Format"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:972
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1351
+#, python-format
+msgid "Update"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:195
+#, python-format
+msgid "Update Email"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Use Shortcut To Open Pricelist Popup"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:118
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_wallet
+#, python-format
+msgid "Use Wallet"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Use promotion in pos front-end"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.menu,name:flexipharmacy.aspl_gift_card_used_details
+msgid "Used Card"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_view_customer_form
+msgid "Used Cards"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_used_date
+msgid "Used Date"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_used_line
+msgid "Used Line"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_recharge_user_id
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_redeem__voucher_search
+msgid "User"
+msgstr "Usuario"
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_res_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:641
+#, python-format
+msgid "VAT:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/payment.xml:83
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:376
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1461
+#, python-format
+msgid "Validate"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_validate_on_click
+msgid "Validate On Click"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_aspl_voucher_form
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_voucher_id
+#: model:ir.ui.menu,name:flexipharmacy.aspl_voucher_details
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_redeem__voucher_search
+msgid "Voucher"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_voucher_redeem_voucher_amount
+msgid "Voucher Amount"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:339
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:563
+#, python-format
+msgid "Voucher Information"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Voucher Journal"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1354
+#, python-format
+msgid "Voucher Used"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1910
+#, python-format
+msgid "Voucher barcode is invalid"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1884
+#, python-format
+msgid "Voucher limit has been expired for this order"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1812
+#, python-format
+msgid "Voucher not found or voucher has been expired"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:158
+#: model:ir.actions.act_window,name:flexipharmacy.action_wallet_acespritech
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_partner_wallet_lines
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_wallet_lines
+#: model:ir.ui.menu,name:flexipharmacy.menu_wallet_main
+#: model:ir.ui.menu,name:flexipharmacy.pos_wallet_side_menu
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_view_customer_form
+#, python-format
+msgid "Wallet"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.view_wallet_search
+msgid "Wallet Management"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_wallet_product
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Wallet Product"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:276
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1283
+#: model:ir.model,name:flexipharmacy.model_stock_warehouse
+#, python-format
+msgid "Warehouse"
+msgstr "Almacén"
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_report_pdf_document
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+msgid "Website:"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "Whole Order Cancellation or Product return"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:314
+#, python-format
+msgid "With Receipt"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:235
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:30
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:53
+#, python-format
+msgid "With a"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:307
+#, python-format
+msgid "Without Receipt"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_wizard_pos_x_report
+#: model:ir.actions.report,name:flexipharmacy.report_pos_sales_thermal_front
+#: model:ir.ui.menu,name:flexipharmacy.menu_print_x_report
+msgid "X Report"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.report,name:flexipharmacy.report_pos_sales_pdf_front
+msgid "X Report(pdf)"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.front_sales_thermal_report_template
+msgid "X-REPORT"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:396
+#: model:ir.actions.report,name:flexipharmacy.pos_x_report
+#: model:ir.model.fields,field_description:flexipharmacy.field_pos_config_x_report
+#: model:ir.model.fields,field_description:flexipharmacy.field_res_users_access_x_report
+#, python-format
+msgid "X-Report"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "X-Report allow print mid-day report"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/order.xml:37
+#: code:addons/flexipharmacy/static/src/xml/voucher.xml:13
+#, python-format
+msgid "YYYY-MM-DD"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:17
+#, python-format
+msgid "YYYY-MM-DD(Expire)"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/gift_card.xml:18
+#, python-format
+msgid "YYYY-MM-DD(Issue)"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:728
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:731
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:966
+#, python-format
+msgid "YYYY/MM/DD"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:524
+#, python-format
+msgid "Yes"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:579
+#, python-format
+msgid "You Earned"
+msgstr ""
+
+#. module: flexipharmacy
+#: sql_constraint:aspl.gift.voucher:0
+msgid "You can only add one time each Barcode."
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1949
+#, python-format
+msgid "You have no any location for switch"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1931
+#, python-format
+msgid "You will lose all items associated with the current order"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:409
+#, python-format
+msgid "Your Points"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/receipt.xml:115
+#, python-format
+msgid "Your Points:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:546
+#, python-format
+msgid "Your Total Points:"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1487
+#, python-format
+msgid "Your remaining credit limit is only"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:567
+#, python-format
+msgid "Your shopping cart is empty"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/popup.js:1856
+#: code:addons/flexipharmacy/static/src/js/popup.js:1880
+#: code:addons/flexipharmacy/static/src/js/popup.js:1905
+#, python-format
+msgid "Your voucher use's limit has been expired"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.act_window,name:flexipharmacy.action_wizard_pos_sale_report
+#: model:ir.actions.report,name:flexipharmacy.report_pos_sales
+#: model:ir.ui.menu,name:flexipharmacy.menu_print_pos_sale_report
+#: model:ir.ui.view,arch_db:flexipharmacy.pos_sales_report_template
+msgid "Z Report"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.actions.report,name:flexipharmacy.report_pos_sales_pdf
+msgid "Z Report(pdf)"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/client.xml:35
+#, python-format
+msgid "ZIP"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model.fields,field_description:flexipharmacy.field_aspl_gift_card_recharge_amount
+msgid "amount"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1489
+#, python-format
+msgid "and you are trying to credit"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_aspl_gift_card
+msgid "aspl.gift.card"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_aspl_gift_card_recharge
+msgid "aspl.gift.card.recharge"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_aspl_gift_card_type
+msgid "aspl.gift.card.type"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_aspl_gift_card_use
+msgid "aspl.gift.card.use"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_aspl_gift_voucher
+msgid "aspl.gift.voucher"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_aspl_gift_voucher_redeem
+msgid "aspl.gift.voucher.redeem"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:201
+#, python-format
+msgid "at"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/product.xml:237
+#, python-format
+msgid "discount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_discount_above_price
+msgid "discount.above.price"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_discount_multi_categories
+msgid "discount.multi.categories"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_discount_multi_products
+msgid "discount.multi.products"
+msgstr ""
+
+#. module: flexipharmacy
+#: code:addons/flexipharmacy/models/point_of_sale.py:450
+#, python-format
+msgid "error!"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1452
+#, python-format
+msgid "fixed"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_generate_product_ean13
+msgid "generate.product.ean13"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_get_discount
+msgid "get.discount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_pos_sale_report_form_view
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_pos_x_report_form_view
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_sales_details_form_view
+msgid "http://1.1.1.1:8069"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_lock_data
+msgid "lock.data"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_loyalty_config_settings
+msgid "loyalty.config.settings"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_loyalty_point
+msgid "loyalty.point"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_loyalty_point_redeem
+msgid "loyalty.point.redeem"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_message_terminal
+msgid "message.terminal"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_generate_product_ean13
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_pos_sale_report_form_view
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_pos_x_report_form_view
+#: model:ir.ui.view,arch_db:flexipharmacy.wizard_sales_details_form_view
+msgid "or"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/js/screens.js:1450
+#, python-format
+msgid "percentage"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_pos_cache
+msgid "pos.cache"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_pos_conditions
+msgid "pos.conditions"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_pos_config
+msgid "pos.config"
+msgstr "Configuración del TPV"
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_pos_promotion
+msgid "pos.promotion"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_pos_session
+msgid "pos.session"
+msgstr "Sesión TPV"
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_product_brand
+#: model:ir.ui.view,arch_db:flexipharmacy.view_product_brand_tree
+msgid "product.brand"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_quantity_discount
+msgid "quantity.discount"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_quantity_discount_amt
+msgid "quantity.discount.amt"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_quick_cash_payment
+msgid "quick.cash.payment"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_report_flexipharmacy_pos_sales_report_pdf_template
+msgid "report.flexipharmacy.pos_sales_report_pdf_template"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_report_flexipharmacy_sales_details_pdf_template
+msgid "report.flexipharmacy.sales_details_pdf_template"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_res_config_settings
+msgid "res.config.settings"
+msgstr ""
+
+#. module: flexipharmacy
+#: code:addons/flexipharmacy/models/point_of_sale.py:456
+#, python-format
+msgid "return"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.ui.view,arch_db:flexipharmacy.aspl_pos_config_view_form
+msgid "validate On Click"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_wallet_management
+msgid "wallet.management"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_wizard_pos_sale_report
+msgid "wizard.pos.sale.report"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_wizard_pos_x_report
+msgid "wizard.pos.x.report"
+msgstr ""
+
+#. module: flexipharmacy
+#: model:ir.model,name:flexipharmacy.model_wizard_sales_details
+msgid "wizard.sales.details"
+msgstr ""
+
+#. module: flexipharmacy
+#. openerp-web
+#: code:addons/flexipharmacy/static/src/xml/popup.xml:1346
+#, python-format
+msgid "yyyy-mm-dd"
+msgstr ""
+

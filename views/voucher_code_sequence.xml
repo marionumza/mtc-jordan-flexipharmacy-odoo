@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data>
+       <record id="voucher_sequence_1" model="ir.sequence">
+          <field name="name">aspl.gift.voucher</field>
+           <field name="code">aspl.gift.voucher</field>
+           <field name="prefix">1</field>
+           <field name="suffix">%(year)s</field>
+           <field name="padding">4</field>
+       </record>
+   </data>
+</odoo>

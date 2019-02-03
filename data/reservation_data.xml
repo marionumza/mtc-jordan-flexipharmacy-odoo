@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+        <record id="product_paid" model="product.product">
+            <field name="name">Paid Amount</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="is_dummy_product">True</field>
+            <field name="available_in_pos" eval="True"/>
+            <field name="list_price">0</field>
+            <field name="type">service</field>
+<!--             <field name="uom_id" ref="product.product_uom_unit"/> -->
+            <field name="description">This is a dummy product used when a customer pays partially. This is a workaround to the fact that Odoo needs to have at least one product on the order to validate the transaction.</field>
+            <field name="taxes_id"/>
+            <field name="supplier_taxes_id"/>
+        </record>
+
+        <record id="product_cancellation" model="product.product">
+            <field name="name">Cancellation Charges</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="available_in_pos" eval="True"/>
+            <field name="list_price">0</field>
+            <field name="type">service</field>
+            <field name="is_dummy_product">True</field>
+<!--             <field name="uom_id" ref="product.product_uom_unit"/> -->
+            <field name="description">This is a dummy product used when a customer pays partially. This is a workaround to the fact that Odoo needs to have at least one product on the order to validate the transaction.</field>
+            <field name="taxes_id"/>
+            <field name="supplier_taxes_id"/>
+        </record>
+
+        <record id="refund_amount" model="product.product">
+            <field name="name">Refund Amount</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="available_in_pos" eval="True"/>
+            <field name="list_price">0</field>
+            <field name="type">service</field>
+            <field name="is_dummy_product">True</field>
+<!--             <field name="uom_id" ref="product.product_uom_unit"/> -->
+            <field name="description">This is a dummy product used as a refund amount product.</field>
+            <field name="taxes_id"/>
+            <field name="supplier_taxes_id"/>
+        </record>
+
+        <record id="aspl_reserve_stock_location" model="stock.location">
+           <field name="name">Reserve</field>
+           <field name="usage">internal</field>
+       </record>
+
+    </data>
+</openerp>

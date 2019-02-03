@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:fdn=3:-->
+<odoo>
+
+        <record id="aspl_security_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div class="app_settings_block" data-string="Point of Sale" data-key="flexipharmacy">
+                        <div id="business_documents">
+                            <h2>Point of Sale Settings</h2>
+                            <div class="row mt16 o_settings_container">
+                                <div class="col-xs-12 col-md-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="google_api_key"/>
+                                        <div class="text-muted">
+                                            Google API Key
+                                        </div>
+                                        <div class="content-group">
+                                            <div class="mt16 row">
+                                                <label for="google_api_key" string="Google API Key" class="col-xs-3 col-md-3 o_light_label"/>
+                                                <field name="google_api_key" class="oe_inline" style="min-width: 65%;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label for="theme_selector"/>
+                                        <div class="text-muted">
+                                            Theme
+                                        </div>
+                                        <div class="content-group">
+                                            <div class="mt16 row">
+                                                <label for="theme_selector" string="Theme" class="col-xs-3 col-md-3 o_light_label"/>
+                                                <field name="theme_selector" class="oe_inline" style="min-width: 65%;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_security_settings" model="ir.actions.act_window">
+            <field name="name">Point of Sale Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_id" ref="aspl_security_settings_view_form"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'flexipharmacy'}</field>
+        </record>
+
+        <menuitem
+            id="point_of_sale_settings"
+            name="Settings"
+            parent="point_of_sale.menu_point_config_product"
+            sequence="-1"
+            action="action_security_settings"
+            groups="point_of_sale.group_pos_manager"/>
+
+        <record model="ir.ui.view" id="view_res_config_inherit_form">
+            <field name="name">sale config inherit form</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='sale_ebay']" position="after">
+                    <h2>Product EAN13 Generate</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="gen_ean13"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="gen_ean13"/>
+                                <div class="text-muted">
+                                    Allow Product EAN13 Barcode Generate
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

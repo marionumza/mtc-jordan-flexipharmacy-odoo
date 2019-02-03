@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="view_company_form_ace" model="ir.ui.view">
+            <field name="name">res.company.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <field name="report_header" position="after">
+                    <field name="shop_ids" widget="many2many_tags" options="{'no_create':True}"/>
+<!--                      	domain="[('company_id', '=', False)]"/> -->
+                </field>
+                <page position="after">
+                    <page name="point_of_sale" string="Point Of Sale">
+                        <separator string="Shortcuts Key" />
+                        <group col='4'>
+                            <field name="pos_price"/>
+                            <field name="pos_quantity"/>
+                            <field name="pos_discount"/>
+                        	<field name="pos_search"/>
+                            <field name="pos_next"/>
+                            <field name="payment_total"/>
+                        </group>
+                    </page>
+                    <page name="zreport" string="POS Report Configuration">
+                        <group>
+                            <field name="report_ip_address"/>
+                        </group>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+    </data>
+</openerp>

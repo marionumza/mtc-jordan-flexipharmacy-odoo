@@ -1,0 +1,2596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<!-- **** Popup related Code Here **** -->
+    <t t-extend="PackLotLinePopupWidget">
+        <t t-jquery="div.modal-dialog" t-operation="replace">
+            <t t-if="widget.pos.config.enable_pos_serial">
+                <div class="modal-dialog">
+		            <div class="popup popup-text"
+	style="height:645px;width: 900px;left: 415px;padding-left: 14px;">
+		                <p class="title"><t t-esc=" widget.options.title || '' " /></p>
+		                <t
+	t-if="widget.options.serials and widget.options.serials.length > 0">
+			                <table style="margin-top: 14px;margin-left: 88px;">
+			                  <td>
+	                                <input style="border-radius: 20px;"
+	class="popup-search" type="text" placeholder="Search Lot/Serial" />
+			                  </td>
+			                </table>
+			            </t>
+						<t t-if="widget.options.serials and widget.options.serials.length > 0">
+							<div
+	style="margin-top: 15px;float:left;height:430px;font-size:15px;overflow: auto;">
+                                <table style="width: 443px;" id="lot_list">
+                                    <thead>
+                                        <tr
+	style="border-bottom: 3px solid #555555;">
+                                           <th align="left">Serial</th>
+                                           <th align="center">Qty</th>
+                                           <th align="center"
+	colspan="2">Add Qty</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class='serial-list-contents'></tbody>
+                                </table>
+								<!--<div id="pagination" class="lot_page">
+				                     <div><button class="btn btn-danger" id="first"><i class="fa fa-angle-double-left fa-lg"></i></button></div>
+				                     <div><button class="btn btn-danger" id="previous"></button></div>
+				                     <div><span class="text" id="text"></span></div>
+				                     <div><button class="btn btn-danger" id="next"></button></div>
+				                     <div><button class="btn btn-danger" id="last"><i class="fa fa-angle-double-right fa-lg"></i></button></div>
+				                </div>-->
+							</div>
+						</t>
+		                <div class='packlot-lines' style="height:400px">
+		                    <t t-if="widget.options.pack_lot_lines">
+		                        <t t-set="focus_lot_line"
+	t-value="widget.focus_model || widget.options.pack_lot_lines.get_empty_model()" />
+		                        <t t-foreach='widget.options.pack_lot_lines.models'
+	t-as='lot_line'>
+		                            <input type="text" t-att-cid="lot_line.cid"
+	t-att-value="lot_line.get('lot_name')" t-att-autofocus="lot_line === focus_lot_line ? 'autofocus': undefined"
+	class="popup-input packlot-line-input" placeholder="Serial/Lot Number"
+	style="width: 70%;" />
+		                            <i
+	class="oe_link_icon remove-lot fa fa-trash-o" style="color: red;"></i>
+		                        </t>
+		                    </t>
+		                </div>
+		                <div class="footer">
+		                    <div class="button confirm">
+		                        Ok
+		                    </div>
+		                    <div class="button cancel">
+		                        Remove All
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+            </t>
+            <t t-if="!widget.pos.config.enable_pos_serial">
+                <div class="modal-dialog">
+                    <div class="popup popup-text">
+                        <p class="title"><t t-esc=" widget.options.title || '' " /></p>
+                        <div class='packlot-lines'>
+                            <t t-if="widget.options.pack_lot_lines">
+                                <t t-set="focus_lot_line"
+	t-value="widget.focus_model || widget.options.pack_lot_lines.get_empty_model()" />
+                                <t
+	t-foreach='widget.options.pack_lot_lines.models' t-as='lot_line'>
+                                    <input type="text" t-att-cid="lot_line.cid"
+	t-att-value="lot_line.get('lot_name')" t-att-autofocus="lot_line === focus_lot_line ? 'autofocus': undefined"
+	class="popup-input packlot-line-input" placeholder="Serial/Lot Number" />
+                                    <i
+	class="oe_link_icon remove-lot fa fa-trash-o"></i>
+                                </t>
+                            </t>
+                        </div>
+                        <div class="footer">
+                            <div class="button confirm">
+                                Ok
+                            </div>
+                            <div class="button cancel">
+                                Cancel
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="listLine">
+        <t t-if="serial.life_date">
+            <t
+	t-if="moment(serial.check_expire_alert).isAfter(serial.check_serial_life) || moment(serial.check_expire_alert).isSame(serial.check_serial_life)">
+		        <tr t-att-data="serial.name"
+	style="height: 30px;font-weight: normal;background: lightgray;" class="select-lot">
+			        <td align="left"><t t-esc="serial.name" /></td>
+			        <td><t t-esc="serial.remaining_qty" /></td>
+			        <td>
+			           <input
+	style="padding:0px;font-size: 16px;height: 30px;min-height: 0px;width: 48px;text-align: center"
+	t-att-id="serial.id" value="1" disabled="disabled" />
+			        </td>
+			        <td style="font-size: 30px;padding-left: 10px;">
+			          <i class="fa fa-info-circle" aria-hidden="true"
+	style="color: #6ec89b;"
+	t-att-title="'Product will expired on ' + moment(serial.life_date).format('YYYY-MM-DD')"></i>
+			        </td>
+		        </tr>
+		    </t>
+            <t
+	t-if="!(moment(serial.check_expire_alert).isAfter(serial.check_serial_life) || moment(serial.check_expire_alert).isSame(serial.check_serial_life))">
+		        <tr t-att-data="serial.name" style="height: 30px;font-weight: normal;"
+	class="select-lot">
+	                <td align="left"><t t-esc="serial.name" /></td>
+	                <td><t t-esc="serial.remaining_qty" /></td>
+	                <td>
+	                   <input
+	style="padding:0px;font-size: 16px;height: 30px;min-height: 0px;width: 48px;text-align: center"
+	t-att-id="serial.id" value="1" />
+	                </td>
+	                <td style="font-size: 30px;padding-left: 10px;">
+	                  <i style="cursor: pointer;color: #6EC89B;"
+	t-att-data="serial.name" class="fa fa-plus-square" aria-hidden="true"></i>
+	                </td>
+		        </tr>
+		    </t>
+	    </t>
+	    <t t-if="!serial.life_date">
+	        <tr t-att-data="serial.name" style="height: 30px;font-weight: normal;"
+	class="select-lot">
+                <td align="left"><t t-esc="serial.name" /></td>
+                <td><t t-esc="serial.remaining_qty" /></td>
+                <td>
+                   <input
+	style="padding:0px;font-size: 16px;height: 30px;min-height: 0px;width: 48px;text-align: center"
+	t-att-id="serial.id" value="1" />
+                </td>
+                <td style="font-size: 30px;padding-left: 10px;">
+                  <i style="cursor: pointer;color: #6EC89B;"
+	t-att-data="serial.name" class="fa fa-plus-square" aria-hidden="true"></i>
+                </td>
+            </tr>
+	    </t>
+    </t>
+
+<!-- Cash In Out Popup -->
+	<t t-name="CashOperationPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput cash_operation_popup">
+                <p class="title title_in_out"><t t-esc="widget.options.title" /></p>
+                <div
+	style="margin-right: 130px;font-size: 15px;margin-right: 105px;">
+                    <t t-esc="widget.options.msg" />
+                </div>
+                <div class='container'>
+                    <table>
+                        <tr>
+                            <td>Reason</td>
+                            <td>
+                                <input type='text' class='reason' />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Amount</td>
+                            <td>
+                                <input type='text' class='amount' />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        OK
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+<!--     Cash In Out Statement Popup -->
+	<t t-name="PrintCashInOutStatmentPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-print-statement" style="height: 301px;">
+                <div class='title cash_statement_title' style="height: 23px;">
+                    <p style="margin-top: 0px;">Print Cash In-Out Statement</p>
+                </div>
+                <div class="in-out-statment"
+	style="display: inline-table;margin: 0px 5px; text-align: left;">
+                    <table style="margin-top: 10px;">
+                        <tbody
+	style="padding: 4px 10px;font-size: 16px;font-weight: bold;
+                        float: left;">
+                            <tr>
+                                <td style="text-align: left;">Cashier</td>
+                                <td
+	style="text-align: right;float: right;
+                                    margin: 1px 0px;padding: 2px 2px;">
+                                    <select id="user-id"
+	style="height: 30px;width: 167px;margin-bottom: 15px;margin-left: 12px;    background: transparent;padding: 0px 10px;">
+                                        <option></option>
+                                        <t t-foreach="widget.pos.users"
+	t-as="user">
+                                            <option t-att-value="user.id">
+                                                <t t-esc="user.name" />
+                                            </option>
+                                        </t>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">Start Date</td>
+                                <td class="display-date start-date"
+	style="text-align: right; padding: 0px 10px;">
+                                    <input class="insert-date"
+	type="date" style="margin-bottom: 15px;height: 31px;font-size: 16px;">
+                                    </input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">End Date</td>
+                                <td
+	style="text-align: right;padding: 1px 10px;" class="end-date">
+                                    <input type="date"
+	style="height: 31px;font-size: 16px; padding: 0px 10px;" class="insert-date">
+                                    </input>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="button ok">
+                        Print
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+<!-- 	Alert popup -->
+	<t t-name="AlertPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-alert">
+                <p class="title"><t t-esc=" widget.options.title || 'Alert' " /></p>
+                <p class="body"><t t-esc=" widget.options.body || '' " /></p>
+                <div class="footer">
+                    <div class="button cancel">
+                        Ok
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="AddressMapPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput map-address-popup"
+	style="height: 580px;width: 700px;">
+                <div class="title">
+                    <input type="textbox" id="search_map_box_popup"
+	placeholder="Search Map" />
+                </div>
+                <div class="map_container_popup" style="margin-left: 20px;">
+                    <div id="map_view_popup"
+	style="height: 390px;width:650px;border: 2px solid;" />
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        Set
+                    </div>
+                    <div class="button cancel">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="CreateProductPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput show-product-popup"
+	style="height: 370px;width: 800px;">
+                <div class="title">
+                    Create Product
+                </div>
+                <div class="details-container">
+                        <div class="product-image">
+                            <img />
+                        </div>
+                        <div class="product-data" style="float:none;padding-left: 0px;">
+                            <div class="product-details-box clearfix"
+	style="font-size: 14px;">
+                                <div class="create-product-image">
+                                    <div
+	class="product-img main-product-image create-product-img">
+					                   <img class="product-img"
+	src="/flexipharmacy/static/src/img/no_image.png" />
+					                </div>
+					                <input type='file' class='product-image-uploader'></input>
+					                <div class="create-product-name">
+                                        <input class="detail product-name"
+	id="prod_name" name="name" placeholder="Name" style="display:block;" />
+                                    </div>
+                                </div>
+                                <div class="create-product-detail">
+	                                <div class="product-details-left">
+	                                    <div class="product-detail">
+	                                        <span class="label">Barcode</span>
+	                                        <input
+	class="detail product-barcode" name="barcode" placeholder="Barcode"
+	style="display:block;" />
+	                                    </div>
+	                                    <div class="product-detail">
+	                                        <span class="label">Type</span> 
+	                                        <select class="detail product-type"
+	name='type' style="display:block;">
+	                                            <option value="consu">Consumable</option>
+	                                            <option value="service">Service</option>
+	                                            <option value="product">Stockable</option>
+	                                        </select>
+	                                    </div>
+	                                    <div class="product-detail">
+	                                        <span class="label">Internal Category</span>
+	                                        <select
+	class='detail product-internal_cat needsclick' name='categ_id' style="display:block;">
+	                                            <t
+	t-foreach='widget.pos.product_categories' t-as='category'>
+	                                                <option
+	t-att-value='category.id'> 
+	                                                    <t
+	t-esc='category.complete_name' />
+	                                                </option>
+	                                            </t>
+	                                        </select>
+	                                    </div>
+	                                </div>
+	                                <div class="product-details-right">
+	                                    <div class="product-detail">
+	                                        <span class="label">POS Category</span>
+	                                        <select
+	class='detail product-category needsclick' name='pos_categ_id' style="display:block;">
+	                                            <option value=''>None</option>
+	                                            <t
+	t-foreach='widget.pos.db.get_all_categories()' t-as='category'>
+	                                                <option
+	t-att-value='category.id'> 
+	                                                    <t t-esc='category.name' />
+	                                                </option>
+	                                            </t>
+	                                        </select>
+	                                    </div>
+	                                    <div class="product-detail">
+	                                        <span class="label">Sale Price</span>
+	                                        <input
+	class="detail product-sale-price" name="list_price" type="sale_price"
+	style="display:block;" />
+	                                    </div>
+	                                    <div class="product-detail">
+	                                        <span class="label">Cost Price</span>
+	                                        <input class="detail cost-price"
+	name="standard_price" style="display:block;" />
+	                                    </div>
+	                                </div>
+	                            </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        Save
+                    </div>
+                    <div class="button cancel">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ShowProductPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput show-product-popup"
+	style="height: 336px;width: 800px;">
+                <div class="title">
+                    <div class="edit-product">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </div>
+                    <t t-if="widget and widget.product">
+                        <t t-esc="widget.product.display_name" />
+                    </t>
+                </div>
+                <div class="details-container">
+                    <t t-if="widget and widget.product">
+		                <!-- <div class="product-image">
+		                    <img t-att-src="widget.pos.chrome.screens.products.product_list_widget.get_product_image_url(widget.product)"/>
+		                </div> -->
+		                <div class="create-product-image">
+	                        <div
+	class="product-img main-product-image create-product-img">
+	                            <img class="product-img"
+	t-att-src="widget.pos.chrome.screens.products.product_list_widget.get_product_image_url(widget.product)" />
+	                        </div>
+	                        <input type='file'
+	class='edit-product-image-uploader'></input>
+                        </div>
+		                <div class="product-data">
+		                    <div class="product-details-box clearfix"
+	style="font-size: 14px;">
+		                        <div class="product-details-left">
+		                            <div class="product-detail">
+		                                <span class="label">Barcode</span>
+		                                <span class="label-value"><t
+	t-esc="widget.product.barcode or '-'" /></span>
+		                                <input class="detail product-barcode"
+	name="barcode" placeholder="Barcode" t-att-value="widget.product.barcode or ''" />
+		                            </div>
+		                            <div class="product-detail">
+		                                <span class="label">Type</span> 
+		                                <t t-if="widget.product.type == 'consu'">
+		                                    <span class="label-value">Consumable</span>
+		                                </t>
+		                                <t t-if="widget.product.type == 'service'">
+                                            <span class="label-value">Service</span>
+                                        </t>
+                                        <t
+	t-if="widget.product.type == 'product'">
+                                            <span class="label-value">Stockable Product</span>
+                                        </t>
+	                                    <select class="detail product-type"
+	name='type'>
+			                                <option value="consu"
+	t-att-selected="widget.product.type == 'consu' ? 'selected' : undefined">Consumable</option>
+			                                <option value="service"
+	t-att-selected="widget.product.type == 'service' ? 'selected' : undefined">Service</option>
+			                                <option value="product"
+	t-att-selected="widget.product.type == 'product' ? 'selected' : undefined">Stockable</option>
+			                            </select>
+		                            </div>
+		                            <div class="product-detail">
+                                        <span class="label">Internal Category</span>
+                                        <span class="label-value"><t
+	t-esc="widget.product.categ_id[1] or '-'" /></span>
+                                        <select
+	class='detail product-internal_cat needsclick' name='categ_id'>
+			                                <t t-foreach='widget.pos.product_categories'
+	t-as='category'>
+			                                    <option t-att-value='category.id'
+	t-att-selected="widget.product.pos_categ_id ? ((category.id === widget.product.categ_id[0]) ? true : undefined) : undefined"> 
+			                                        <t t-esc='category.complete_name' />
+			                                    </option>
+			                                </t>
+			                            </select>
+                                    </div>
+		                        </div>
+		                        <div class="product-details-right">
+		                            <div class="product-detail">
+		                                <span class="label">POS Category</span>
+		                                <span class="label-value"><t
+	t-esc="widget.product.pos_categ_id[1] or '-'" /></span>
+		                                <select
+	class='detail product-category needsclick' name='pos_categ_id'>
+		                                    <option value=''>None</option>
+			                                <t
+	t-foreach='widget.pos.db.get_all_categories()' t-as='category'>
+				                                <option t-att-value='category.id'
+	t-att-selected="widget.product.pos_categ_id ? ((category.id === widget.product.pos_categ_id[0]) ? true : undefined) : undefined"> 
+				                                    <t t-esc='category.name' />
+				                                </option>
+				                            </t>
+			                            </select>
+		                            </div>
+		                            <div class="product-detail">
+		                                <span class="label">Sale Price</span>
+		                                <span class="label-value"><t
+	t-esc="widget.format_currency(widget.product.list_price)" /></span>
+		                                <input class="detail product-sale-price"
+	name="list_price" t-att-value="widget.product.list_price" type="sale_price" />
+		                            </div>
+		                            <div class="product-detail">
+		                                <span class="label">Cost Price</span>
+		                                <span class="label-value"><t
+	t-esc="widget.format_currency(widget.product.standard_price)" /></span>
+		                                <input class="detail cost-price"
+	name="standard_price" t-att-value="widget.product.standard_price" />
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+	                </t>
+	            </div>
+	            <div class="footer">
+	                <div class="button cancel">
+	                    Close
+	                </div>
+	            </div>
+	        </div>
+        </div>
+    </t>
+
+    <t t-name="ProductNotePopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput">
+                <p class="title">Add Product Note</p>
+                <textarea id="textarea_note" rows="7" cols="30"></textarea>
+                <div class="footer">
+                    <div class="button confirm">
+                        Done
+                    </div>
+                    <div class="button cancel">
+                        Close 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ProductQtyPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput">
+                <p class="title">Product Quantity</p>
+                <div><t t-esc="widget.prod_info" /></div>
+	            <table style="width:100%;font-size: 16px;">
+		            <tr class="warehouse_css">
+		                <th style="text-align: left;padding-left: 15px;">Warehouse</th>
+		                <th style="text-align: right;padding-right: 15px;">Quantity</th>
+		            </tr>
+		            <t t-raw="widget.prod_info_data" />
+		            <tr class="warehouse_css">
+		                <th style="text-align: left;padding-left: 15px;">Total</th>
+		                <td style="text-align: right;padding-right: 15px;"><t t-esc="widget.total_qty" /></td>
+		            </tr>
+                </table>
+                <div class="footer">
+                    <div class="button cancel">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+	<!--     Return order -->
+    <t t-name="PosReturnOrderOption">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput pos_popup_background"
+	style="height:200px;">
+               <p class="title pos_popup_title_background">
+                    Select Operation
+                    <i class="fa fa-times close_btn" aria-hidden="true"
+	style="float:right; cursor:pointer;"></i>
+               </p>
+                <div id="pos_return_choice">
+                    <div style="width:50%" id="choice_without_receipt">
+                        <div class='return_btn' style="cursor:pointer;">
+                            <img
+	src="/flexipharmacy/static/src/img/icons/order_return_without_recipt.png"
+	id="missing_receipt_return" /><br />
+                            <span for="missing_receipt_return">Without Receipt</span>
+                        </div>
+                    </div>
+                    <div style="width:50%" id="choice_with_receipt">
+                        <div class='return_btn' style="cursor:pointer;"
+	align="center">
+                            <img
+	src="/flexipharmacy/static/src/img/icons/order_return_with_receipt.png"
+	id="with_receipt_return" /><br />
+                            <span for="with_receipt_return">With Receipt</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="PosReturnOrder">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput pos-return-popup"
+	style="width: 700px;height: 500px;">
+                <p class="title">Return Order</p>
+                <div class="content">
+                    <input type="text" id="return_order_number"
+	placeholder="Scan barcode of Order" />
+                </div>
+                <br />
+                 <div class="ac_product_list" style="max-height: 300px !important;">
+                    <t t-if='widget.lines'>
+                        <t t-foreach='widget.lines' t-as='line'>
+                            <t t-set="product"
+	t-value="widget.pos.db.get_product_by_id(line.product_id[0])" />
+                            <span class='product product_content'
+	t-att-data-product-id="product.id" t-att-data-line-id="line.id">
+                                <div class="product-img">
+                                    <img
+	t-att-src='widget.get_product_image_url(product.id)' />
+                                    <t t-if="!product.to_weight">
+                                        <span class="price-tag">
+                                            <t
+	t-esc="widget.format_currency(line.price_unit,'Product Price')" />
+                                        </span>
+                                    </t>
+                                    <t t-if="product.to_weight">
+                                        <span class="price-tag">
+                                            <t
+	t-esc="widget.format_currency(line.price_unit,'Product Price')+'/Kg'" />
+                                        </span>
+                                    </t>
+                                    <span class="item_remain_qty">
+                                        <t t-esc="line.return_qty" />
+                                    </span>
+                                </div>
+                                <div class="product-name">
+                                        <div class="qty_buttons">
+                                            <!-- return product qty -->
+                                            <div class="input-group oe_website_spinner return_product" style="margin: auto">
+                                                <span class="input-group-addon">
+                                                    <a t-attf-href="#" class="mb8 js_return_qty">
+                                                        <i class="fa fa-minus"></i>
+                                                    </a>
+                                                </span>
+                                                <input type="text"
+	class="js_quantity return_product_qty form-control" data-min="0"
+	t-att-data-max="line.return_qty" t-att-name="line.id" t-att-value="0"
+	t-att-data-total-qty="line.return_qty" />
+                                                <span class="input-group-addon">
+                                                    <a t-attf-href="#" class="mb8 float_left js_return_qty">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                </div>
+								<div class="item-return-disply-name">
+									<t t-esc="product.display_name" />
+								</div>
+                            </span>
+                        </t>
+                    </t>
+                 </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        Validate
+                    </div>
+                    <div class="button cancel">
+                        Close 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="BagSelectionPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup pos_popup_background">
+                <p class="title pos_popup_title_background">Bags</p>
+                <div class="ac_product_list" style="max-height: 200px;">
+                    <t t-foreach='widget.pos.db.get_product_by_category(0)'
+	t-as='product'>
+                        <t t-if="product.is_packaging">
+                        	<span class='product product_content'
+	t-att-data-product-id="product.id">
+                                <div class="product-img">
+                                    <img
+	t-att-src='widget.get_product_image_url(product.id)' />
+                                    <t t-if="!product.to_weight">
+                                        <span class="price-tag">
+                                            <t
+	t-esc="widget.format_currency(product.list_price,'Product Price')" />
+                                        </span>
+                                    </t>
+                                    <t t-if="product.to_weight">
+                                        <span class="price-tag">
+                                            <t
+	t-esc="widget.format_currency(product.list_price,'Product Price')+'/Kg'" />
+                                        </span>
+                                    </t>
+                                </div>
+                                <div class="product-name">
+                                        <div class="qty_buttons">
+                                            <div
+	class="input-group oe_website_spinner bag_product" style="margin: auto">
+                                                <span
+	class="input-group-addon">
+                                                    <a t-attf-href="#"
+	class="mb8 js_qty">
+                                                        <i
+	class="fa fa-minus"></i>
+                                                    </a>
+                                                </span>
+                                                <input type="text"
+	class="js_quantity form-control" data-max="2000" data-min="1" value="1"
+	t-att-id="product.id" t-att-prod-id="product.id" />
+                                                <span
+	class="input-group-addon">
+                                                    <a t-attf-href="#"
+	class="mb8 float_left js_qty">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <t t-esc="product.display_name" />
+                                </div>
+                            </span>
+                        </t>
+                    </t>
+                    <div id="total_container">
+                        <div id="sub_container">
+                            <span style="font-size:14px;">
+                                <input id="chk_bag_charges" type="checkbox"
+	style="width:5%;min-height:0%;margin-left: 22px;box-shadow: unset !important;" />
+                                <span style="margin-right: 54px;">Include Bag Charges</span> 
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer">
+                	<span id="bag_charges_total"
+	style="float: left; padding-left: 14px; padding-top: 17px;" />
+                    <div
+	class="button pos_aces_retail confirm pos_popup_footer_button">
+                        Select
+                    </div>
+                    <div
+	class="button press_cancel cancel pos_popup_footer_button">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ReorderProductPopupWidget">
+         <div class="modal-dialog">
+            <div class="popup popup-reorder-product"
+	style="height: auto !important;max-height: 370px;max-width: 580px;">
+               <div class="header">
+                   <div class="btn button cancel">
+                        <i class="fa fa-times"></i>
+                   </div>
+                    <p class="title">Products</p>
+                </div>
+                <div
+	style="max-height: 246px;height:auto;overflow: auto;padding-left: 10px;padding-right: 10px;">
+                    <table class="popup-product-list table"
+	style="border: 3px solid #e6e6e6;margin: 8px 0px;">
+                         <thead>
+                           <tr
+	style="height: 34px;background: #e6e6e6;padding: 0;">
+                               <th>Product</th>
+                               <th>Unit Price</th>
+                               <th>Quantity</th>
+                               <th></th>
+                           </tr>
+                       </thead>
+                       <tbody class="popup-product-list-contents">
+                           <t t-if="widget.order_lines">
+                               <t t-foreach="widget.order_lines"
+	t-as="line">
+                                   <t t-if="line.qty > 0">
+                                       <tr t-att-id="line.id" class="product_line"
+	style="background: none;">
+                                           <td style="width:50%;"><t
+	t-esc="line.product_id[1] or '-'" /></td>
+                                           <td style="width:20%;"><t
+	t-esc="widget.format_currency(line.price_unit) or widget.format_currency(0)" /></td>
+                                           <td style="width:20%;">
+                                               <span
+	class="input-group-addon">
+                                                   <a t-attf-href="#"
+	class="mb8 js_quantity-reorder">
+                                                       <i class="fa fa-minus"
+	style="font-size: 20px;"></i>
+                                                   </a>
+                                               </span>
+                                               <input type="text"
+	class="js_quantity return_product_qty form-control" data-min="0"
+	data-max="5000" t-att-name="line.id" t-att-value="line.qty"
+	t-att-data-total-qty="line.qty" style="width: 40% !important;" />
+                                               <span
+	class="input-group-addon">
+                                                   <a t-attf-href="#"
+	class="mb8 float_left js_quantity-reorder">
+                                                       <i class="fa fa-plus"
+	style="font-size: 20px;"></i>
+                                                   </a>
+                                               </span>
+                                           </td>
+                                           <td
+	style="width:10%;text-align: center;cursor: pointer;" class="remove_line">
+                                                <i class="fa fa-trash"
+	style="font-size: 20px;"></i>
+                                           </td>
+                                       </tr>
+                                   </t>
+                               </t>
+                           </t>
+                       </tbody>
+                    </table>
+                </div>
+                <div class="footer">
+                    <button class="button confirm" style="line-height:0px;">
+                         Re-Order
+                     </button>
+                     <div class="button cancel">
+                         Close
+                    </div>
+                </div>
+            </div>
+         </div>
+    </t>
+
+    <t t-name="ComformDeliveryPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput-delivery-conf-msg"
+	style="height: 250px;">
+                <p class="title pos_popup_title_background">Delivery Process</p>
+                <div id="container" style="padding: 40px;">
+                    Are You sure want to remove delivery process?
+                </div>
+                <div class="footer">
+                    <div class="button confirm pos_popup_footer_button">
+                        Yes
+                    </div>
+                    <div class="button cancel pos_popup_footer_button">
+                        No
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    
+    	<t t-name="RedeemLoyaltyPointsPopup">
+         <div class="modal-dialog">
+            <div class="popup popup-redeem-loyalty">
+            	<p class="title">Redeem Loyalty Points</p>
+            	<t
+	t-if="widget.pos.loyalty_config and widget.pos.get_order().get_client()">
+            		<div class="loyalty_info Redeem_Loyalty_css">
+		            	<table>
+							<colgroup>
+								<col width="50%" />
+							</colgroup>
+		            		<tr>
+		            			<td class="text_formate">Your Total Points: </td>
+		            			<td><t
+	t-esc="widget.pos.get_order().get_client().remaining_loyalty_points.toFixed(2) - widget.pos.get_order().get_loyalty_redeemed_point()" /></td>
+		            		</tr>
+		            		<tr>
+		            			<td class="text_formate"> <t t-esc="widget.pos.loyalty_config.points" /> Point = </td>
+		            			<td><t
+	t-esc="widget.format_currency(widget.pos.loyalty_config.to_amount)" /></td>
+		            		</tr>
+		            		<tr>
+		            			<td class="text_formate">Redeem Point: </td>
+		            			<td><input type="text" class="redeem_loyalty_input" /></td>
+		            		</tr>
+		            		<tr>
+		            			<td class="text_formate">Point to Amount: </td>
+		            			<td><span class="point_to_amount"></span></td>
+		            		</tr>
+		            	</table>
+	            	</div>
+            	</t>
+            	<div class="footer">
+            		<div class="button confirm">
+                        Redeem
+                    </div>
+                    <div class="button cancel">
+                        Close
+                    </div>
+                </div>
+            </div>
+    	 </div>
+    </t>
+
+    <t t-name="TodayPosReportPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput pos-today-sale"
+	style="width: 700px;height: 460px;">
+                <p class="title pos_popup_title_background">Today Sale Report</p>
+                <div id="tabs-container">
+                    <ul class="tabs-menu">
+                        <li class="current"><a href="#tab-1">Session</a></li>
+                        <li><a href="#tab-2">Category</a></li>
+                        <li><a href="#tab-3">Payment</a></li>
+                    </ul>
+                </div>
+                <div class='tab'>
+                    <div id='tab-1' class='tab-content'>
+                        <div style="width:100%; height:265px; overflow:auto;">
+                            <table class="today-report" border='1'
+	style='width: 100%;'>
+                                <tr class="header">
+                                    <th>Point of Sale</th>
+                                    <th>Session ID</th>
+                                    <th>Total</th>
+                                </tr>
+                                <t t-if="widget.session_total">
+                                    <t t-foreach="widget.session_total"
+	t-as="st">
+                                        <tr>
+                                            <td
+	style='font-size: 14px;padding: 8px;'><t t-esc='st[0]' /></td>
+                                            <td
+	style='font-size: 14px;padding: 8px;'><t t-esc='st[1]' /></td>
+                                            <td
+	style='font-size: 14px;padding: 8px;'><t t-esc='widget.format_currency(st[2])' /></td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </table>
+                        </div>
+                    </div>
+                    <div id='tab-2' class='tab-content'>
+                        <div style="width:100%; height:265px; overflow:auto;">
+                            <table class="today-report" border='1'
+	style='width: 100%;'>
+                                <tr class="header">
+                                    <th>Category Name</th>
+                                    <th>Total</th>
+                                </tr>
+                                <t t-if="widget.all_cat">
+                                     <t t-foreach="widget.all_cat"
+	t-as="cat">
+                                        <tr>
+                                            <td
+	style='font-size:14px;padding:8px;background-color #f5f5f5' colspan='2'>
+                                                <t t-if="cat[0]">
+                                                    <t
+	t-esc='cat[0].session_name' />
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <t t-foreach="cat" t-as="c">
+                                            <tr>
+                                                <td
+	style='font-size: 14px;padding: 8px;'><t t-esc='c.cate_name' /></td>
+                                                <td
+	style='font-size: 14px;padding: 8px;'><t t-esc='widget.format_currency(c.cate_total)' /></td>
+                                            </tr>
+                                        </t>
+                                     </t>
+                                 </t>
+                            </table>
+                        </div>
+                    </div>
+                    <div id='tab-3' class='tab-content'>
+                        <div style="width:100%; height:265px; overflow:auto;">
+                            <table class="today-report" border='1'
+	style='width: 100%;'>
+                                <tr class="header">
+                                    <th>Journals</th>
+                                    <th>Total</th>
+                                </tr>
+                                <t t-raw="widget.str_payment" />
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button confirm pos_popup_footer_button">
+                        OK
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="TakeMoneyOutPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput take-money-out">
+                <p class="title title_in_out">Take Money Out</p>
+                <div
+	style="margin-right: 130px;font-size: 15px;margin-right: 30px;">
+                    Describe why you take money from the cash register:
+                </div>
+                <t t-raw="widget.msg_show_take_money_out" />
+                <div class="footer">
+                    <div class="button confirm">
+                        OK
+                    </div>
+                    <div class="button cancel">
+                        Close 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="CreateCardPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput gift_card create_gift_card">
+                <p class="title">Create Gift Card</p>
+                <div>
+                    <table border="0" align="center" id="table1">
+                        <tr>
+                            <td>Card No. </td>
+                            <td>
+                                <t
+	t-if="widget.panding_card and widget.panding_card.giftcard_card_no">
+                                    <input type="text" id="card_no"
+	maxlength="10" t-att-value="widget.panding_card.giftcard_card_no" />
+                                </t>
+                                <t
+	t-if="!widget.panding_card || !widget.panding_card.giftcard_card_no">
+                                    <input type="text" id="card_no"
+	maxlength="10" />
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Customer </td>
+                            <td>
+                                <t
+	t-if="widget.panding_card and widget.panding_card.giftcard_customer_name">
+                                    <input type="text" id="select_customer"
+	t-att-value="widget.panding_card.giftcard_customer_name" />
+                                </t>
+                                <t
+	t-if="!widget.panding_card || !widget.panding_card.giftcard_customer_name">
+                                    <input type="text" id="select_customer" />
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Expire Date </td>
+                            <td>
+                                <t
+	t-if="widget.panding_card and widget.panding_card.giftcard_expire_date">
+                                    <input type="text"
+	id="text_expire_date" class="datetime" placeholder="YYYY/MM/DD"
+	t-att-value="widget.panding_card.giftcard_expire_date" />
+                                </t>
+                                <t
+	t-if="!widget.panding_card || !widget.panding_card.giftcard_expire_date">
+                                    <input type="text"
+	id="text_expire_date" class="datetime" placeholder="YYYY/MM/DD" />
+                                </t>
+                            </td>
+                        </tr>
+                        <tr id="amount_row">
+                            <td>Card value </td>
+                            <td>
+                                <t
+	t-if="widget.panding_card and widget.panding_card.giftcard_amount">
+                                    <input type="text" id="text_amount"
+	class="text_amount" t-att-value="widget.panding_card.giftcard_amount" />
+                                </t>
+                                <t
+	t-if="!widget.panding_card || !widget.panding_card.giftcard_amount">
+                                    <input type="text" id="text_amount"
+	class="text_amount" />
+                                </t>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Card Type </td>
+                            <td>
+                                <t
+	t-if="widget.panding_card and widget.panding_card.card_type">
+                                    <select id='select_card_type'>
+                                        <option value="">Select Card Type </option>
+                                        <t t-foreach="widget.pos.card_type"
+	t-as="card_type">
+                                            <option t-att-value='card_type.id'
+	t-att-selected="widget.panding_card.card_type ? ((card_type.id == widget.panding_card.card_type) ? true : undefined) : undefined"> 
+                                                <t t-esc='card_type.name' />
+                                            </option>
+                                        </t>
+                                    </select>
+                                </t>
+                                <t
+	t-if="!widget.panding_card || !widget.panding_card.card_type">
+                                    <select id='select_card_type'>
+                                        <option value="">Select Card Type </option>
+                                        <t t-foreach="widget.pos.card_type"
+	t-as="card_type">
+                                            <option t-att-value="card_type.id"><t
+	t-esc="card_type.name" /></option>
+                                        </t>
+                                    </select>
+                                </t>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Paid </td>
+                            <td>
+                                <label class="switch">
+								  <input type="checkbox" id="checkbox_paid" class="checkbox_paid" />
+								  <span class="slider round"></span>
+								</label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="button confirm commonbutton">
+                        Create
+                    </div>
+                    <div class="button cancel commonbutton">
+                        Cancel 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="RedeemCardPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput gift_card redeem_gift_card" style="height:354px;">
+            	<div class="gift_card_css">
+	                <p class="title">Gift Card</p>
+	                <span class="due_amount_gift_card">Due Amount : <t
+		t-esc="widget.format_currency(widget.pos.get_order().get_due())" /></span>
+	                <div class="gift_card_due_amount">
+	                    <table border="0" id="table_barcode">
+	                        <tr>
+	                            <td colspan="2"><input type="text"
+		id="text_gift_card_no" placeholder="Scan Barcode" /></td>
+	                        </tr>
+	                        <tr>
+	                            <td colspan="2"
+		> <label id="lbl_set_customer" /> </td>
+	                        </tr>
+	                        <tr>
+	                            <td colspan="2"
+		> <label id="lbl_card_no" /> </td>
+	                        </tr>
+	                        <tr id="in_balance" style="display:none">
+	                            <td></td>
+	                            <td> <label style="color:red">Insufficient Balance.</label> </td>
+	                        </tr>
+	                        <tr id="redeem_amount_row">
+	                            <td colspan="2"><input type="text"
+		id="text_redeem_amount" placeholder="Enter Amount" /></td>
+	                        </tr>
+	                    </table>
+	                </div>
+	                <div class="footer">
+	                    <div class="button confirm commonbutton">
+	                        Apply
+	                    </div>
+	                    <div class="button cancel commonbutton">
+	                        Cancel
+	                    </div>
+	                </div>
+            </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="RechargeCardPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput gift_card recharge_gift_card">
+                <p class="title"> Recharge Gift Card</p>
+                <div>
+                    <table border="0" align="center" id="table_barcode">
+                        <t
+	t-if="widget.pending_card and widget.pending_card.recharge_card_no">
+                            <tr>
+                                <td>Card No. </td>
+                                <td>
+                                    <t
+	t-esc="widget.pending_card.recharge_card_no" />
+                                </td>
+                            </tr>
+                        </t>
+                        <t
+	t-if="!widget.pending_card or !widget.pending_card.recharge_card_no">
+                            <tr>
+                                <td>Card No. </td>
+                                <td>
+                                    <t t-esc="widget.card_no" />
+                                </td>
+                            </tr>
+                        </t>
+                        <t
+	t-if="widget.pending_card and widget.pending_card.card_customer_id">
+                            <td>Customer </td>
+                            <td>
+                                <!-- <select id='set_customers' disabled='true'>
+                                    <t t-foreach="widget.pos.partners" t-as="partner">
+                                        <t t-if="widget.pending_card.card_customer_id">
+                                            <t t-if="widget.pending_card.card_customer_id ==  partner.id">
+                                                <option selected="selected" t-att-value="partner.id"><t t-esc="partner.name" /></option>
+                                            </t>
+                                            <t t-if="widget.pending_card.card_customer_id !=  partner.id">
+                                                <option t-att-value="partner.id"><t t-esc="partner.name" /></option>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </select> -->
+                                <t t-foreach="widget.pos.partners"
+	t-as="partner">
+                                    <t
+	t-if="widget.pending_card.card_customer_id">
+                                        <t
+	t-if="widget.pending_card.card_customer_id ==  partner.id">
+                                            <t t-esc="partner.name" />
+                                        </t>
+                                    </t>
+                                </t>
+                            </td>
+                        </t>
+                        <t
+	t-if="!widget.pending_card or !widget.pending_card.card_customer_id">
+                            <tr>
+                                <td>Customer </td>
+                                <td>
+                                    <!-- <select id='set_customers' disabled='true'>
+                                        <t t-foreach="widget.pos.partners" t-as="partner">
+                                            <t t-if="widget.customer_id">
+                                                <t t-if="widget.customer_id[0] ==  partner.id">
+                                                    <option selected="selected" t-att-value="partner.id"><t t-esc="partner.name" /></option>
+                                                </t>
+                                                <t t-if="widget.customer_id[0] !=  partner.id">
+                                                    <option t-att-value="partner.id"><t t-esc="partner.name" /></option>
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </select> -->
+                                    <t t-foreach="widget.pos.partners"
+	t-as="partner">
+                                        <t t-if="widget.customer_id">
+                                            <t
+	t-if="widget.customer_id[0] ==  partner.id">
+                                                <t t-esc="partner.name" />
+                                            </t>
+                                        </t>
+                                    </t>
+                                </td>
+                            </tr>
+                        </t>
+                        <t
+	t-if="widget.pending_card and widget.pending_card.total_card_amount and widget.pending_card.recharge_card_amount">
+                            <tr>
+                                <td>Amount </td>
+                                <td>
+                                    <t
+	t-esc="widget.format_currency(widget.pending_card.total_card_amount - widget.pending_card.recharge_card_amount)" />
+                                </td>
+                            </tr>
+                        </t>
+                        <t
+	t-if="!widget.pending_card or !widget.pending_card.total_card_amount or !widget.pending_card.recharge_card_amount">
+                            <tr>
+                                <td>Amount </td>
+                                <td>
+                                    <t
+	t-esc="widget.format_currency(widget.card_value)" />
+                                </td>
+                            </tr>
+                        </t>
+                        <t
+	t-if="widget.pending_card and widget.pending_card.recharge_card_amount">
+                            <tr id="recharge_amount_row">
+                                <td>Recharge Amount </td>
+                                <td><input type="text"
+	id="text_recharge_amount" t-att-value="widget.pending_card.recharge_card_amount" /></td>
+                            </tr>
+                        </t>
+                        <t
+	t-if="!widget.pending_card or !widget.pending_card.recharge_card_amount">
+                            <tr id="recharge_amount_row">
+                                <td>Recharge Amount </td>
+                                <td><input type="text"
+	id="text_recharge_amount" /></td>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="button confirm commonbutton">
+                        Recharge
+                    </div>
+                    <div class="button cancel commonbutton">
+                        Cancel 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="EditCardPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput gift_card edit_gift_card">
+                <p class="title"> Edit Gift Card</p>
+                <div>
+                    <table border="0" align="center" id="table_barcode">
+                        <tr>
+                            <td>Card No. </td>
+                            <td>
+                                <t t-esc="widget.card_no" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Expire Date </td>
+                            <td>
+                                <t t-esc="widget.expire_date" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>New Expire Date </td>
+                            <td>
+                                <input type="text" id="new_expire_date"
+	class="date" placeholder="YYYY/MM/DD" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="button confirm commonbutton">
+                        Update
+                    </div>
+                    <div class="button cancel commonbutton">
+                        Cancel 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ExchangeCardPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput gift_card exchange_gift_card">
+                <p class="title"> Exchange Gift Card</p>
+                <div>
+                    <table border="0" align="center" id="table_barcode">
+                        <tr>
+                            <td>Current Card No. </td>
+                            <td>
+                                <t t-esc="widget.card_no" />
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>New Card No. </td>
+                            <td>
+                                <input type="text" id="new_card_no"
+	maxlength="10" style="width: 70% !important;" />
+<!--                                 <label id="new_card_no" for="new_card"/> -->
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="button confirm commonbutton">
+                        Apply
+                    </div>
+                    <div class="button cancel commonbutton">
+                        Cancel 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ConfirmationCardPayment">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput gift_card exchange_gift_card"
+	style="height:400px !important">
+                <p class="title">Confirm</p>
+                <div>
+                    <table border="0" align="center" id="table1">
+                        <t
+	t-if="widget.recharge_card and widget.recharge_card.recharge_card_no">
+                           <tr>
+                                <td>Card No. </td>
+                                <td>
+                                    <label id="confirm_card_no"><t
+	t-esc="widget.recharge_card.recharge_card_no" /></label>
+                                </td>
+                            </tr>
+                        </t>
+                        <t t-if="widget.options.giftcard_card_no">
+                           <tr>
+                                <td>Card No. </td>
+                                <td>
+                                    <label id="confirm_card_no"><t
+	t-esc="widget.options.giftcard_card_no" /></label>
+                                </td>
+                            </tr>
+                        </t>
+                        <t
+	t-if="widget.recharge_card and widget.recharge_card.customer_name">
+                            <tr>
+                                <td>Customer </td>
+                                <td>
+                                    <label id="confirm_select_customer"><t
+	t-esc="widget.recharge_card.customer_name" /></label>
+                                </td>
+                            </tr>
+                        </t>
+                        <t t-if="widget.options.giftcard_customer_name">
+                            <tr>
+                                <td>Customer </td>
+                                <td>
+                                    <label id="confirm_select_customer"><t
+	t-esc="widget.options.giftcard_customer_name" /></label>
+                                </td>
+                            </tr>
+                        </t>
+                        <t t-if="widget.options.giftcard_expire_date">
+                            <tr>
+                                <td>Expire Date </td>
+                                <td>
+                                    <label id="confirm_text_expire_date"><t
+	t-esc="widget.options.giftcard_expire_date" /></label>
+                                </td>
+                            </tr>
+                        </t>
+                        <t
+	t-if="widget.recharge_card and widget.recharge_card.recharge_card_amount and widget.recharge_card.total_card_amount">
+                            <tr id="amount_row">
+                                <td>Card value </td>
+                                <td>
+                                    <label id="confirm_text_amount"> <t
+	t-esc="widget.format_currency(widget.recharge_card.total_card_amount - widget.recharge_card.recharge_card_amount)" /> </label>
+                                </td>
+                            </tr>
+                        </t>
+                        <t
+	t-if="widget.recharge_card and widget.recharge_card.recharge_card_amount">
+                            <tr id="amount_row">
+                                <td>Recharge Amount </td>
+                                <td>
+                                    <label id="confirm_text_amount"> <t
+	t-esc="widget.format_currency(widget.recharge_card.recharge_card_amount)" /> </label>
+                                </td>
+                            </tr>
+                        </t>
+                        <t t-if="widget.options.giftcard_amount">
+                            <tr id="amount_row">
+                                <td>Card value </td>
+                                <td>
+                                    <label id="confirm_text_amount"> <t
+	t-esc="widget.format_currency(widget.options.giftcard_amount)" /> </label>
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        Continue
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="RedeemGiftVoucherPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height: 260px;">
+                <p class="title">Redeem Gift Voucher</p>
+                <span style="float: left;margin-left: 48px;height: 30px;">Due Amount: <t
+	t-esc="widget.format_currency(widget.pos.get_order().get_due())" /></span>
+                <input type="text" id="gift_voucher_text"
+	placeholder="Scan Voucher Barcode" />
+                <div style="padding-top: 15px;"> 
+                    <label id="barcode"></label>
+                </div>
+                <name />
+                <div class="footer">
+                    <div class="button confirm">
+                        Apply
+                    </div>
+                    <div class="button cancel">
+                        Cancel 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="LockPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup lock_popup">
+                <div class="lock-container"
+	style="text-align: left;color: #fff;font-size: 16px;">
+                    <div class="close-lock-btn">
+                    <i class="fa fa-times" aria-hidden="true"
+	style="margin-left: 1px;font-size: 20px;"></i>
+                    </div>
+                    <div class="lock-section">
+	                    <h3>Lock Screen</h3>
+	                    <div>
+	                        Goodbye, <t t-esc="widget.pos.get_cashier().name" />.
+	                        Are you sure you want to lock pos screen?
+	                    </div>
+	                    <div class="lock-btn">
+	                        <span class="lock-pos">
+	                           <i class="fa fa-lock"></i>
+	                        </span>
+	                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!--Logout on close popup  -->
+    <t t-name="POSSessionConfig">
+        <div class="modal-dialog">
+            <div class="popup pos_close_popup">
+                <div class="pos-close-container"
+	style="text-align: left;color: #fff;font-size: 16px;">
+                    <div class="close-popup-btn">
+                    <i class="fa fa-times" aria-hidden="true"
+	style="margin-left: 1px;font-size: 20px;"></i>
+                    </div>
+                    <div class="lock-section">
+                        <h3
+	style="border-bottom: 1px solid;width: 265px;padding: 12px;">
+                            Do you want to close the session?
+                        </h3>
+                        <!-- <div>
+                            Goodbye, <t t-esc="widget.pos.get_cashier().name"/>.
+                        </div> -->
+                        <div class="close-pos-btn">
+                            <!-- <span class="close-pos">
+                               <i class="fa fa-sign-out"></i>
+                               <div class="title-name-hover">
+                                   Close POS
+                               </div>
+                            </span> -->
+                            <span class="close-pos-session">
+                               <i class="fa fa-sign-out"></i>
+                               <div class="title-name-hover">
+                                   Close POS
+                               </div>
+                            </span>
+                            <span class="logout-pos">
+                               <i class="fa fa-power-off"
+	aria-hidden="true"></i>
+                               <div class="title-name-hover">
+                                   Logout
+                               </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+<!-- 	Multi Terminal Lock and Message  -->
+	<t t-name="TerminalListPopup">
+		<div class="modal-dialog">
+			<div id="popup_design_change" class='popup popup-textinput'>
+				<p class="title" style="margin-bottom: 5px !important;">Terminals</p>
+				<div class="popup_body">
+					<div id="sessionlist_container"
+	class='subwindow-container-fix touch-scrollable scrollable-y session_list_with_chat'>
+						<table class='selection scrollable-y touch-scrollable session-list'>
+							<colgroup>
+			                    <col width='30%' />
+			                    <col width='20%' />
+			                    <col width='30%' />
+			                    <col width='10%' />
+			                    <col width='10%' />
+			                </colgroup>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Cashier</th>
+									<th>Locked By</th>
+									<th> </th>
+									<th> </th>
+								</tr>
+							</thead>
+							<tbody class='terminal-list-contents'>
+							</tbody>
+						</table>
+					</div>
+					<div id="message_area_container"
+	class='subwindow-container-fix touch-scrollable scrollable-y' style="width:30%;display:none;">
+						<div class="message_display_area" id="to_send_user_name" />
+						<div class="message_text_box">
+							<textarea type="text" id="session_message_txtarea" />
+						</div>
+					</div>
+				</div>
+				<div class="footer">
+					<div class="button close_terminal_list">
+						Cancel
+					</div>
+					<div class="button confirm block_all">
+						BLock All
+					</div>
+					<div class="button cancel unblock_all">
+						Unblock All
+					</div>
+					<div class="button broadcast_message">
+						Broadcast
+					</div>
+				</div>
+			</div>
+		</div>
+	</t>
+
+	<t t-name='MessageLine'>
+		<div class="msg_line"
+	t-att-id="message.message_session_id ? message.message_session_id[0]: 'false'">
+			<t t-if="message and message.message">
+            	<span class="sender_image"><img
+	t-att-src="widget.user_icon_url(message.sender_user ? message.sender_user[0]: false)" /></span>
+            	<span class="message"><t t-esc='message.message' /></span>
+            </t>
+		</div>
+	</t>
+
+	<t t-name="SessionLine">
+        <tr t-att-id='session.id'>
+            <t t-if="session and session.name">
+            	<td><t t-esc='session.name' /></td>
+            </t>
+            <t
+	t-if="session and session.current_cashier_id and session.current_cashier_id[1]">
+           		<td><t t-esc='session.current_cashier_id[1]' /></td>
+           	</t>
+           	<t
+	t-if="session and session.user_id and session.user_id[1] and !session.current_cashier_id">
+           		<td><t t-esc='session.user_id[1]' /></td>
+           	</t>
+           	<t
+	t-if="session and session.locked_by_user_id and session.locked_by_user_id[0]">
+           		<td><t t-esc='session.locked_by_user_id[1]' /></td>
+           	</t>
+           	<t
+	t-if="!session.locked_by_user_id or !session.locked_by_user_id[0]">
+           		<td> - </td>
+           	</t>
+           	<td>
+	           	<span id="toggle_session" t-att-data-id='session.id'
+	title="Block/Unblock" style="cursor:pointer;font-size: 27px;">
+	                <t t-if="session.locked">
+	                	<i class="fa fa-lock toggle" id="lock_session_togl"
+	aria-hidden="true" style="color: red;"></i>
+	                </t>
+	                <t t-if="!session.locked">
+	                	<i class="fa fa-unlock-alt toggle" id="unlock_session_togl"
+	aria-hidden="true" style="color: rgb(94, 185, 55);"></i>
+	                </t>
+	            </span>
+	        </td>
+	        <td>
+	        	<span id="line_message_btn" class="line_message_btn"
+	t-att-data-id='session.id' title="Message"
+	style="cursor:pointer;font-size: 24px;color:rgb(94, 185, 55)">
+	        		<i class="fa fa-envelope" aria-hidden="true"></i>
+	        	</span>
+	        </td>
+        </tr>
+    </t>
+
+    <t t-name="ProductQtyAdvancePopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput">
+                <p class="title">Product Quantity</p>
+                <div><t t-esc="widget.prod_info" /></div>
+                <table style="width:100%;font-size: 16px;">
+                    <tr
+	style="background: #CCC; border-top: 1px solid gray;border-bottom: 1px solid gray;">
+                        <th>Warehouse</th>
+                        <th>Quantity</th>
+                        <th>Qty</th>
+                    </tr>
+                    <t t-if="widget.prod_info_data">
+                        <t t-foreach="widget.prod_info_data" t-as="data">
+                            <t
+	t-if="data[2] != widget.pos.config.stock_location_id[0]">
+                                <tr>
+                                    <td
+	style='color:gray;font-weight: initial !important;padding:5px;padding-left: 15px;'>
+                                      <t t-esc="data[0]" /></td>
+                                    <td
+	style='color:gray;font-weight: initial !important;padding:5px;padding-right: 15px;'>
+                                      <t t-esc="data[1]" /></td>
+                                    <td
+	style='color:gray;font-weight: initial !important;padding:5px;padding-right: 15px;'>
+                                        <input t-att-id="data[2]"
+	class="input_qty" t-att-loaction-data='data[1]' type="text" style="width:80px"
+	name="qty" />
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </t>
+                    <tr
+	style="border-top: 1px solid gray;border-bottom: 1px solid gray;display:none;">
+                        <th style="text-align: left;padding-left: 15px;">Total</th>
+                        <td style="text-align: center;padding-right: 15px;"><t t-esc="widget.total_qty" /></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <div class="footer">
+                    <div class="button confirm">
+                        Add to Cart
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="AddToWalletPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput pos_popup_background">
+               <p class="title pos_popup_title_background">Add to Wallet</p>
+               <img
+	src="/flexipharmacy/static/src/img/icons/add_to_wallet_big.png" />
+               <h1 align="center" style="font-size:40px;">Change</h1>
+               <t t-if="widget.change">
+                    <h1 class="change_add_to_wallet" style="font-size:110%;"><t
+	t-esc="widget.format_currency(widget.change)" /></h1>
+               </t>
+               <div class="footer">
+                  <div class="button confirm pos_popup_footer_button">
+                      Add to Wallet
+                  </div>
+                  <div class="button cancel pos_popup_footer_button">
+                      Skip 
+                  </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    
+    <t t-name="DeliveryDatePopup">
+         <div class="modal-dialog">
+            <div class="popup delivery-date-popup" style="height:300px;">
+                <p class="title">Delivery Date</p>
+                <div style="margin-top: 20px;">
+                    <input placeholder="yyyy-mm-dd" type="text"
+	id="delivery_datepicker" />
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        <t t-if="widget.new_date">Set</t>
+                        <t t-if="!widget.new_date">Update</t>
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+         </div>
+    </t>
+    
+    <t t-name="CancelOrderPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput pos-cancel-popup">
+                <p class="title">Cancel
+                    <t t-if="widget.order_tobe_cancel">
+                        - <t t-esc="widget.order_tobe_cancel.pos_reference" />
+                    </t></p>
+                <div class="cancel_item_container">
+                    <div class="order_info_mini_cart">
+                        <div class="product_info">
+                            <ul></ul>
+                        </div>
+                        <div class="cancel_order_summary">
+                            <div class="order_total">
+                                <span class="label">Order Total</span>
+                                <span class="value"><t
+	t-esc="widget.order_tobe_cancel ? widget.format_currency(widget.order_tobe_cancel.amount_total) : 0.00" /></span>
+                            </div>
+                            <div class="cancel_order_total">
+                                <span class="label">(-)Cancel Order Total</span>
+                                <span class="value">0.00</span>
+                            </div>
+                            <div class="cancel_charge">
+                                <span class="label">(+)Cancellation Charge</span>
+                                <span class="value"
+	style="border-bottom: thin solid #000;">0.00</span>
+                            </div>
+                            <div class="new_order_total">
+                                <span class="label">(=)New Order Total</span>
+                                <span class="value"></span>
+                            </div>
+                            <div class="amount_paid">
+                                <span class="label">(-)Amount Paid</span>
+                                <span class="value"
+	style="border-bottom: thin solid #000;"><t
+	t-esc="widget.order_tobe_cancel ? widget.format_currency(widget.order_tobe_cancel.amount_paid) : 0.00" /></span>
+                            </div>
+                            <div class="new_amount_due">
+                                <span class="label">(=)New Amount Due</span>
+                                <span class="value"></span>
+                            </div>
+
+                            <div class="refundable_total">
+                                <span class="label">(=)Refund Amount</span>
+                                <span class="value">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ac_product_list">
+                        <div class="check_all_items">
+                            <input class="check_all_items_checkbox"
+	type="checkbox" />
+                            <span class='label'>Select all</span>
+                        </div>
+                        <t t-if='widget.lines'>
+                            <div class="products_line">
+                                <t t-foreach='widget.lines' t-as='line'>
+                                    <t
+	t-if="line.product_id[0] != widget.pos.config.cancellation_charges_product_id[0] and
+                                            line.product_id[0] != widget.pos.config.prod_for_payment[0] and
+                                            line.product_id[0] != widget.pos.config.refund_amount_product_id[0] ">
+                                        <t t-set="product"
+	t-value="widget.pos.db.get_product_by_id(line.product_id[0])" />
+                                        <t
+	t-if="product and !product.is_dummy_product">
+	                                        <span
+	class='product product_content' t-att-data-product-id="product.id">
+	                                            <div class="product-img">
+	                                                <img
+	t-att-src='widget.get_product_image_url(product.id)' />
+	                                                <t
+	t-if="!product.to_weight">
+	                                                    <span class="price-tag"
+	t-att-data-price="line.price_unit">
+	                                                        <t
+	t-esc="widget.format_currency(line.price_unit,'Product Price')" />
+	                                                    </span>
+	                                                </t>
+	                                                <t t-if="product.to_weight">
+	                                                    <span class="price-tag">
+	                                                        <t
+	t-esc="widget.format_currency(line.price_unit,'Product Price')+'/Kg'" />
+	                                                    </span>
+	                                                </t>
+	                                                <span class="check_box_tag">
+	                                                    <input
+	class="ac_selected_product" t-att-data-name="line.id"
+	t-att-data-product="product.id" type="checkbox" />
+	                                                </span>
+	                                            </div>
+	                                            <div class="product-name">
+	                                                <t
+	t-esc="product.display_name" /><br />
+	                                                <div
+	class="input-group oe_website_spinner" style="margin: auto">
+	                                                    <span
+	class="input-group-addon">
+	                                                        <a
+	t-attf-href="#" class="mb8 js_qty">
+	                                                            <i
+	class="fa fa-minus"></i>
+	                                                        </a>
+	                                                    </span>
+	                                                    <input type="text"
+	class="js_quantity form-control" data-min="1" t-att-data-max="line.qty"
+	t-att-name="line.id" t-att-value="line.qty" />
+	                                                    <span
+	class="input-group-addon">
+	                                                        <a
+	t-attf-href="#" class="mb8 float_left js_qty">
+	                                                            <i
+	class="fa fa-plus"></i>
+	                                                        </a>
+	                                                    </span>
+	                                                </div>
+	                                            </div>
+	                                        </span>
+	                                    </t>
+                                    </t>
+                                </t>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        Validate
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+	<t t-name="CancelLines">
+        <t t-if="line">
+            <li class="cancel_line" t-att-data-id="line.id">
+                <span class="cancel_product_name"><t t-esc="line.product_name" /></span>
+                <span class="cancel_product_total"><t
+	t-esc="widget.format_currency(line.price)" /></span>
+                <ul class="cancel_operations">
+                    <li class="remove_line"><i class="fa fa-trash-o"
+	aria-hidden="true"></i></li>
+                    <li class="cancel_qty">QTY: <t t-esc="line.qty" /></li>
+                </ul>
+            </li>
+        </t>
+    </t>
+    <t t-name="MaxCreditExceedPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height: 203px;">
+                <p class="title">Max Debit Exceeded</p>
+                <span align="center" style="font-size:16px;">
+                    Your remaining Debit limit is only <t t-esc="widget.format_currency(widget.options.remaining_debit_limit)" />
+                    <t t-if="widget.pos.get_order()">
+                        <br />and you are trying to Debit <t t-esc="widget.format_currency(widget.pos.get_order().get_due())" />
+                    </t>
+                </span>
+                <div class="footer">
+                    <div class="button cancel">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+<!--     Discard Product Popup  -->
+
+	<t t-name="StockPickPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height: 203px;">
+                <p class="title">Confirmation</p>
+                Discarded Product : <a target="blank" t-att-href="widget.options.url"
+	style="color:blue">
+                    <t t-esc="widget.options.name" />
+                </a>
+                <div class="footer">
+                    <div class="button confirm">
+                        OK
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+<!-- 	Payment summary popup -->
+	<t t-name="PaymentSummaryReportPopupWizard">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height:245px;width:600px;">
+                <p class="title" style="font-size:24px;">Payment Summary</p>
+                <div class="container_summary_popup">
+                    <div class="summary_main_div summary_main1">
+                        <div class="summary_date_div summary_dateset">
+                            <span class="start_date start_dateset">Start Date</span>
+                            <input id="start_date" type="date"
+	class="date startdateset" style="line-height: 1 !important;" />
+                        </div>
+                        <div class="summary_date_div summary_date_divset">
+                            <span class="end_date end_dateset">End Date </span>
+                            <input id="end_date" type="date"
+	class="date enddateset" style="line-height: 1 !important;" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="receipt_option_container receipt_option1">
+                        <div class="receipt_main_div">
+                            <span class="receipt_text1">Summary</span>
+                            <select id="dropdown_data" class="dropdownset">
+                                <option value="sales_person">Salespersons</option>
+                                <option value="journals">Journals</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        Print
+                    </div>
+                    <div class="button cancel">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+<!-- Product Summary Report -->
+	<t t-name="ProductSummaryReportPopupWizard">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput"
+	style="height: 370px;max-width: 600px;width: 100%;">
+                <p class="title" style="font-size:24px;">Product Summary</p>
+                <div class="container_summary_popup">
+                    <div class="product_summary_main_div" style="margin: 5px;">
+                        <div class="date_input_container main_div_pro">
+	                        <div
+	class="product_summary_date_div product_first_date">
+	                            <span
+	class="product_summary_start_date Pro_start_firstdiv">Start Date </span>
+	                            
+	                            <input id="start_date" type="date"
+	class="date Pro_start_firstinput" />
+	                        </div>
+	                        <div
+	class="product_summary_date_div product_second_date">
+	                            <span
+	class="product_summary_end_date Pro_start_seconddiv">End Date </span>
+	                            <input id="end_date" type="date"
+	class="date Pro_start_secondinput" />
+	                        </div>
+	                    </div>
+	                    <br></br>
+	                    <div class="part2_product_popup">
+	                    	<div>
+	                    	<span class="summary_new_div">Summary :</span>
+	                   		 </div>
+	                   		 <br />
+	                    
+	                      <div class="summary_option_container summary_setdiv">
+	                        <div class="summary_setdiv1" style="float:left;width:50%">
+	                        	<input id="product_summary" class="summary_setdiv2"
+	type="checkbox" /> <span class="margin_pro_set">Product</span>
+	                        </div>
+	                        <div class="summary_setdiv3" style="float:left;width:50%">
+	                        	<input id="category_summary" class="summary_setdiv4"
+	type="checkbox" /> <span class="margin_pro_set">Category</span>
+	                        </div>
+	                    </div>
+	                    
+	                      <div class="summary_option_container summary_setdiv"
+	style="font-weight: normal; width:100%">
+	                        <div class="summary_setdiv1" style="float:left;width:50%">
+	                        	<input id="location_summary" class="summary_setdiv2"
+	type="checkbox" /> <span class="margin_pro_set">Location</span>
+	                        </div>
+	                        <div class="summary_setdiv3" style="float:left;width:50%">
+	                        	<input id="payment_summary" class="summary_setdiv4"
+	type="checkbox" /> <span class="margin_pro_set">Payment</span>
+	                        </div>
+	                    </div>
+	                    </div>
+	                    <div>
+	                    
+	                    
+	                     <div class="receipt_option_container">
+	                    	<div class="receipt_option1">
+	                            <span class="receipt_option2" style="font-weight: normal;">No.of Copies </span>
+	                            <input id="no_of_summary" class="receipt_option3"
+	type="text"></input>
+	                        </div>
+	                    </div>
+	                    
+	                    
+	                    
+	                    
+	                    </div>
+                    	
+	                  
+	                  
+	                   
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        Print
+                    </div>
+                    <div class="button cancel">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+<!-- 	Order Summary Report -->
+
+	<t t-name="OrderSummaryPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput popup_ordersummary_width">
+                <p class="title" style="font-size:24px;">Order Summary</p>
+                <div class="container_summary_popup" style="margin:5px;">
+                    <div class="summary_main_div">
+                        <div class="date_input_container date_Orderset_popup">
+	                        <div class="summary_date_div order_summary1_date">
+	                            <span
+	class="start_date order_summary_start_date">Start Date </span>
+	                            <input id="start_date" type="date"
+	class="date order_summary_input_date" />
+	                        </div>
+	                        <div class="summary_date_div order_summary2_date">
+	                            <span class="end_date order_summary_start_date">End Date </span>
+	                            <input id="end_date" type="date"
+	class="date order_summary_input_date" />
+	                        </div>
+	                    </div>
+	                    
+	                    
+	                    
+	                    <div class="order_summary_part2">
+	                    	 <div>
+	                    	<span class="summary_new_divorder1">Summary :</span>
+	                    </div>
+	                    <br />
+	                    <div
+	class="summary_option_container ordersummary_deviedpart3" style="font-weight: normal;width:100%">
+	                        <div class="input1_order">
+	                        	<input id="order_summary_report" class="input1_order1"
+	type="checkbox" style="vertical-align: middle;" /> <span class="order_span">Order</span>
+	                        </div>
+	                        <div class="input1_order">
+	                        	<input id="category_summary_report"
+	class="input1_order1" type="checkbox" style="vertical-align:middle" /> <span
+	class="order_span">Category</span>
+	                        </div>
+                            <div class="input1_order">
+	                        	<input id="payment_summary_report"
+	class="input1_order1" type="checkbox" style="vertical-align:middle" /> <span
+	class="order_span">Payment</span>
+	                        </div>
+	                    </div>
+	                    </div>
+	                    
+	                      <div
+	class="summary_option_container order_summary_part3">
+                        <div class="order_summary_part3_div1">
+                            <span class="order_summary_part3_span">No.of Copies </span>
+                            <input id="no_of_copies" class="order_summary_part3_input"
+	type="text"></input>
+                        </div>
+                           <div class="order_summary_part3_div2">
+                            <span class="order_summary_part3_span1">States</span>
+                               <select id="states" class="dropdown_part3">
+                                   <option value="">Select State</option>
+                                   <option value="new">New</option>
+                                   <option value="paid">Paid</option>
+                                   <option value="done">Posted</option>
+                                   <option value="invoiced">Invoiced</option>
+                               </select>
+                        	</div>
+                    		</div>
+                       
+                        
+                    </div>
+                  
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        Print
+                    </div>
+                    <div class="button cancel">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+<!-- 	Operation Restrict  -->
+	<t t-name="ManagerAuthenticationPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-confirm imgset_popup" style="height: 290px;">
+                <p class="title">Authentication</p>
+					<img src="/flexipharmacy/static/src/img/scan.png" />
+                    <p>Manager Authentication Required.</p>
+                    <input id="manager_barcode" type="text"
+	placeholder="Manager Barcode" />
+                    <p id="discount_value" style="display:none"></p>
+                    <p id="manager_name"></p>
+                <div class="footer">
+                    <div class="button confirm">
+                        OK
+                    </div>
+                    <div class="button cancel">
+                        Cancel 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="CashControlWizardPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-cashcontrol-structure" style="height: 100%;width: 50%;">
+                <p class="title"><t t-esc="widget.title" /></p>
+                <div style="max-height: 250px !important;overflow: auto;">
+                    <table id="cashbox_data_table">
+                        <thead>
+                            <tr>
+                                <th>Coin/Bill Value</th>
+                                <th>Number of Coins/Bills</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div id="add_close_balance" style="width:100%;">
+                        <div style="position: fixed;top: 55%;float:left">
+                            <button id="add_new_item">Add New Item</button>
+                        </div>
+                        <div
+	style="position: fixed;top: 53%;float:right;margin-left:30%;">
+                            <h5>Subtotal :<span class="subtotal_end"
+	style="margin-left: 10px;"></span></h5>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div id="cash_details" style="position:fixed; top:50%;width:50%;">
+                    <table width="100%">
+                        <tr align="right">
+                            <td width="30%"><label>Opening Balance: </label></td>
+                            <td width="20%"><span id="open_bal">0.00</span></td>
+                            <td width="30%"><label>Real Closing Balance: </label></td>
+                            <td width="20%"><span id="real_close_bal">0.00</span></td>
+                        </tr>
+                        <tr align="right">
+                            <td width="30%"><label>+ Transactions: </label></td>
+                            <td width="20%"><span id="transaction">0.00</span></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr align="right">
+                            <td width="30%"><label>= Theoretical Closing Balance: </label></td>
+                            <td width="20%"><span id="theo_close_bal">0.00</span></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr style="border-top: 2px solid ! important;"
+	align="right">
+                            <td></td>
+                            <td></td>
+                            <td width="30%"><label>Difference: </label></td>
+                            <td width="20%"><span id="differ">0.00</span></td>
+                        </tr>
+                    </table>
+                </div>
+                <br />
+                <div class="footer" style="">
+                    <div class="button close_session" style="width: 130px;">
+                        Close Session
+                    </div>
+                    <div class="button ok">
+                        Validate
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+	<!-- Print Audit Report Popup -->
+
+    <t t-name="ReportPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup inventory-report-popup" style="height: 445px;">
+                <p class="title">Audit Reports</p>
+                <div class="pos_tab_session">
+					<button class="tablinks active" value="sessions">Sessions</button>
+					<button class="tablinks" value="locations">Locations</button>
+				</div>
+				<div id="sessions" class="tabcontent">
+					<div class="scrollable-y touch-scrollable inventory-report-div">
+	                    <table class="inventory_report_table">
+	                        <t t-if="widget.pos.all_pos_session.length &gt; 0">
+		                        <t t-foreach="widget.pos.all_pos_session" t-as="session">
+		                            <tr class="session_record">
+		                                <td style="width: 75%;">
+		                                    <t t-esc="session.name"/>
+		                                </td>
+		                                <td class="report" t-att-title="'Thermal Report of ' + session.name + ' Session'">
+		                                    <t t-if="widget.enable_thermal_print">
+		                                        <img class="report_thermal session" t-att-data-id="session.id" src="/flexipharmacy/static/src/img/printer.png" style="width: 30px;"/>
+		                                    </t>
+		                                </td>
+		                                <td class="report" t-att-title="'PDF Report of ' + session.name + ' Session'" style="text-align: right;padding-right: 20px;">
+		                                    <img class="report_pdf session" src="/flexipharmacy/static/src/img/pdf.png" t-att-data-id="session.id"/>
+		                                </td>
+		                            </tr>
+		                        </t>
+	                        </t>
+	                        <t t-else="">
+	                           <tr class="session_record">
+	                               <td style="text-align: center;color: brown;">
+	                                   POS sessions not found.
+	                               </td>
+	                           </tr>
+	                        </t>
+	                    </table>
+                    </div>
+				</div>
+				<div id="locations" class="tabcontent" style="display:none;">
+				    <div class="scrollable-y touch-scrollable inventory-report-div">
+                        <table class="inventory_report_table">
+                            <t t-if="widget.pos.all_pos_session.length &gt; 0">
+	                            <t t-foreach="widget.pos.all_locations" t-as="location">
+	                                <tr class="location_record">
+	                                    <td style="width: 75%;">
+	                                        <t t-esc="location.complete_name"/>
+	                                    </td>
+	                                    <td class="report" t-att-title="'Thermal Report of ' + location.name + ' Location'">
+	                                        <t t-if="widget.enable_thermal_print">
+	                                            <img class="report_thermal location" t-att-data-id="location.id" src="/flexipharmacy/static/src/img/printer.png" style="width: 30px;"/>
+	                                        </t>
+	                                    </td>
+	                                    <td class="report" t-att-title="'PDF Report of ' + location.name + ' Location'" style="text-align: right;padding-right: 20px;">
+	                                        <img class="report_pdf location" src="/flexipharmacy/static/src/img/pdf.png" t-att-data-id="location.id"/>
+	                                    </td>
+	                                </tr>
+	                            </t>
+                            </t>
+                            <t t-else="">
+                               <tr class="session_record">
+                                   <td style="text-align: center;color: brown;">
+                                       Locations not found.
+                                   </td>
+                               </tr>
+                            </t>
+                        </table>
+                    </div>
+				</div>
+                <div class="footer">
+                    <div class="button cancel">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+	<t t-name="CreatePurchaseOrderPopupWizard">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height:500px;width:650px;font-weight: normal;">
+                <p class="title" style="font-size:24px;">Purchase Order</p>
+                <div class="container_summary_popup">
+                    <div>
+                        <div style="text-align: left !important;height: 54px;position: relative;float: left;padding: 0 20px;">
+                            <span style="font-weight: normal;">Supplier</span>
+                             <input type="text" id="select_supplier" style="width: 60%;
+                            min-height: 29px !important;height: 35px !important;border-radius: 8px;"/>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="listview_product_details">
+                            <table class='product-detail-list'>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 58%;">Product</th>
+                                        <th style="width: 28%;">Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody  class='product-detail-list-contents'>
+                                    <t t-if="widget.pos.get_order() and widget.pos.get_order().get_list_products()">
+                                        <t t-foreach="widget.pos.get_order().get_list_products()" t-as="product">
+                                            <tr class='product-line' t-att-data-id="product.id">
+                                                <td style="width: 55%;"><t t-esc='product.display_name' /></td>
+                                                <td style="width: 25%;">
+                                                    <input type="text" t-att-data-id="product.id" value="1" class="select_qty_product"/>
+                                                </td>
+                                                <td id="delete_row"><i class="fa fa-trash"/></td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="check_email">
+                        <input type="checkbox" id="create_po_mail" style="width: auto;min-height: 0;"></input>
+                        <span style="font-weight: normal;">Send Email to Supplier</span>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        Create
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+     </t>
+
+    <t t-name="PurchaseOrderPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height: 203px;">
+                <p class="title">Confirmation</p>
+                Purchase Order Created: <a target="blank" t-att-href="widget.options.url" style="color:blue">
+                    <t t-esc="widget.options.name"/>
+                </a>
+                <div class="footer">
+                    <div class="button confirm">
+                        OK
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+	<!-- Multi Store Popup -->
+	<t t-name="MultiStorePopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="width: 580px;">
+                <p class="title">Shops</p>
+                <div class="stock_locations_container">
+                    <ul class="store-list">
+                        <t t-if="widget and widget.cashier_store">
+	                        <t t-foreach="widget.cashier_store" t-as="store">
+		                        <li class="store" t-att-id="store.id">
+                                    <div class="shop_container">
+                                        <div t-attf-class="store-icon #{(store.location_id[0] == widget.pos.config.stock_location_id[0]) ? 'selected_location' : '' }" >
+                                            <t t-if="store.image">
+                                                <img t-att-src="'data:image/png;base64,'+ store.image" width="60" height="60" />
+                                            </t>
+                                            <t t-if="!store.image">
+                                                <img src="/flexipharmacy/static/src/img/icons/store.png" width="60" height="60" />
+                                            </t>
+                                        </div>
+                                         <div t-attf-class='store-name #{(store.location_id[0] == widget.pos.config.stock_location_id[0]) ? "selected_location" : "" }'>
+                                            <t t-esc="store.name"/>
+                                        </div>
+                                    </div>
+		                        </li>
+		                    </t>
+	                    </t>
+                    </ul>
+                </div>
+                <div class="footer">
+                   	<div class="button confirm">
+                        Switch
+                    </div>
+                    <div class="button cancel">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+	<t t-name="AddMoneyToCreditPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput pos_popup_background" style="max-height: 380px;">
+                <p class="title pos_popup_title_background">Add Money</p>
+                <table style="margin: auto;">
+                    <tbody class="add_money_setcss" style="font-size: 17px;">
+                        <tr>
+                            <td style="text-align: left;">Customer: </td>
+                            <td style="text-align: left;" id="customer-name">
+                                <span style="margin-top: 2px;">
+                                    <t t-if="widget.client and widget.client.name">
+                                        <t t-esc="widget.client.name" style="text-align: left;"/>
+                                    </t>
+                                    <t t-if="!widget.client and widget.pos.get_order() and widget.pos.get_order().get_client() and widget.pos.get_order().get_client().name">
+                                        <t t-esc="widget.pos.get_order().get_client().name" style="text-align: left;"/>
+                                    </t>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="pos-left-align">
+                                Due Amount:
+                            </td>
+                            <td class="cust-due" style="text-align:left;">
+                                <t t-esc="widget.format_currency(widget.cust_due)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left">Journal:</td>
+                            <span>
+                                <td style="text-align: left;" id="journal-name">
+                                    <select class="select-journal journal_cashregister1">
+                                        <t t-foreach="widget.pos.cashregisters" t-as="cashregister">
+                                            <div class="button paymentmethod" t-att-data-id="cashregister.journal_id[0]">
+                                                <option t-att-value="cashregister.journal_id[0]">
+                                                    <t t-esc="cashregister.journal_id[1]" />
+                                                </option>
+                                            </div>
+                                        </t>
+                                    </select>
+                                </td>
+                            </span>
+                        </tr>
+                        <tr>
+                            <td class="pos-left-align">
+                                Pay Due Amount
+                            </td>
+                            <td class="pay_amount">
+                                <t t-if="widget.cust_due &lt;= 0">
+                                    <input class="pos-right-align" disabled="disabled" id="pay_amount" type="checkbox" style="width: 26px;cursor: not-allowed;height: 20px;max-height: 20px;min-height: 7px;float:left"></input>
+                                </t>
+                                <t t-if="widget.cust_due &gt; 0">
+                                    <input class="pos-right-align" id="pay_amount" type="checkbox" style="width: 26px;height: 20px;max-height: 20px;min-height: 7px;"></input>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Amount: </td>
+                            <td>
+                                <input type="text" id="amount-to-be-added" style="text-align: left;min-height: 17px;min-width: 135px;width: 118px;"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="footer">
+                    <div class="button confirm pos_popup_footer_button">
+                        Add
+                    </div>
+                    <div class="button cancel pos_popup_footer_button">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+	<!--Debit Management-->
+	<t t-name="PayDebutPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput pos_popup_background" style="max-height: 300px;">
+                <p class="title pos_popup_title_background">Pay Debit</p>
+                <table style="margin: auto;">
+                    <tbody class="add_money_setcss1"  style="font-size: 17px;">
+                        <tr>
+                            <td style="text-align: left;">Customer: </td>
+                            <td style="text-align: left" id="customer-name">
+                                <span style="margin-top: 2px;">
+                                    <t t-if="widget.client and widget.client.name">
+                                        <t t-esc="widget.client.name" style="text-align: left;"/>
+                                    </t>
+                                    <t t-if="!widget.client and widget.pos.get_order() and widget.pos.get_order().get_client() and widget.pos.get_order().get_client().name">
+                                        <t t-esc="widget.pos.get_order().get_client().name" style="text-align: left;"/>
+                                    </t>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="pos-left-align" style="padding-top: 13px;padding-right: 50px; ">
+                                Due Amount:
+                            </td>
+                            <td class="cust-due" style="text-align:left;padding-top: 14px;">
+                                <t t-esc="widget.format_currency(widget.cust_due)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left">Journal:</td>
+                            <span>
+                                <td style="text-align:left;" id="journal-name">
+                                    <select id="select-journal" class="select-journal">
+                                        <t t-foreach="widget.pos.cashregisters" t-as="cashregister">
+                                            <div class="button paymentmethod" t-att-data-id="cashregister.journal_id[0]">
+                                                <option t-att-value="cashregister.journal_id[0]">
+                                                    <t t-esc="cashregister.journal_id[1]" />
+                                                </option>
+                                            </div>
+                                        </t>
+                                    </select>
+                                </td>
+                            </span>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;"><br />Amount: </td>
+                            <td style="text-align: right;">
+                                <br /><input type="text" id="amount-to-be-pay" style="text-align: left;min-height: 17px;min-width: 100px;width: 118px;margin-top: -8px;"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="footer">
+                    <div class="button confirm pos_popup_footer_button">
+                        Pay
+                    </div>
+                    <div class="button cancel pos_popup_footer_button">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

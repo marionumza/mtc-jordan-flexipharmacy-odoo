@@ -1,0 +1,439 @@
+/*The OrderList List Screen */
+.pos .orderlist-screen .order-list {
+	font-size: 16px;
+	width: 100%;
+	line-height: 40px;
+}
+
+.pos .orderlist-screen .order-list tr {
+	transition: all 150ms linear;
+	background: rgb(230, 230, 230);
+}
+
+.pos .orderlist-screen .order-list thead>tr, .pos .orderlist-screen .order-list tr:nth-child(even)
+	{
+	background: rgb(247, 247, 247);
+}
+
+.pos .orderlist-screen .order-list tr.highlight {
+	transition: all 150ms linear;
+	background: rgb(110, 200, 155) !important;
+	color: white;
+}
+
+.pos .orderlist-screen .order-list tr.lowlight {
+	transition: all 150ms linear;
+	background: rgb(216, 238, 227);
+}
+
+.pos .orderlist-screen .order-list tr.lowlight:nth-child(even) {
+	transition: all 150ms linear;
+	background: rgb(227, 246, 237);
+}
+
+.screen .top-content .filter {
+	margin-left: 10px;
+	margin-top: 15px;
+}
+
+.screen .top-content .button.paid {
+	left: 0px;
+	margin-left: 136px;
+}
+
+.screen .top-content .button.draft {
+	left: 0px;
+	margin-left: 236px;
+}
+
+.screen .top-content .button.posted {
+	left: 0px;
+	margin-left: 336px;
+}
+
+.screen .top-content .button.date {
+	left: 0px;
+	margin-left: 536px;
+	z-index: 100;
+}
+
+.screen .top-content .button.not-selected {
+	background: rgb(230, 230, 230);
+	color: #000;
+}
+
+.screen .top-content .button.selected {
+	background: #acce45;;
+	color: #FFF;
+}
+
+.pos .orderlist-screen .searchbox {
+	float: left;
+	height: 52px;
+	line-height: 59px;
+	position: relative;
+}
+
+.screen .top-content .button.not-selected {
+	background: rgb(230, 230, 230);
+}
+
+.pos .orderlist-screen .searchbox input {
+	width: 120px;
+}
+
+.screen .top-content .date-filter i {
+	height: 20px;
+}
+
+#pagination {
+	margin-top: 20px;
+	float: left;
+	position: absolute;
+	bottom: 5px;
+	font-weight: bold;
+	font-size: 14px;
+	display: block !important;
+	text-align: center !important;
+	margin-bottom: 20px;
+	display: block;
+	width: 100% !important;
+}
+
+#pagination div {
+	display: inline-block;
+}
+
+.popup-reorder-product {
+	padding: 3px !important;
+	border-radius: 5px !important;
+	background: rgba(255, 255, 255, 0.5);
+	width: 670px !important;
+}
+
+.popup-reorder-product .title {
+	margin: 0;
+	padding: 20px;
+	border-radius: 3px 3px 0px 0px;
+	/*  border-bottom: solid 3px rgba(110, 200, 155, 1) !important;*/
+}
+
+.popup-reorder-product .popup-product-list {
+	border-spacing: 0.5rem;
+	border-collapse: collapse;
+	width: 100%;
+	text-align: left;
+}
+
+.popup-reorder-product .popup-product-list thead tr {
+	font-size: 16px;
+}
+
+.popup-reorder-product .popup-product-list table {
+	overflow-y: auto;
+	text-align: left
+}
+
+.popup-reorder-product .popup-product-list tbody tr {
+	font-size: 14px;
+	font-weight: normal !important;
+	line-height: 3rem;
+}
+
+/* .popup-reorder-product .popup-product-list tbody tr:nth-child(even) { */
+/*     background: rgb(230, 230, 230); */
+/* } */
+.popup-reorder-product .header .btn {
+	cursor: pointer;
+	float: right;
+	border: none !important;
+	background: none !important;
+	width: 45px;
+}
+
+.popup-reorder-product .footer .save .icon {
+	float: left;
+}
+
+.popup-reorder-product .footer .save .text {
+	float: left;
+	margin-left: 8px;
+	margin-top: -5px;
+}
+
+.rotate {
+	transform: rotate(-360deg);
+	transition: .7s;
+}
+
+.rotate-reset {
+	transform: rotate(0deg);
+	transition: .7s;
+}
+
+.client-line.active {
+	background: #2581c4 none repeat scroll 0 0;
+	color: #fff;
+}
+
+#client_list_header_buttons {
+	height: 64px;
+	position: absolute;
+	top: 0;
+	left: 34%;
+}
+
+.screen .top-content .client_history_button {
+	float: left;
+	font-size: 15px;
+	margin-right: 0;
+	position: static !important;
+	margin-top: 10px;
+	height: 36px;
+}
+
+.pos .clientlist-screen .searchbox {
+	left: 22%;
+	/* top: 0; */
+	margin-top: 0px;
+}
+/* ORDER DETAIL SCREEN */
+.orderdetail-screen .order-details {
+	padding: 16px;
+	border-bottom: solid 5px rgb(110, 200, 155);
+}
+
+.orderdetail-screen .order-name {
+	font-size: 32px;
+	line-height: 64px;
+	margin-bottom: 16px;
+}
+
+.orderdetail-screen .order-details-box {
+	font-size: 16px;
+}
+
+.orderdetail-screen .order-details-left {
+	width: 50%;
+	float: left;
+}
+
+.orderdetail-screen .order-details-right {
+	width: 50%;
+	float: right;
+}
+
+.orderdetail-screen .order-detail {
+	line-height: 24px;
+}
+
+.orderdetail-screen .order-detail>.label {
+	font-weight: bold;
+	display: inline-block;
+	width: 120px;
+	text-align: left;
+	margin-right: 8px;
+}
+
+.orderdetail-screen .paymentline-list {
+	font-size: 16px;
+	width: 100%;
+	line-height: 40px;
+}
+
+.pos .orderdetail-screen .paymentline-list th, .pos .orderdetail-screen .paymentline-list td
+	{
+	padding: 0px 5px;
+}
+
+.pos .orderdetail-screen .paymentline-list tr {
+	transition: all 150ms linear;
+	/*background: rgb(230, 230, 230);*/
+}
+
+.bgcolorset tr {
+	background: #375e97;
+	color: #fff;
+}
+
+.pos .orderdetail-screen .paymentline-list thead>tr, .pos .orderdetail-screen .paymentline-list tr:nth-child(even)
+	{
+	/* background: rgb(247, 247, 247);*/
+	
+}
+
+.pos .orderdetail-screen .paymentline-list tr.highlight {
+	transition: all 150ms linear;
+	background: rgb(110, 200, 155) !important;
+	color: white;
+}
+
+.pos .orderdetail-screen .paymentline-list tr.lowlight {
+	transition: all 150ms linear;
+	background: rgb(216, 238, 227);
+}
+
+.pos .orderdetail-screen .paymentline-list tr.lowlight:nth-child(even) {
+	transition: all 150ms linear;
+	background: rgb(227, 246, 237);
+}
+
+/*css*/
+/* Cancel Popup */
+.pos-cancel-popup {
+	height: 90% !important;
+	width: 70% !important;
+}
+
+#return_order_number {
+	width: 30% !important;
+}
+
+.check_box_tag {
+	position: absolute;
+	top: -16px;
+	right: 84px;
+	vertical-align: top;
+	color: white;
+	line-height: 13px;
+	padding: 0px 5px;
+	border-radius: 2px;
+	width: 43px;
+}
+
+.js_quantity {
+	min-height: 0px !important;
+	height: 24px !important;
+	font-size: 14px !important;
+	padding: 0px !important;
+	text-align: center !important;
+	width: 60% !important;
+}
+
+.ac_product_list {
+	max-height: 385px !important;
+	overflow-y: auto;
+}
+
+.order_info_mini_cart {
+	float: left;
+	background: #FFF !important;
+	border: thin solid #ccc;
+	height: 450px;
+	width: 35% !important;
+	margin-left: 20px;
+}
+
+div.order_info_mini_cart .product_info {
+	font-size: 13px;
+	max-height: 60%;
+	overflow-y: auto;
+	height: 60%;
+	border-bottom: solid 3px rgb(55, 94, 151);
+}
+
+div.order_info_mini_cart .cancel_order_summary {
+	width: 100%;
+	font-weight: bold;
+	margin-bottom: 10px;
+	font-size: 13px;
+}
+
+div.order_info_mini_cart .cancel_order_summary div {
+	padding: 12px;
+}
+
+div.order_info_mini_cart .cancel_order_summary span.label {
+	width: 60%;
+	float: left;
+	text-align: left;
+}
+
+div.order_info_mini_cart .cancel_order_summary span.value {
+	float: right;
+	margin-right: 5px;
+	width: 25%;
+	text-align: right;
+}
+
+div.order_info_mini_cart .product_info li.cancel_line {
+	width: 100% !important;
+	margin: 0px !important;
+	padding-top: 3px !important;
+	padding-bottom: 10px !important;
+	padding-left: 15px !important;
+	padding-right: 15px !important;
+	box-sizing: border-box !important;
+	text-align: left;
+	border-bottom: 1px solid #CCC;
+}
+
+div.order_info_mini_cart .product_info li.cancel_line span.cancel_product_name
+	{
+	display: inline-block;
+	padding: 0;
+	width: 50%;
+	padding: 0;
+	font-weight: bold;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+div.order_info_mini_cart .product_info li.cancel_line span.cancel_product_total
+	{
+	float: right;
+}
+
+div.order_info_mini_cart .product_info li.cancel_line ul {
+	font-size: 12px;
+	padding: 5px;
+}
+
+div.order_info_mini_cart .product_info li.cancel_line .cancel_operations .cancel_qty
+	{
+	width: 88% !important;
+	display: inline-block;
+}
+
+div.order_info_mini_cart .product_info li.cancel_line .cancel_operations .remove_line
+	{
+	cursor: pointer;
+	font-size: 22px !important;
+	color: red;
+	display: inline-block;
+	padding: 2px 5px;
+	border-radius: 5px;
+}
+
+.product_content {
+	width: 120px !important;
+	height: 100px !important;
+}
+
+.check_all_items .label {
+	font-size: 14px;
+	color: red;
+}
+
+.check_all_items .check_all_items_checkbox {
+	width: 5% !important;
+	min-height: 0px !important;
+}
+
+.screen .top-content .button.pay {
+	right: 0px;
+	margin-right: 16px;
+}
+
+.order_datefilter {
+	top: 0px !important;
+}
+
+.pos .order .orderline .info-list {
+	color: #333;
+}
+
+.pos .order .orderline .info-list em {
+	color: #333;
+	font-weight: normal;
+}

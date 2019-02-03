@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="CustomerName">
+        <div class="customer_name">
+            Customer Name: 
+            <t t-if="customer_name">
+               <t t-esc="customer_name"/>
+            </t>
+            <t t-if="!customer_name">
+                  Unknown
+               </t>
+        </div>
+    </t>
+
+    <t t-name="CustomerDisplayScreen">
+        <nav class="navbar" style="background-color: #555;border-color: #3e3e3e;height: 52px;">
+            <div class="container-fluid">
+                <div style="width: 40%;float: left;">
+		            <div class="pos-company_logo">
+		                <img t-att-src="widget.company_logo" style="height: 45px;"/>
+		            </div>
+		        </div>
+               <div class="client_name">
+                   <t t-call="CustomerName"/>
+               </div>
+            </div>
+        </nav>
+		<div class="row content" style="height: calc( 100vh - 52px );">
+		    <div class="col-sm-6 sidenav" style="border-right: 1px solid #aaa;background: #fff;padding-right: 0;">
+		        <div>
+		            <div class="placeholder-LeftPanelWidget"/>
+		        </div>
+		    </div>
+		    <div class="col-sm-6" style="background:#FFF;height: calc( 100vh - 52px );">
+	            <div class="placeholder-RightPanelWidget"/>
+	        </div>
+	    </div>
+    </t>
+
+    <t t-name="LeftPanelWidget">
+        <div class="order-container">
+            <div style="height: calc( 100vh - 52px );">
+	            <t t-if="widget.cart_data">
+	                <t t-raw="widget.cart_data"/>
+	            </t>
+	            <t t-if="!widget.cart_data">
+	                <div class="order-scroller touch-scrollable">
+		                <div class="order">
+	                        <div class="order-empty">
+	                            <i class="fa fa-shopping-cart"></i>
+	                            <h1>Your shopping cart is empty</h1>
+	                        </div>
+		                </div>
+		            </div>
+	            </t>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="RightPanelWidget">
+        <div>
+            <div class="pos-payment_info">
+                <div class="pos-adv">
+                    <!-- <div class="placeholder-AdvtPanelWidget"/> -->
+                    <div id="slider">
+		                <a href="#" class="control_next"><i class="fa fa-angle-right"></i></a>
+		                <a href="#" class="control_prev"><i class="fa fa-angle-left"></i></a>
+		                <ul>
+		                    <t t-if="widget.advertise_data">
+		                        <t t-foreach="widget.advertise_data" t-as="adv_data">
+		                            <li>
+		                                <img t-attf-src="data:image/gif;base64, #{adv_data.image}" style="width:100%;height: 100%;float:left;">
+		                                    <span style="position: absolute;width: 100%;color: #fff;font-weight: bold;font-size: 20px;bottom: 0;z-index: 9999;height: 45px;left: 0;">
+		                                        <t t-esc="adv_data.name"/>
+		                                    </span>
+		                                </img>
+		                            </li>
+		                        </t>
+		                    </t>
+		                    <t t-if="!widget.advertise_data">
+		                        <img src="/flexipharmacy/static/src/img/no-ads-icon.png" style="width:100%;height: 100%;"/>
+		                    </t>
+		                </ul>
+		            </div>
+                </div>
+                <t t-call="Payment-Details"/>
+                <t t-call="Paymentlines-Details"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="Paymentlines-Details">
+        <div class="paymentline-details">
+            <t t-if="widget.payment_info and widget.payment_info[0]">
+	            <table class="table" style="font-size: 20px;border: 1px solid #ddd;">
+	                <tr>
+	                    <td colspan="2">
+	                        <strong>Payment</strong>
+	                    </td>
+	                </tr>
+	                <t t-foreach="widget.payment_info" t-as="p_line">
+	                    <tr>
+	                        <td style="border: 1px solid #ddd;">
+	                            <t t-esc="p_line.name"/>
+	                        </td>
+	                        <td>
+	                            <t t-esc="widget.format_currency(p_line.amount)"/>
+	                        </td>
+	                    </tr>
+	                </t>
+	            </table>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="Payment-Details">
+        <div class="pos-payment_info_details">
+            <table class="table" style="font-size: 20px;border: 1px solid #ddd;">
+                <tr>
+                    <td>
+                        <strong>Total:</strong>
+                    </td>
+                    <td style="border-right: 1px solid #ddd;">
+                        <t t-if="widget.order_amount">
+                            <t t-esc="widget.format_currency(widget.order_amount)"/>
+                        </t>
+                        <t t-if="!widget.order_amount">
+                            <t t-esc="widget.format_currency(0)"/>
+                        </t>
+                    </td>
+                    <td>
+                        <strong>Change:</strong>
+                    </td>
+                    <td>
+                        <t t-if="widget.change_amount">
+                            <t t-esc="widget.format_currency(widget.change_amount)"/>
+                        </t>
+                        <t t-if="!widget.change_amount">
+                            <t t-esc="widget.format_currency(0)"/>
+                        </t>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </t>
+
+</templates>

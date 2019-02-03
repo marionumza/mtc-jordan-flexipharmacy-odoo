@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="bags_prod" model="product.product">
+        <field name="name">Bag</field>
+        <field name="list_price">5.00</field>
+        <field name="type">consu</field>
+        <field name="is_packaging">True</field>
+        <field name="is_dummy_product">True</field>
+        <field name="taxes_id"/>
+        <field name="supplier_taxes_id" />
+        <field name="image_medium">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</field>
+    </record>
+
+    <record id="delivery_charge" model="product.product">
+        <field name="available_in_pos">True</field>
+        <field name="list_price">0</field>
+        <field name="is_dummy_product">True</field>
+        <field name="taxes_id"/>
+        <field name="supplier_taxes_id" />
+        <field name="type">service</field>
+        <field name="name">Delivery Charge</field>
+    </record>
+
+    <record id="discount_product" model="product.product">
+        <field name="available_in_pos">True</field>
+        <field name="list_price">0</field>
+        <field name="is_dummy_product">True</field>
+        <field name="taxes_id"/>
+        <field name="supplier_taxes_id" />
+        <field name="type">service</field>
+        <field name="name">Discount Product</field>
+    </record>
+
+    <record id="acespritech_retail_payment_charge_product" model="product.product">
+        <field name="name">Payment Charges</field>
+        <field name="list_price">0</field>
+        <field name="type">service</field>
+        <field name="available_in_pos">True</field>
+        <field name="is_dummy_product">True</field>
+        <field name="sale_ok">True</field>
+        <field name="taxes_id"/>
+        <field name="supplier_taxes_id" />
+    </record>
+
+    <record id="package_product_template_only_form_view" model="ir.ui.view">
+        <field name="name">package.product.template.form.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+        	<field name="to_weight" position="after">
+           		<field name="loyalty_point" />
+           	</field>
+            <field name="sale_ok" position="before">
+                <div>
+                	<field name="product_brand_id" placeholder="Brand"/>
+                </div>
+                <div>
+                    <field name="is_packaging"/>
+                    <label for="is_packaging"/>
+                </div>
+            </field>
+        </field>
+    </record>
+    
+    <record id="aspl_pos_category_form" model="ir.ui.view">
+        <field name="name">aspl.pos.category.form.view</field>
+        <field name="model">pos.category</field>
+        <field name="inherit_id" ref="point_of_sale.product_pos_category_form_view"/>
+        <field name="arch" type="xml">
+        	<field name="sequence" position="after">
+        		<field name="loyalty_point" />
+        		<field name="return_valid_days"/>
+        	</field>
+        </field>
+    </record>
+
+	<record id="product_product_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.purchase</field>
+        <field name="model">product.product</field>
+        <field name="priority" eval="25"/>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <button name="toggle_active" position="before">
+                <button class="oe_stat_button" name="nearly_expired" icon="fa-building-o" type="object">
+                    <field name="near_expire" widget="statinfo" string="Nearly Expire"/>
+                </button>
+                <button class="oe_stat_button" name="product_expired" type="object" icon="fa-building-o">
+                    <field string="Expired" name="expired" widget="statinfo"/>
+                </button>
+            </button>
+        </field>
+    </record>
+</odoo>

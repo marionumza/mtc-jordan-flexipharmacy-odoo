@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="GiftVoucherListScreenWidget">
+        <div class="giftvoucherlist-screen list-screen screen">
+            <div class="screen-content">
+                <section class="top-content top-content_finalset">
+                    <div class="voucher_set_width"> 
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Cancel
+                    </span>
+                    </div>
+                    <div class="voucher_set_width1">
+                    <span class="date-filter pos_search_box voucher_set_width3">
+                        <input type="text" id="search_voucher_expiry_date" class="search_date" placeholder="YYYY-MM-DD" />
+                    </span>
+                    <span class='button reload giftvoucher_reload voucher_set_width3'>
+                        <i class="fa fa-refresh voucher_reload" aria-hidden="true"></i>
+                        Reload
+                    </span>
+                    <span class='searchbox voucher_search pos_search_box voucher_set_width3'>
+                        <input placeholder='Search Gift Voucher' style="width: 164px;" />
+                        <span class='search-clear'></span>
+                    </span>
+                    <span class='searchbox'></span>
+                    </div>
+                    </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y giftvoucher-list-scroll' style="height:auto;max-height: 490px !important;">
+                                    <div>
+                                        <table class='list_table giftvoucher-list'>
+                                            <thead class="bgcolorset1">
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Code</th>
+                                                    <th>Amount</th>
+                                                    <th>Minimum Purchase</th>
+                                                    <th>Expire Date</th>
+                                                    <th>Redemption Order</th>
+                                                    <th>Redemption Customer</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody  class='giftvoucher-list-contents'>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="GiftVoucherlistLine">
+        <tr class='gift-voucher-line' t-att-data-id='gift_voucher.id'>
+            <td><t t-esc='gift_voucher.voucher_name' /></td>
+            <td><t t-esc='gift_voucher.voucher_code' /></td>
+            <td><t t-esc='widget.format_currency(gift_voucher.voucher_amount)' /></td>
+            <td><t t-esc='widget.format_currency(gift_voucher.minimum_purchase)' /></td>
+            <td><t t-esc='gift_voucher.expiry_date or ""' /></td>
+            <td><t t-esc='gift_voucher.redemption_order' /></td>
+            <td><t t-esc='gift_voucher.redemption_customer' /></td>
+        </tr>
+    </t>
+
+</templates>

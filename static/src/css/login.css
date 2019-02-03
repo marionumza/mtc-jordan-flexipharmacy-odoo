@@ -1,0 +1,243 @@
+/*.pos-login {
+    background: #eeeef0 none repeat scroll 0 0;
+}*/
+
+.page-container {
+    width: 100%;
+    font-family: sans-serif;
+}
+.input-fields {
+    float: left;
+    width: 100%;
+}
+.logo-container {
+    margin: 0 0 15px;
+    text-align: center;
+}
+.input-fields > input {
+    float: left;
+    margin: 15px 0;
+    padding: 5px;
+    width: 100%;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #1e81c0;
+    border-image: none;
+    border-style: none none solid;
+    border-width: 0 0 2px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    -webkit-transition: all ease 0.3s;
+    -moz-transition: all ease 0.3s;
+    -o-transition: all ease 0.3s;
+    -ms-transition: all ease 0.3s;
+    transition: all ease 0.3s;
+/*    background: #f0eeee;
+*/}
+.input-fields > input::-webkit-input-placeholder,
+.input-fields > input:focus {
+    /* Chrome/Opera/Safari */
+    
+    /*color: #1e81c0;
+    font-family: sans-serif;*/
+    font-size: 21px;
+    letter-spacing: 2px;
+    outline: 0;
+    -webkit-transition: all ease 0.3s;
+    -moz-transition: all ease 0.3s;
+    -o-transition: all ease 0.3s;
+    -ms-transition: all ease 0.3s;
+    transition: all ease 0.3s;
+    box-shadow: none !important;
+}
+.input-fields > input::-moz-placeholder,
+.input-fields > input:focus {
+    /* Firefox 19+ */
+    
+   /* color: #1e81c0;
+    font-family: sans-serif;*/
+    font-size: 21px;
+    letter-spacing: 2px;
+}
+.input-fields > input:-ms-input-placeholder,
+.input-fields > input:focus {
+    /* IE 10+ */
+    
+    color: #1e81c0;
+    font-family: nexa-regular;
+    font-size: 21px;
+    letter-spacing: 2px;
+}
+.input-fields > input::-moz-placeholder,
+.input-fields > input:focus {
+    color: #1e81c0;
+    font-family: sans-serif;
+    font-size: 21px;
+    letter-spacing: 2px;
+}
+.action > input {
+    background-color: #555555;
+    border: medium none;
+    cursor: pointer;
+    font-size: 18px;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 200px;
+    color: #fff;
+    /*background: linear-gradient(to left, #1e81c0 50%, black 50%);*/
+    background: linear-gradient(to left, #555555 50%, #626d61  50%);
+
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all 0.5s ease;
+}
+.action >input:hover {
+    background-position: left bottom;
+}
+.panel-container {
+    border-radius: 15px;
+    box-shadow: 0 0 10px -3px #1e81c0;
+    margin: 2% auto 0;
+    padding: 25px;
+}
+.pos-login .panel-container {
+    width: 420px;
+}
+.action {
+    display: inline-block;
+    margin: 25px auto 0;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+.oe_single_form {
+    overflow: scroll !important;
+}
+.oe_single_form_logo img {
+    width: 62px;
+}
+.oe_single_form_container {
+    margin-top: -290px !important;
+}
+.login_key_bord {
+    margin: 15px auto 0;
+    width: 515px;
+    text-align: center;
+}
+.login_space {
+    width: 250px;
+}
+.number_pad_button {
+    background: #1e81c0 none repeat scroll 0 0 !important;
+    border: medium none !important;
+    box-shadow: 0 2px 1px 0 #000 !important;
+    border-radius: 5px !important;
+    font-size: 20px !important;
+    margin-left: 5px !important;
+    margin-top: 5px !important;
+    padding: 10px !important;
+    cursor: pointer !important;
+    width: 35px !important;
+    color: #fff !important;
+}
+body.oe_single_form .oe_single_form_container {
+    width: auto;
+}
+.display_none {
+    display: none;
+}
+.change_char,
+.change_smallChar,
+.change_num,
+.ac-clear-data {
+    border-radius: 5px !important;
+    background: #1e81c0 none repeat scroll 0 0 !important;
+    border: 0 none !important;
+    font-size: 20px !important;
+    margin-top: 5px !important;
+    padding: 10px !important;
+    box-shadow: 0 2px 1px 0 #000 !important;
+/*    color: #fff !important;
+*/    margin-left: 5px !important;
+}
+
+
+.ac-carousel-control {
+    background: red;
+}
+.oe_website_login_container {
+    width: 500px;
+}
+::-webkit-scrollbar,
+::-moz-appearance-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track,
+::-moz-appearance-scrollbar-track {
+    background-color: #91C0E1;
+}
+/* the new scrollbar will have a flat appearance with the set background color */
+
+::-webkit-scrollbar-thumb,
+::-moz-scrollbar-thumb {
+    background-color: #2581C4;
+}
+/* this will style the thumb, ignoring the track */
+
+::-webkit-scrollbar-corner,
+::-moz-scrollbar-corner {
+    background-color: black;
+}
+.toolbar-product-section .back-btn {
+    font-size: 35px;
+    height: 40px;
+    left: 50px;
+    position: absolute;
+    top: 12px;
+    width: 40px;
+}
+button.btn.btn-default.btn-lg.change_char {
+    display: none;
+}
+button.btn.btn-default.btn-lg.number_pad_button.login_space {
+    width: 140px !important;
+}
+.pos .pos-login-topheader {
+   position: absolute;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 50px;
+   margin: 0;
+   padding: 0;
+   color: gray;
+}
+.pos .pos-login-rightheader {
+   position: absolute;
+   right: 0;
+   top: 0;
+   height: 100%;
+   display: -webkit-flex;
+   display: flex;
+   font-size: 52px;
+   color: #1e81c0;
+   cursor: pointer;
+}
+@media(max-width:767px) {
+    .panel-container {
+        border: medium none;
+        border-radius: 15px;
+        box-shadow: none;
+        margin: 10% auto 0;
+        padding: 0;
+        width: 305px;
+    }
+    .virtual-keyboard {
+        display: none;
+    }
+}

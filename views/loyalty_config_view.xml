@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_loyalty_config_settings_form_pos" model="ir.ui.view">
+            <field name="name">pos.loyalty.config.settings.form</field>
+            <field name="model">loyalty.config.settings</field>
+            <field name="arch" type="xml">
+                <form class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="cancel" class="oe_link" special="cancel"/>
+                    </header>
+                    <group string="Loyalty">
+                        <field name="points_based_on"/>
+                    </group>
+                    <group cols="4" attrs="{'invisible': [('points_based_on', '!=', 'order')]}">
+                    	<group>
+                    		<field name="minimum_purchase" widget="monetary"/>
+                    	</group>
+                    	<group>
+                    		<field name="point_calculation" />
+                    	</group>
+                    </group>
+                    <group cols="4" >
+                    	<group>
+                    		<field name="points"/>
+                    	</group>
+                    	<group>
+                    		<field name="to_amount" />
+                    	</group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="action_pos_loyalty_configuration" model="ir.actions.act_window">
+            <field name="name">Configure Point of Sale Loyalty</field>
+            <field name="res_model">loyalty.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+		<menuitem id="menu_point_config_loyalty" name="Loyalty" parent="point_of_sale.menu_point_root" groups="point_of_sale.group_pos_manager"/>
+
+        <menuitem id="menu_pos_global_loyalty_settings" name="Settings" 
+            parent="menu_point_config_loyalty" action="action_pos_loyalty_configuration" groups="base.group_system"/>
+</odoo>

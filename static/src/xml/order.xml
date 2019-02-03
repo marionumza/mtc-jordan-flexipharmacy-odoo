@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<!-- **** Orders(Screen) related Code Here **** -->
+
+	<t t-name="OrderListScreenWidget">
+        <div class="orderlist-screen screen">
+            <div class="screen-content orderlist-screen">
+                <section class="top-content top-content_finalset">
+                <div class="order_set_width">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                 </div>
+                 <div class="order_set_width_right">
+                    <span class='button paid'>
+                        <i class='fa fa-credit-card'></i>
+                        Paid
+                    </span>
+                    <span class='button draft'>
+                        <i class='fa fa-file-text'></i>
+                        Draft
+                    </span>
+                     <span class='button posted'>
+                        <i class='fa fa-file-text'></i>
+                        Posted
+                    </span>
+                    <!--<t t-if="widget.pos.config.enable_order_reservation">-->
+	                    <!--<span class='button reserved'>-->
+	                        <!--<i class="fa fa-pencil-square-o" aria-hidden="true"></i>-->
+	                        <!--Reserved-->
+	                    <!--</span>-->
+	               	<!--</t>-->
+	               	<span class='button reload load_reset'>
+                    	<i class="fa fa-refresh reload_order"
+	aria-hidden="true"></i>
+                       	Reload
+                   	</span>
+                   	<span class="date-filter date-filterset order_datefilter">
+                    	<input placeholder="YYYY-MM-DD" type="text"
+	id="datepicker" class='searchbox date_search_set' style="float: left;
+    left: 0;" />
+                   	</span>
+                    <span class='searchbox search_order1' style="margin-top: 0px;">
+                    	<input placeholder='Search orders' style="width: 164px;" />
+                    	<span class='search-clear'></span>
+                   	</span>
+                   	<span class='searchbox'></span>
+                   	</div>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div
+	class='subwindow-container-fix touch-scrollable scrollable-y order-list-scroll'
+	style="height:auto;max-height: 490px !important;">
+                                    <div>
+                                        <table class='order-list'>
+                                                <thead class="bgcolorset">  
+                                                    <tr>
+                                                    <th>Order Ref</th>
+                                                    <th>Receipt Ref</th>
+                                                    <th>Customer</th>
+                                                    <th>Order Date</th>
+                                                    <th>Total</th>
+                                                    <t
+	t-if="widget.pos.config and widget.pos.config.enable_order_reservation">
+	                                                     <th>Amount due</th>
+	                                                </t>
+	                                                <t
+	t-if="widget.pos.config and widget.pos.config.enable_order_reservation">
+	                                                     <th>Pay</th>
+	                                                     <th>Cancel</th>
+	                                                     <th>Delivery Date</th>
+	                                                 </t>
+                                                    <th>Receipt</th>
+                                                    <th>Edit</th>
+                                                    <th>Reorder</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody
+	class='order-list-contents'>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+                <div id="pagination">
+                     <div><button class="btn btn-danger" style="font-size:20px"
+	id="first"><i class="fa fa-angle-double-left fa-lg"></i></button></div>
+                     <div><button class="btn btn-danger" style="font-size:20px"
+	id="previous"></button></div>
+                     <div><span class="text" id="text"></span></div> 
+                     <div><button class="btn btn-danger" style="font-size:20px"
+	id="next"></button></div>
+                     <div><button class="btn btn-danger" style="font-size:20px"
+	id="last"><i class="fa fa-angle-double-right fa-lg"></i></button></div>
+                 </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="OrderlistLine">
+        <tr t-attf-class='client-line #{order.state == "draft"?"draft-font":""}'
+	t-att-data-id='order.id'>
+            <td><t t-esc='order.name' /></td>
+            <td><t t-esc='order.pos_reference' /></td>
+            <td><t t-esc='order.partner_id[1]' /></td>
+            <td><t t-esc='order.date_order or ""' /></td>
+            <td><t t-esc='order.amount_total or ""' /></td>
+            <t
+	t-if="widget.pos.config and widget.pos.config.enable_order_reservation">
+                <td><t t-esc='widget.format_currency(order.amount_due) or ""' /></td>
+            </t>
+            <t
+	t-if="widget.pos.config and widget.pos.config.enable_order_reservation">
+	            <td class="order_history_button">
+	                <t t-if="order.state == 'draft'">
+	                    <span id="pay_due_amt" t-att-data-id='order.id'
+	title="Pay" style="cursor:pointer;font-size: 27px;">
+	                        <i class="fa fa-money" aria-hidden="true"></i>
+	                    </span>
+	                </t>
+	            </td>
+                <td class="order_history_button">
+	                <t
+	t-if="order.state == 'draft' and order.order_status != 'full' and order.reserved">
+	                    <span id="cancel_order" t-att-data-id='order.id'
+	title="Cancel" style="cursor:pointer;font-size: 27px;">
+	                        <i class="fa fa-times" aria-hidden="true"></i>
+	                    </span>
+	                </t>
+	            </td>
+                <td class="order_history_button">
+	                <t t-if="order.state == 'draft'">
+	                    <span id="delivery_date" t-att-data-id='order.id'
+	title="Delivery Date" style="cursor:pointer;font-size: 27px;">
+	                        <i class="fa fa-calendar" aria-hidden="true"></i>
+	                    </span>
+	                </t>
+	            </td>
+            </t>
+            <td>
+                <span id="print_order" t-att-data-id='order.id'
+	title="Print Receipt" style="cursor:pointer">
+                    <i class="fa fa-print" aria-hidden="true"
+	style="font-size: x-large;"></i>
+                </span>
+            </td>
+            <td>
+                <t t-if="order.state == 'draft' and !order.reserved">
+                    <span id="edit_order" t-att-data-id='order.id'
+	t-att-data-operation="edit" title="Edit" style="cursor:pointer;font-size: 27px;">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </span>
+                </t>
+            </td>
+            <td>
+                <t
+	t-if="(order.state == 'paid' or order.state == 'done') and !order.back_order">
+                    <span id="re_order_duplicate" t-att-data-id='order.id'
+	t-att-data-operation="reorder" title="Reorder" style="cursor:pointer;font-size: 27px;">
+                        <i class="fa fa-repeat" aria-hidden="true"></i>
+                    </span>
+                </t>
+            </td>
+        </tr>
+    </t>
+	
+	<t t-name="OrderDetails">
+            <section class='order-details'>
+            <div class='order-name'><t t-esc='order.name' /></div>
+            <div class='order-details-box clearfix'>
+                <div class='order-details-left'>
+                    <div class='order-detail'>
+                        <span class='label'>Client: </span>
+                        <t t-if='order.partner_id'>
+                            <span class='detail'><t t-esc='order.partner_id[1]' /></span>
+                        </t>
+                        <t t-if='!order.partner_id'>
+                            <span class='detail empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='order-detail'>
+                        <span class='label'>Receipt: </span>
+                        <t t-if='order.pos_reference'>
+                            <span class='detail'><t t-esc='order.pos_reference' /></span>
+                        </t>
+                        <t t-if='!order.pos_reference'>
+                            <span class='detail empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='order-detail'>
+                        <span class='label'>Order Date: </span>
+                        <t t-if='order.date_order'>
+                            <span class='detail'><t t-esc='order.date_order' /></span>
+                        </t>
+                        <t t-if='!order.date_order'>
+                            <span class='detail empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='order-detail'>
+                        <span class='label'>Delivery Date: </span>
+                        <t t-if='order.delivery_date'>
+                            <span class='detail'><t t-esc='order.delivery_date' /></span>
+                        </t>
+                        <t t-if='!order.delivery_date'>
+                            <span class='detail empty'>N/A</span>
+                        </t>
+                    </div>
+                </div>
+                <div class='order-details-right'>
+                    <div class='order-detail'>
+                        <span class='label'>Total: </span>
+                        <t t-if='order.amount_total'>
+                            <span class='detail'><t
+	t-esc='widget.format_currency(order.amount_total)' /></span>
+                        </t>
+                        <t t-if='!order.amount_total'>
+                            <span class='detail empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='order-detail'>
+                        <span class='label'>Due: </span>
+                        <t t-if='order.amount_due'>
+                            <span class='detail'><t
+	t-esc='widget.format_currency(order.amount_due)' /></span>
+                        </t>
+                        <t t-if='!order.amount_due'>
+                            <span class='detail empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='order-detail'>
+                        <span class='label'>Status: </span>
+                        <t t-if='order.state'>
+                            <span class='detail'><t t-esc='order.state' /></span>
+                        </t>
+                        <t t-if='!order.state'>
+                            <span class='detail empty'>N/A</span>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </t>
+	
+	
+	<t t-name="OrderDetailScreenWidget">
+        <div class="orderdetail-screen screen">
+            <div class="screen-content">
+                <section class="top-content top-content_finalset">
+                    <span class='button back highlight'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                    <h1>Payment History</h1>
+                    <t
+	t-if="widget.clicked_order and widget.clicked_order.state == 'draft'">
+                        <span class='button pay highlight'>
+                            <i class="fa fa-money" aria-hidden="true"></i>
+                            Pay
+                        </span>
+                    </t>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div
+	class='subwindow-container-fix order-details-contents' style="height:auto;max-height: 490px !important;">
+                                </div>
+                                <div
+	class='subwindow-container-fix touch-scrollable scrollable-y' style="height: 347px;">
+                                    <table class='paymentline-list'>
+                                        <thead class='bgcolorset'>
+                                            <tr>
+                                                <th>Journal</th>
+                                                <th>Date</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody
+	class='paymentline-list-contents'>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="PaymentLines">
+        <tr class='payment-line' t-att-data-id='statement.id'>
+            <td><t
+	t-esc='statement.journal_id ? statement.journal_id[1] : ""' /></td>
+            <td><t t-esc='statement.date' /></td>
+            <td><t t-esc='widget.format_currency(statement.amount)' /></td>
+        </tr>
+    </t>
+
+    <t t-name="OpeningBalanceScreenWidget">
+        <div class="opening-balance-screen screen">
+             <div class="screen-content">
+                <section class="top-content select-user">
+                    <button id="skip">Skip</button>
+                    <div class='cash-control-header'>
+                        Opening Cash Control
+                    </div>
+                </section>
+                <section class="full-content" style="top: 80px;overflow: auto;">
+                    <div class='window'>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div
+	class='subwindow-container-fix touch-scrollable scrollable-y'>
+                                    <div
+	style="max-height: 300px !important;overflow: auto;">
+                                        <table id="opening_cash_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Coin/Bill Value</th>
+                                                    <th>Number of Coins/Bills</th>
+                                                    <th>Subtotal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                        <div id="open_balance_add"
+	style="width:100%;">
+                                            <div
+	style="position: fixed;top: 70%;float:left">
+                                                <button
+	id="add_open_balance">Add New Item</button>
+                                            </div>
+                                            <div
+	style="position: fixed;top: 70%;float:right;margin-left:45%;">
+                                                <h2>Subtotal :<span
+	class="open_subtotal" style="margin-left: 15px;"></span></h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+                <div class="open_footer">
+                    <button id="validate_open_balance">Validate Cash</button>
+                </div>
+             </div>
+        </div>
+    </t>
+
+</templates>

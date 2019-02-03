@@ -1,0 +1,423 @@
+.product-price-tag {
+	text-align: center;
+	top: auto;
+	line-height: 14px;
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	position: absolute;
+	bottom: 8px;
+	font-size: 14px;
+}
+
+.subwindow-container-fix.touch-scrollable.scrollable-y.products-list-scroll
+	{
+	overflow-x: hidden;
+	overflow-y: auto;
+	height: calc(100vh - 150px);
+}
+
+.ac_product_list_manage .main-product {
+	border: none;
+	box-shadow: 0 0 5px 0 #000;
+	width: 160px;
+	height: 150px;
+}
+
+body .pos .ac_product_list_manage .main-product-image {
+	position: initial;
+	text-align: center;
+	width: 100%;
+}
+
+.ac_product_list_manage .main-product-image>img {
+	max-height: 110px;
+	max-width: 130px;
+	vertical-align;
+}
+
+.pos .screen {
+	background: #fff;
+}
+
+.product.main-product:hover {
+	box-shadow: 0 0 5px 0 #2581c4;
+}
+
+.pos .product-list-container {
+	background: #AGACBG;
+}
+
+.ac_product_list_manage .product-referance {
+	display: none;
+}
+
+.ac_product_list_manage.list .product-referance {
+	display: block;
+}
+
+.ac_product_list_manage.list .product-price-tag {
+	position: relative;
+	top: unset;
+	bottom: unset;
+	float: right;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 40px;
+	line-height: normal !important;
+	width: 160px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.ac_product_list_manage.list span.product.main-product {
+	float: left;
+	width: 100%;
+	height: 43px;
+	padding: 0;
+	margin: 0px 0px !important;
+	box-shadow: none;
+	border: 1px solid #eee;
+}
+
+.pos .ac_product_list_manage.list .product-img.main-product-image {
+	float: left;
+	width: 150px;
+	height: 40px;
+}
+
+.ac_product_list_manage.list .product-price-tag {
+	font-size: 14px;
+}
+
+.pos .ac_product_list_manage .product-name {
+	font-size: 14px;
+}
+
+.pos .ac_product_list_manage.list .product-name, .pos .ac_product_list_manage.list .product-referance
+	{
+	float: left !important;
+	position: relative !important;
+	padding: 0 !important;
+	width: 25% !important;
+	display: flex;
+	bottom: unset !important;
+	align-items: center;
+	justify-content: center;
+	height: 40px;
+	font-size: 14px;
+	font-weight: bold;
+	background: transparent;
+}
+
+.pos .ac_product_list_manage.list .product .product-img img {
+	max-width: 50px !important;
+	max-height: 40px !important;
+	vertical-align: top;
+}
+
+.ac_product_list_manage .header {
+	display: none;
+}
+
+.ac_product_list_manage.list .header {
+	display: block;
+	background: #576271;
+	color: #fff;
+}
+
+.product-img-lable {
+	width: 150px;
+	float: left;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.product-image {
+	width: 120px;
+	height: auto;
+	float: left;
+	padding-left: 12px;
+}
+
+.edit-product {
+	font-size: 30px;
+	left: 25px;
+	position: absolute;
+	top: 10px;
+	cursor: pointer;
+}
+
+.product .label {
+	display: inline;
+	padding: .2em .6em .3em;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: .25em;
+}
+
+.product-section {
+	float: left;
+	max-height: 100%;
+	overflow: hidden;
+}
+
+.product-container {
+	display: inline-block;
+	height: 100vh;
+	overflow-y: scroll;
+	padding-bottom: 115px;
+}
+
+/* .product-list {
+	padding: 0 15px 35px;
+}
+ */
+.toolbar-product-section {
+	padding: 10px 15px;
+}
+
+.search-blk .fa.fa-search {
+	color: #888;
+	float: left;
+	font-size: 25px;
+	line-height: 35px;
+}
+
+.search-blk {
+	border: medium none;
+	display: inline-block;
+	height: 40px;
+	line-height: 35px;
+	margin-left: 50px;
+	overflow: hidden;
+	padding-left: 20px;
+	position: relative;
+	width: 780px;
+}
+
+.product-data {
+	width: 80%;
+	margin: 0 auto;
+	float: left;
+	padding-left: 15px;
+}
+
+.product-item {
+	width: 16%;
+}
+
+.product-image img {
+	width: 100%;
+}
+
+.product-details-left, .product-details-right {
+	float: left;
+	width: 50%;
+}
+
+.product-detail .label {
+	color: #333;
+	float: left;
+	height: 35px;
+	line-height: 35px;
+	text-align: left;
+	width: 125px;
+}
+
+.product-details-box .product-detail input, .product-details-box .product-detail select
+	{
+	background: #fff none repeat scroll 0 0;
+	border: 1px solid lightgrey;
+	float: left;
+	padding: 5px;
+	width: 185px;
+	min-height: 35px;
+	font-size: 14px;
+	display: none;
+}
+
+.product-detail {
+	float: left;
+	padding: 3px 0;
+	width: 100%;
+}
+/*.product-list.list .view-details {
+    float: left;
+    width: 100%;
+}*/
+.product-mode.right {
+	float: right;
+	margin-top: 8px;
+	text-align: right;
+}
+
+.product-list.list {
+	margin-top: 10px;
+}
+
+.product-list.list .product-item {
+	float: left;
+	margin: 5px 0;
+	width: 100%;
+	height: 50px;
+}
+
+.product-list.list .sale-label {
+	top: 0;
+}
+
+.product-list.list .product-name, .product-list.list .product-price,
+	.product-list.list .product-description {
+	height: 50px;
+}
+
+.product-list.list .product-img {
+	width: 40px;
+}
+
+.label-value {
+	float: right;
+	padding: 6px;
+	text-align: left;
+	width: 180px;
+}
+
+.btn.btn-primary {
+	background: #2581c4 none repeat scroll 0 0;
+	border: medium none;
+	border-radius: 0;
+}
+
+.btn.btn-default {
+	border: 1px solid #e5e5e5;
+	border-radius: 0;
+}
+
+.product-list.list .product-item {
+	border: 1px solid #f3f3f3;
+	box-shadow: none;
+	float: left;
+	height: 50px;
+	margin: 5px 0;
+	width: 100%;
+}
+
+.product-list.list  .product-content.view-details {
+	float: left;
+	width: 100%;
+}
+
+/* @media ( min-width :1024px) and (max-width:1100px) {
+	.pos .rightpane {
+		left: 577px;
+	}
+} */
+/* Load Background */
+.product_progress_bar {
+	/*     width: 29.5%; */
+	border: 1px solid #555;
+	height: 32px;
+	line-height: 8px;
+	position: relative;
+	top: 7px;
+	left: 160px;
+}
+
+.graph {
+	width: 226px;
+	/* width and height are arbitrary, just make sure the #bar styles are changed accordingly */
+	height: 30px;
+	border: 1px solid #888;
+	background: rgb(168, 168, 168);
+	background: -moz-linear-gradient(top, rgba(168, 168, 168, 1) 0%,
+		rgba(204, 204, 204, 1) 23%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(168,
+		168, 168, 1)), color-stop(23%, rgba(204, 204, 204, 1)));
+	background: -webkit-linear-gradient(top, rgba(168, 168, 168, 1) 0%,
+		rgba(204, 204, 204, 1) 23%);
+	background: -o-linear-gradient(top, rgba(168, 168, 168, 1) 0%,
+		rgba(204, 204, 204, 1) 23%);
+	background: -ms-linear-gradient(top, rgba(168, 168, 168, 1) 0%,
+		rgba(204, 204, 204, 1) 23%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a8a8a8',
+		endColorstr='#cccccc', GradientType=0);
+	background: linear-gradient(top, rgba(168, 168, 168, 1) 0%,
+		rgba(204, 204, 204, 1) 23%);
+	position: relative;
+}
+
+#bar {
+	height: 29px;
+	/* Not 30px because the 1px top-border brings it up to 30px to match #graph */
+	background: rgb(255, 197, 120);
+	background: -moz-linear-gradient(top, rgba(255, 197, 120, 1) 0%,
+		rgba(244, 128, 38, 1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255,
+		197, 120, 1)), color-stop(100%, rgba(244, 128, 38, 1)));
+	background: -webkit-linear-gradient(top, rgba(255, 197, 120, 1) 0%,
+		rgba(244, 128, 38, 1) 100%);
+	background: -o-linear-gradient(top, rgba(255, 197, 120, 1) 0%,
+		rgba(244, 128, 38, 1) 100%);
+	background: -ms-linear-gradient(top, rgba(255, 197, 120, 1) 0%,
+		rgba(244, 128, 38, 1) 100%);
+	background: linear-gradient(top, rgba(255, 197, 120, 1) 0%,
+		rgba(244, 128, 38, 1) 100%);
+	border-top: 1px solid #fceabb;
+}
+
+#bar p {
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	margin: 0;
+	line-height: 30px;
+	color: #000;
+}
+
+.create-product-image .product-img.main-product-image {
+	float: left;
+	margin-left: 2%;
+}
+
+.create-product-name {
+	float: left;
+	margin-left: 30px;
+	margin-top: 10px;
+}
+
+.create-product-image {
+	float: left;
+	width: 100%;
+}
+
+.product_list_manage {
+	height: calc(100vh - 150px);
+}
+
+.products-list-scroll .ac_product_list_manage.list .product:last-child {
+	border-bottom: 1px solid #375e97;
+}
+
+.products-list-scroll .ac_product_list_manage.list .product:first-child
+	{
+	border-top: none;
+}
+@media screen and (min-width:768px) and (max-width:1024px){
+	.ac_product_list_manage .main-product {
+    border: none;
+    box-shadow: 0 0 5px 0 #000;
+    width: 148px;
+    height: 137px;
+}
+}

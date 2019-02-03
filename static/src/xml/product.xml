@@ -1,0 +1,1357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	
+<!-- **** Product Screen related Code Here **** -->
+
+    <t t-name="CategoriesView">
+        <t t-if="sub_categories">
+            <t t-if="parent_categ_id">
+                <span class='v-category parent_categ category-simple-button js-category-switch' t-att-data-category-id="parent_categ_id">
+                   <i class="fa fa-arrow-left"></i> Back
+                </span>
+            </t>
+            <t t-foreach="sub_categories" t-as="categ">
+                <span class='v-category category-simple-button js-category-switch' t-att-data-category-id="categ.id">
+                    <t t-esc="categ.name"/>
+                </span>
+            </t>
+        </t>
+    </t>
+
+	<t t-extend="Chrome">
+	   <t t-jquery="div.pos-rightheader" t-operation="append">
+            <t t-if="widget.pos.config and widget.pos.config.product_sync and widget.pos.get_cashier().access_product_sync">
+                <div class="oe_status" id="product_sync">
+                    <a title="Product Sync" href="#">
+                        <i class="fa fa-refresh prodcut_sync" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </t>
+            <t t-if="widget.pos.get_cashier() and widget.pos.get_cashier().lock_terminal">
+	            <div class="lock_widget" >
+					<div class="oe_status" id="pos_lock">
+						<a title="Lock Terminals" href="#">
+							<i class="fa fa-lock" aria-hidden="true" style="color: rgb(94, 185, 55);"></i>
+						</a>
+					</div>
+				</div>
+			</t>
+			<t t-if="widget.pos.config and widget.pos.config.customer_display">
+		        <div class="oe_status" id="customer_display">
+		        	<a title="Customer Display" href="#">
+		        		<i class="fa fa-desktop" style="margin-top: 4px"></i>
+		        	</a>
+		        </div>
+	        </t>
+			<div class="messages_button">
+				<div class="oe_status" id="messages_button">
+					<a title="Messages" href="#">
+						<i class="fa fa-envelope" id="message_icon" aria-hidden="true" style="color: gray;font-size: 18px;"></i>
+					</a>
+				</div>
+				<div>
+				    <ul id="draggablePanelList" class="list-unstyled">
+				        <li class="panel panel-info">
+				            <div class="panel-heading">
+				                <span class='head_data'/>
+				                <span id="close_draggable_panal">
+				                	<i class="fa fa-window-close" aria-hidden="true" />
+								</span>
+				                <t t-if="widget.pos.get_cashier() and widget.pos.get_cashier().delete_msg_log">
+				                	<span id="delete_msg_history">
+					                	<i class="fa fa-trash-o" aria-hidden="true" />
+					                </span>
+				                </t>
+				            </div>
+				            <div id="message_list_container" class='message-panel-body message-list' style="overflow: auto;">
+							</div>
+				        </li>
+				    </ul>
+				</div>
+			</div>
+        </t>
+        <t t-jquery="div.pos-branding" t-operation="replace">
+        	<div class="pos-branding">
+        		<span class="placeholder-SliderWidget"></span>
+<!--                 <img class="pos-logo" src="/point_of_sale/static/src/img/logo.png" /> -->
+				<span class="pos-cart-info">
+	                <span class="placeholder-PosCartCountWidget"></span>
+		        </span>
+            </div>
+            <div class="show-left-cart" style="display:none;left:0px;">
+                Cart Data
+            </div>
+        </t>
+        <t t-jquery=".pos-cart-info" t-operation="after">
+            <t t-if="widget.pos.config and widget.pos.config.enable_manual_lock and widget.pos.get_cashier().access_pos_lock">
+                <span class="order-button lock_button">
+                    <i class="fa fa-lock"></i>
+                </span>
+            </t>
+        </t>
+        <t t-jquery=".pos-topheader" t-operation="after">
+            <div class="pos-login-topheader">
+                <div class="pos-login-rightheader">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                </div>
+            </div>
+        </t>
+        <t t-jquery=".pos-topheader" t-operation="before">
+            <div class="freeze_screen">
+                <span class="show_unlock_button">
+                    <button class="unlock_button" style="display:none;">
+                        <i id="manual_lock_unlock" class="fa fa-unlock-alt" aria-hidden="true"></i>
+                        Unlock
+                    </button>
+                </span>
+            </div>
+            <div id="block_session_freeze_screen">
+                <span class="lock_screen_button" style="display:none;">
+                    <button class="lock_screen_button" style="display:none;">
+                        <i class="fa fa-lock" id="fa-unlock-alt_freeze" aria-hidden="true" style="color: red ;"></i>
+                    </button>
+                </span>
+                <span class="locked_msg_disply" id="msg_lock"/>
+<!--                 <div class="lock_screen_messages_button"> -->
+<!-- 					<t t-if="widget.pos.pos_session and widget.pos.pos_session.locked"> -->
+<!-- 						<a title="Messages" href="#"> -->
+<!-- 							<i class="fa fa-envelope" aria-hidden="true" style="color: rgb(94, 185, 55);"></i> -->
+<!-- 						</a> -->
+<!-- 					</t> -->
+<!-- 				</div> -->
+            </div>
+        </t>
+    </t>
+
+	<t t-name="LockIconChrome">
+		<t t-if="widget.get_cashier() and widget.get_cashier().lock_terminal">
+			<div class="oe_status" id="pos_lock">
+				<a title="Lock Terminals" href="#">
+					<i class="fa fa-lock" aria-hidden="true"></i>
+				</a>
+			</div>
+		</t>
+	</t>
+
+	<t t-extend="ProductScreenWidget">
+		<t t-jquery="div.window" t-operation="prepend">
+			<t t-call="CustomerWidget"/>
+		</t>
+        <t t-jquery="span.placeholder-ProductListWidget" t-operation="after">
+            <div class="slider-btn-categ">
+                <div id="mysidebar_categ">
+                    <!--<div id="wrapper_categ" class="toggled">-->
+                    <div id="wrapper_categ">
+                        <div id="sidebar-wrapper-categ">
+                            <ul class="sidebar-nav-categ">
+                                <li>
+                                    <div class='CustomCategories'/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="product-category-slider" style="display:none;">
+                            <a id="menu-toggle-categ" align="center">
+                                <i id="slider" class="fa fa-chevron-left" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+        <t t-jquery="div.leftpane" t-operation="before">
+            <div class="left_option_menu">
+                <div id="left-sidebar-content">
+                    <div id="sale_mode" title="Sale Mode" class="selected-menu btn_icon_set">
+                        <img src="/flexipharmacy/static/src/img/icons/sale.png" />
+                        <span class="btn_span_set"> Cart</span>
+                    </div>
+                    <t t-if="widget.pos.config.enable_order_reservation">
+                         <div id="reservation_mode" class="btn_icon_set">
+                            <img src="/flexipharmacy/static/src/img/icons/booking_mode.png"/>
+                            <span class="btn_span_set">Reservation </span>
+                         </div>
+                    </t>
+                    <t t-if="widget.pos.config.enable_delivery_charges and widget.pos.get_cashier().access_delivery_charges">
+                         <div id="delivery_mode" class="btn_icon_set">
+                            <img src="/flexipharmacy/static/src/img/icons/delivery_charge.png"/>
+                            <span class="btn_span_set"> Delivery</span>
+                        </div>
+                    </t>
+					<t t-if="widget.pos.config.enable_pos_return and widget.pos.get_cashier().access_pos_return">
+	                     <div id="order_return" class="btn_icon_set">
+                            <img src="/flexipharmacy/static/src/img/icons/order_return.png" />
+                             <span class="btn_span_set">Item Return</span>
+	                    </div>
+                    </t>
+                    <t t-if="widget.pos.config.display_warehouse_qty and widget.pos.get_cashier().access_display_warehouse_qty">
+	                   <div id="product_qty" title="Product Quantity" class="btn_icon_set">
+	                       <img src="/flexipharmacy/static/src/img/icons/product_quantity.png" />
+	                       <span class="btn_span_set"> Product</span>
+	                   </div>
+                    </t>
+                    <t t-if="widget.pos.config.enable_draft_order and widget.pos.get_cashier().access_draft_order">
+                        <div id="draft_order" title="Create Draft Order" class="btn_icon_set">
+                            <img src="/flexipharmacy/static/src/img/icons/draft_order.png"/>
+                             <span class="btn_span_set">Draft Order</span>
+                        </div>
+                    </t>
+                    <t t-if="widget.pos.config.enable_bag_charges and widget.pos.get_cashier().access_bag_charges">
+                        <div id="bag_charges" title="Apply Bag Charges" class="btn_icon_set">
+                            <img src="/flexipharmacy/static/src/img/icons/bags.png"/>
+                            <span class="btn_span_set">Bag charges</span>
+                        </div>
+                    </t>
+                    <t t-if="widget.pos.config.multi_shop_id and widget.pos.config.multi_shop_id[0]">
+                        <div id="multi-shop" class="btn_icon_set">
+                            <img src="/flexipharmacy/static/src/img/icons/store.png"/>
+                            <span class="btn_span_set">Shop</span>
+	                    </div>
+                    </t>
+                    <t t-if="widget.pos.config.money_in_out and widget.pos.get_cashier().access_money_in_out">
+                        <div id="money_in" title="Put Money In" class="btn_icon_set">
+                            <img src="/flexipharmacy/static/src/img/icons/put_money.png"/>
+                            <span class="btn_span_set">Money In</span>
+                        </div>
+                        <div id="money_out" title="Take Money Out" class="btn_icon_set">
+                            <img src="/flexipharmacy/static/src/img/icons/take_money.png"/>
+                            <span class="btn_span_set"> Money Out</span>
+                        </div>
+                    </t>
+                    <t t-if="widget.pos.config.money_in_out and widget.pos.get_cashier().access_print_cash_statement">
+                        <div id="cash_in_out_stmt" title="Cash In-Out Statement" class="btn_icon_set">
+                            <img src="/flexipharmacy/static/src/img/icons/in_out_statement.png"/>
+                            <span class="btn_span_set">Money In Out</span>
+                        </div>
+                    </t>
+                    <t t-if="widget.pos.config.enable_credit">
+                        <div id="add_credit" title="Add Credit Amount" class="btn_icon_set">
+                            <img src="/flexipharmacy/static/src/img/icons/add_credit.png"/>
+                            <span class="btn_span_set">Add Credit</span>
+                        </div>
+                    </t>
+                    <t t-if="widget.pos.config.enable_debit">
+                        <div id="pay_debit" title="Pay Debit Amount" class="btn_icon_set">
+                            <img src="/flexipharmacy/static/src/img/icons/pay_debit.png"/>
+                            <span class="btn_span_set">Pay Debit</span>
+                        </div>
+                    </t>
+                    <t t-if="widget.pos.config.discard_product">
+                        <div id="discard_product" title="Discard Product" class="btn_icon_set">
+                            <img src="/flexipharmacy/static/src/img/discard_product.png"/>
+                            <span class="btn_span_set" style="font-size: 14px;">Discard Product</span>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </t>
+
+    <t t-name="Orderline">
+        <li t-attf-class="orderline #{ line.selected ? 'selected' : '' } 
+                                    #{line.bag_color ? 'bag_color' : ''}
+                                    #{line.delivery_charges_color ? 'delivery_charges_color' : ''}">
+            <span class="product-name">
+                <t t-esc="line.get_product().display_name"/>
+                <t t-if="line.get_product().type == 'product' and line.get_product().tracking!=='none' and widget.pos.config.enable_pos_serial">
+                    <i t-attf-class="oe_link_icon fa fa-trash oe_icon #{line.has_valid_product_lot() ? 'oe_del' : 'oe_del_off' }"/>
+                    <i style="float:right;" t-attf-class="oe_link_icon fa fa-list oe_icon line-lot-icon #{line.has_valid_product_lot() ? 'oe_green' : 'cust_red' }"/>
+                </t>
+                <t t-if="line.get_product().tracking!=='none' and !widget.pos.config.enable_pos_serial">
+                    <i t-attf-class="oe_link_icon fa fa-list oe_icon line-lot-icon #{line.has_valid_product_lot() ? 'oe_green' : 'oe_red' }"/>
+                </t>
+            </span>
+            <span class="price">
+                <t t-if="widget.pos.config.use_pricelist and line.order.pricelist != widget.pos.default_pricelist and line.get_display_price() != line.get_original_price()">
+	                <span style="text-decoration: line-through;color: red;"><t t-esc="widget.format_currency(line.get_original_price())" /></span>
+	            </t>
+                <t t-esc="widget.format_currency(line.get_display_price())"/>
+                <i class="oe_link_icon fa fa-trash oe_icon remove_line"/>
+            </span>
+            <ul class="info-list">
+                <t t-if="line.get_quantity_str() !== '1' || line.selected ">
+                    <li class="info">
+                        <em>
+                            <t t-esc="line.get_quantity_str()" />
+                        </em>
+                        <t t-if="widget.pos.config.show_qty and widget.pos.get_cashier().access_show_qty">
+	                        <t t-if="(line.get_product().qty_available and !line.get_location_id())">
+	                           <t t-set='qty_available' t-value='line.get_product().qty_available.toFixed(2)'/>
+	                            (of <span t-attf-class="qty-info #{qty_available lt line.quantity ? 'not-available':''}"><t t-esc="qty_available"/></span>)
+	                        </t>
+                        </t>
+                        <t t-esc="line.get_unit().name" />
+                        at
+                        <t t-esc="widget.format_currency(line.get_unit_display_price(),'Product Price')" />
+                        /
+                        <t t-esc="line.get_unit().name" />
+                    </li>
+                    <t t-if="(line.get_product() and line.get_product().qty_available and line.get_location_name())">
+			            <t t-set='qty_available' t-value='line.get_product().qty_available.toFixed(2)'/>
+		                <li class="info">
+		                    <span t-attf-class="loc-info"><t t-esc="line.get_location_name()"/></span>
+		                </li>
+		            </t>
+		            <t t-if="widget.pos.config.show_qty and widget.pos.get_cashier().access_show_qty">
+	                    <t t-set='cur_product' t-value='line.get_product()'/>
+	                    <t t-set='unit_id' t-value='cur_product.uom_id[0]'/>
+	                    <t t-if="unit_id">
+	                        <t t-set='qty_available_round' t-value='Math.ceil(Math.log(1.0 / widget.pos.units_by_id[unit_id].rounding) / Math.log(10))'/>
+	                    </t>
+	                    <t t-if="!unit_id">
+	                         <t t-set='qty_available_round' t-value='2'/>
+	                    </t>
+	                </t>
+                </t>
+                <t t-if="line.get_line_note()">
+	                <li class="info">
+	                    Note Added...
+	                </li>
+	            </t>
+	            <t t-if="line.get_deliver_info()">
+	                <li class="info to_be_deliver">
+	                    To Be Deliver...
+	                </li>
+	            </t>
+                <t t-if="line.get_discount_str() !== '0'">
+                    <li class="info">
+                        With a 
+                        <em>
+                            <t t-esc="line.get_discount_str()" />%
+                        </em>
+                        discount
+                    </li>
+                </t>
+                <t t-if="line.get_promotion_data() and line.get_promotion_data().promotion_code">
+	                <li class="info">
+	                    <span style="color: #6ec89b;"><t t-esc="line.get_promotion_data().promotion_code"/> Rule Applied...</span>
+	                </li>
+	            </t>
+                <!-- <t t-if="line.get_discount_amt() and line.get_discount_amt() > 0">
+	                <li class="info">
+	                    With a <t t-esc="line.get_discount_amt_str()"/> discount
+	                </li>
+	            </t>
+	            <t t-if="line.get_promotion() and line.get_promotion().rule_name">
+	                <li class="info">
+	                    <span style="color: #6ec89b;font-size: 14px;"><t t-esc="line.get_promotion().rule_name"/> Rule Applied...</span>
+	                </li>
+	            </t>
+	            <t t-if="line.get_buy_x_get_y_child_item().rule_name">
+	                <li class="info">
+	                    <span style="color: #6ec89b;font-size: 14px;"><t t-esc="line.get_buy_x_get_y_child_item().rule_name"/> Rule Applied...</span>
+	                </li>
+	            </t>
+	            <t t-if="line.get_quantity_discount().rule_name">
+	                <li class="info">
+	                    <span style="color: #6ec89b;font-size: 14px;"><t t-esc="line.get_quantity_discount().rule_name"/> Rule Applied...</span>
+	                </li>
+	            </t>
+	            <t t-if="line.get_discount_amt_rule()">
+	                <li class="info">
+	                    <span style="color: #6ec89b;font-size: 14px;"><t t-esc="line.get_discount_amt_rule()"/> Rule Applied...</span>
+	                </li>
+	            </t>
+	            <t t-if="line.get_combinational_product_rule()">
+	                <li class="info">
+	                    <span style="color: #6ec89b;font-size: 14px;"><t t-esc="line.get_combinational_product_rule()"/> Rule Applied...</span>
+	                </li>
+	            </t>
+	            <t t-if="line.get_multi_prod_categ_rule()">
+	                <li class="info">
+	                    <span style="color: #6ec89b;font-size: 14px;"><t t-esc="line.get_multi_prod_categ_rule()"/> Rule Applied...</span>
+	                </li>
+	            </t> -->
+            </ul>
+        </li>
+    </t>
+
+    <t t-extend="ProductListWidget">
+        <t t-jquery="div.product-list" t-operation="after">
+            <div class="product-list-view" style="display: none;">
+                <div class="home_product_list_view">
+                    <span class="main-product-listview-header">
+                        <div class="home-product-img-lable">Image</div>
+                        <div class="home-product-name">Product Name</div>
+                        <div class="home-product-price-tag">Sale Price</div>
+                    </span>
+                    <div class="home_product_list_manage"></div>
+                </div>
+            </div>
+            <t t-if="widget.pos.product_list.length == 0 and widget.pos.is_product_loading()">
+                <div id="loading" align="center" style="font-size:20px;vertical-align:middle;">
+                    <img src="/flexipharmacy/static/src/img/loader.gif/" />
+                <br/>Loading...</div>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="ProductCategoriesWidget">
+        <t t-jquery="header.rightpane-header" t-operation="replace">
+        	<div class="breadcrumbs">
+                <!-- <span class="breadcrumb">
+                    <span class=" breadcrumb-button breadcrumb-home js-category-switch">
+                        <i class='fa fa-home'></i>
+                    </span>
+                </span> -->
+                <!-- <t t-foreach="widget.breadcrumb" t-as="category">
+                    <span class="breadcrumb">
+                        <img src="/point_of_sale/static/src/img/bc-arrow-big.png" class="breadcrumb-arrow" />
+                        <span class="breadcrumb-button js-category-switch" t-att-data-category-id="category.id">
+                            <t t-esc="category.name"/>
+                        </span>
+                    </span>
+                </t> -->
+            </div>
+            <div class="right_css_header">
+            	<div class="right_css_header_part1">
+	            	<div class="searchbox">
+		                <input placeholder="Search Products" />
+		                <span class="search-clear"></span>
+		            </div>
+		            <div style="float:left;" class="category_searchbox">
+		                <input placeholder="Search Category" />
+		                <span class="category-clear"></span>
+		           	</div>
+		           	<div class="brand_searchbox">
+		                <input placeholder="Search Brand" />
+		                <span class="brand-clear"></span>
+		           	</div>
+		            <div class="product_home_listview">
+		                <span class="button btn_product_listview" title="List View">
+		                    <i class="fa fa-list-ul"></i>
+		                </span>
+		            </div>
+				</div>
+				<div class="right_css_header_part2">
+					<div class="category_home">
+		                <span>
+		                    <i class="fa fa-home"></i>
+		                </span>
+		           	</div>
+				</div>
+            </div>
+	   	</t>
+	   <!-- 	<t t-jquery="div.breadcrumbs" t-operation="replace">
+	   		<span class="breadcrumb">
+                <span class=" breadcrumb-button breadcrumb-home js-category-switch">
+                    <i class='fa fa-home'></i>
+                </span>
+            </span>
+	   	</t> -->
+		<t t-jquery="div.categories" t-operation="replace">
+			<div style="display:none;" class="categories">
+                <div class="category-list-scroller touch-scrollable">
+                    <div class="category-list">
+                    </div>
+                </div>
+            </div>
+		</t>
+    </t>
+
+    <t t-extend="OrderSelectorWidget">
+        <t t-jquery="span.order-button.deleteorder-button" t-operation="after">
+            <div class="product_progress_bar" style="display:none;">
+                <div id="progress" class="graph">
+                    <div id="bar" style="width:0%">
+                        <p id="progress_status">
+                            0% complete
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </t>
+        <t t-jquery="div.order-selector" t-operation="append">
+            <t t-if="widget.pos.pos_session.shop_id and widget.pos.config.multi_shop_id and widget.pos.config.multi_shop_id[0]">
+                <h2 style="margin-left: 150px;font-style: italic;color: #DDD;font-size: 16px;">Shop :
+                <t t-esc="widget.pos.pos_session.shop_id[1]" /></h2>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="SidebarUser">
+		<div id="side_username" style="height: 100%;color: #555;">
+		    <span class="user_img">
+		        <img t-attf-src="data:image/gif;base64, #{widget.pos.get_cashier().image_small}"/>
+		    </span>
+		    <span class="user_name">
+		        <t t-esc="widget.pos.get_cashier().name" />
+		    </span>
+		</div>
+	</t>
+
+    <t t-name="SliderWidget">
+        <div id="menu-slider" style="width: 37px;position: absolute;">
+            <div id="mysidebar">
+                <div id="wrapper"  class="toggled">
+                   <div id="sidebar-wrapper" class="sidebar_color">
+                       <ul class="sidebar-nav">
+                           <li class="sidebar-brand">
+                               <t t-call="SidebarUser"/>
+                           </li>
+                           <li>
+                               <a class='button_select item' id="product-screen" title="Product">Products</a>
+                           </li>
+                            <t t-if="widget.pos.config.out_of_stock_detail">
+                               <li>
+                                   <a class='button_select item' id="out_of_stock" title="Out of Stock Products">Out of Stock</a>
+                               </li>
+                           </t>
+                           <t t-if="widget.pos.config.enable_reorder and widget.pos.get_cashier().access_reorder">
+	                           <li>
+	                               <a class='button_select item' id="order-screen" title="POS Orders">Orders</a>
+	                           </li>
+                           </t>
+                           <t t-if="widget.pos.config.enable_gift_card and widget.pos.get_cashier().access_gift_card">
+		                       <li>
+                                   <a class='button_select item' id="gift_card_screen" title="Gift Card Screen">Gift Card</a>
+                               </li>
+		                   </t>
+		                   <t t-if="widget.pos.config.discard_product and widget.pos.get_cashier().discard_product">
+		                       <li>
+                                   <a class='button_select item' id="discard_product_screen" title="Discarded Products">Discarded Products</a>
+                               </li>
+		                   </t>
+		                   <t t-if="widget.pos.config.enable_gift_voucher and widget.pos.get_cashier().access_gift_voucher">
+		                       <li>
+                                   <a class='button_select item' id="gift_voucher_screen" title="Gift Voucher Screen">Gift Voucher</a>
+                               </li>
+		                   </t>
+		                   <t t-if="widget.pos.config.enable_print_last_receipt and widget.pos.get_cashier().access_print_last_receipt">
+		                       <li>
+		                           <a class='button_select item' id="print_lastorder" title="Print Last Receipt">Print Last Receipt</a>
+			                   </li>
+			               </t>
+                           <!-- <t t-if="widget.pos.config.pos_graph or widget.pos.config.x_report or widget.pos.config.today_sale_report"> -->
+                           <ul class="main_slider-ul">
+                               <li class="main-header-li">
+                                   <a href="#">
+                                       <!-- <i class="fa fa-chevron-right" aria-hidden="true"></i> -->
+                                       <img id="toggle_image" class="right" src="/flexipharmacy/static/src/img/icons/angle-right.png" style="width: 23px;position: relative;top: 6px;"/>
+                                       Reports
+                                   </a>
+                               </li>
+                               <ul class="content-list-ul" style="display:none;cursor: pointer;">
+                                   <t t-if="widget.pos.config.pos_graph and widget.pos.get_cashier().access_pos_graph">
+                                       <li class="report-li pos-graph">Graph</li>
+                                   </t>
+                                   <t t-if="widget.pos.config.x_report and widget.pos.get_cashier().access_x_report">
+                                       <li class="x-report">X-Report</li>
+                                   </t>
+                                   <t t-if="widget.pos.config.today_sale_report and widget.pos.get_cashier().access_today_sale_report">
+                                       <li class="today_sale_report">Today Sale Report</li>
+                                   </t>
+                                   <t t-if="widget.pos.config.payment_summary">
+                                   		<li class="payment_summary_report">Payment Summary</li>
+					               </t>	
+					               <t t-if="widget.pos.config.print_product_summary">
+                                   		<li class="product_summary_report">Product Summary</li>
+					               </t>
+					               <t t-if="widget.pos.config.enable_order_summary">
+                                   		<li class="order_summary_report">Order Summary</li>
+					               </t>
+                                   <t t-if="widget.pos.config.print_audit_report">
+                                       <li class="print_audit_report">Session Inventory Audit</li>
+                                   </t>
+                                   <t t-if="widget.pos.config.print_ledger">
+                                       <li class="print_credit_stmt">Print Credit Statement</li>
+                                   </t>
+                               </ul>
+                           </ul>
+                           <!-- </t> -->
+                           <ul class="main_slider-ul">
+                               <li class="main-header-li">
+                                   <a href="#">
+                                       <img id="toggle_image_dashboard" class="right" src="/flexipharmacy/static/src/img/icons/angle-right.png" style="width: 23px;position: relative;top: 6px;"/>
+                                       Dashboard
+                                   </a>
+                               </li>
+                               <ul class="content-list-ul" style="display:none;cursor: pointer;">
+		                           <t t-if="widget.pos.config.pos_dashboard and widget.pos.get_cashier().access_pos_dashboard">
+                                       <li class="report-li sales_deshboard">Sales Dashboard</li>
+                                   </t>
+                                   <t t-if="widget.pos.config.product_expiry_report and widget.pos.get_cashier().access_product_expiry_report">
+                                       <li class="report-li expiry_deshboard">Expiry Dashboard</li>
+                                   </t>
+                               </ul>
+                           </ul>
+                       </ul>
+                   </div>
+                    <div id="slidemenubtn">
+                        <a id="menu-toggle" align="center">
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="PosCartCountWidget">
+        <div id="pos-cart" style="width: 40px;">
+	        <span><img src="/flexipharmacy/static/src/img/icons/cart.png" style="width: 44px;"/></span>
+	        <span class="cart-num">0</span>
+        </div>
+    </t>
+    
+    <t t-name="ProductList">
+        <t t-foreach='products' t-as='product'>
+           <span class='product main-product' t-att-data-product-id="product.id">
+                <div class="product-img main-product-image">
+                   <img t-att-src='widget.pos.chrome.screens.products.product_list_widget.get_product_image_url(product)' />
+                </div>
+                <div class="product-name" style="text-align: center;bottom: 30px;">
+                    <t t-esc="product.display_name" /><br />
+                </div>
+                <div class="product-referance">
+                    <t t-esc="product.default_code or '-'" />
+                </div>
+                <div class="product-price-tag">
+                    <t t-esc="widget.format_currency(product.list_price,'Product Price')" />
+                </div>
+           </span>
+       </t>
+    </t>
+
+    <t t-name="HomeProductList">
+        <t t-foreach='products' t-as='product'>
+           <span class='product home-main-product' t-att-data-product-id="product.id">
+                <div class="home-main-product-image">
+                   <img t-att-src='widget.pos.chrome.screens.products.product_list_widget.get_product_image_url(product)' />
+                </div>
+                <div class="home-main-product-name" style="text-align: center;bottom: 30px;">
+                    <t t-esc="product.display_name" /><br />
+                </div>
+                <div class="home-main-product-price">
+                    <t t-esc="widget.format_currency(product.list_price,'Product Price')" />
+                </div>
+           </span>
+       </t>
+    </t>
+
+    
+    <t t-name="ProductsScreenWidget">
+        <div class="productlist-screen screen">
+            <section class="top-content top-content_finalset">
+         			
+            <div class="pro_width_set">
+            	<span class='button back' style="width:80px;">
+                    <i class='fa fa-angle-double-left'></i>
+                    Back
+                </span>
+             </div>
+             <div class="pro_width_set2">
+                <div
+	class="brand_searchbox manage_search_brand pro_width_set3">
+	                <input placeholder="Search Brand" />
+	                <span class="brand-clear_manage"></span>
+	           	</div>
+                <div
+	class="category_searchbox manage_search_category pro_width_set3">
+	                <input placeholder="Search Category" />
+	                <span class="category-clear_manage"></span>
+	            </div>
+                <div class="searchbox manage_search_prod pro_width_set3">
+	                <input placeholder="Search Products" />
+	                <span class="search-clear"></span>
+	            </div>
+	            <div class="kanban_width_set">
+	            <div class="pro_width_set4">
+	            	<span class="button btn_add_product pro_width_set5"
+	title="Add Product">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                	</span>
+                </div>
+                <div class="pro_width_set6">
+                <span class="button btn_list pro_width_set5"
+	title="List View">
+                    <i class='fa fa-list-ul'></i>
+                </span>
+                </div>
+                <div class="pro_width_set7">
+                <span class="button btn_kanban highlight pro_width_set5"
+	title="Kanban View">
+                    <i class='fa fa-th-large'></i>
+                </span>
+                </div>
+                </div>
+                </div>
+            </section>
+            <section class="full-content">
+                <div class='window'>
+                    <section class='subwindow'>
+                        <div class='subwindow-container'>
+                            <div class='subwindow-container-fix touch-scrollable scrollable-y products-list-scroll'>
+                                <div>
+                                    <div class="ac_product_list_manage">
+                                        <span class="product main-product header">
+                                            <div class="product-img-lable">Image</div>
+                                            <div class="product-name">Product Name</div>
+                                            <div class="product-referance">Internal Reference</div>
+                                            <div class="product-price-tag">Sale Price</div>
+                                        </span>
+                                        <div class="product_list_manage"></div>
+<!-- 				                        <t t-call="ProductList"/> -->
+					                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </t>
+
+    <t t-extend="ActionpadWidget">
+        <t t-jquery="div.actionpad" t-operation="replace">
+            <div class="actionpad">
+	            <button class='button empty-cart'>
+	                <i aria-hidden="true" class="fa fa-shopping-cart"></i>
+	                Empty Cart
+	            </button>
+	            <button class='button pay'>
+	                <div class='pay-circle'>
+	                    <i class='fa fa-chevron-right' />
+	                </div>
+	                Payment
+	            </button>
+	        </div>
+        </t>
+    </t>
+
+    <t t-name="CustomerWidget">
+        <div class="cart-customer-section">
+            <div class="customer-row">
+                <div class="customer-head">
+                    <span class="avatar-img client-image">
+                    	<t t-if="widget.pos.get_client()">
+                    		<img style="height:50px;width:50px" t-att-src='widget.partner_icon_url(widget.pos.get_client().id)' />
+                      	</t>
+                      	<t t-if="!widget.pos.get_client()">
+							<i style="font-size:30px;padding: 8px;" class="fa fa-user" aria-hidden="true"></i>
+                      	</t>
+                    </span>
+                    <div class="c-name">
+                        <span class="c-user">
+                        	<t t-esc="widget.pos.get_client() ? widget.pos.get_client().name : 'Guest Customer'"/>
+						</span>
+                    </div>
+                    <span class="customer-icon-action icon icon-plus set_customer">
+                        <i class="fa fa-user-plus" title="Add customer"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </t>
+    
+	<t t-extend="OrderWidget">
+		<t t-jquery="div.order-container" t-operation="replace">
+			<div class="order-container">
+	            <div class="order-scroller touch-scrollable">
+	                <div class="order">
+	                    <t t-if="orderlines.length === 0" >
+	                        <div class='order-empty'>
+	                            <i class='fa fa-shopping-cart' />
+	                            <h1>Your shopping cart is empty</h1>
+	                        </div>
+	                    </t>
+	                    <t t-if="orderlines.length > 0">
+	                        <ul class="orderlines"></ul>
+<!-- 	                        <div>Can add extra things linke total items, lyalty</div> -->
+	                    </t>
+	                </div>
+	            </div>
+	            <t t-if="orderlines.length > 0">
+		            <t t-if="widget.pos and widget.pos.loyalty_config and widget.pos.config.enable_pos_loyalty and widget.pos.get_cashier().access_pos_loyalty">
+						<div class="loyalty_info_cart extra_things">
+							<span class="label">You Earned <span class="value" style="font-weight: bold;">0</span> Loyalty Points</span> 
+						</div>
+					</t>
+		            <t t-if="widget.pos and widget.pos.config.pos_promotion">
+		            	<div class='discount promotion-disc extra_things'>Promotion Discount: <span class="value" style="font-weight: bold;">0.00€</span></div>
+	            	</t>
+	            </t>
+	            <t t-if="orderlines.length > 0">
+	                <div class="summary clearfix" id="total_pay">
+	                    <div class="line">
+	                        <div class='entry total'>
+	                            <span class="label">Make Payment: </span> <span class="value total_value">0.00 €</span>
+	                            <div class='subentry'>Taxes: <span class="value">0.00€</span></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </t>
+	        </div>
+		</t>
+    </t>
+
+    <t t-name="GraphScreenWidget">
+        <div class="graph-screen screen">
+            <div class="screen-content" style="max-width:1254px !important;">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Cancel
+                    </span>
+                    <span class='button bar_chart selected_chart' id="bar_chart">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                        Bar Chart
+                    </span>
+                    <span class='button pie_chart' id="pie_chart">
+                        <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                        Pie Chart
+                    </span>
+                    <span id="selection">
+                        <select id="duration_selection">
+                            <option value="nofilter"></option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select> 
+                    </span>
+                    <span id="selection">
+                        <select id="limit_selection">
+                            <option value="ALL" selected="selected">All</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                        </select> 
+                    </span>
+                    <span>
+                        <input type="text" placeholder="Start Date" class="input-textbox" id="start_date" readonly="readonly"/>
+                        <input type="text" placeholder="End Date" class="input-textbox" id="end_date" readonly="readonly"/>
+                    </span>
+                </section><br/><br/><br/><br/><br/>
+                <div id="container">
+                    <div id="left"><br/>
+                        <div id="divMenu">
+                            <ul>
+                                <li><a href="#" class="top_customer menu_selected" id="top_customer">Top Customers</a></li>
+                                <li><a href="#" class="top_products" id="top_products">Top Products</a></li>
+                                <li><a href="#" class="top_category" id="top_category">Top Category</a></li>
+                                <li><a href="#" class="cashiers" id="cashiers">Cashiers</a></li>
+                                <li><a href="#" class="sales_by_location" id="sales_by_location">Sales By Location</a></li>
+                                <li><a href="#" class="income_by_journals" id="income_by_journals">Income By Journals</a></li>
+                                <li><a href="#" class="pos_benifit" id="pos_benifit">Profit/Loss</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="right">
+                        <div id="chart" style="margin-top:16px;width: 100%;height: 400px;">
+                            <div id="chartContainer" style="overflow:auto;max-width:100%;height:450px;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-extend="Product">
+        <t t-jquery="[t-if='!product.to_weight'] .price-tag" t-operation="append">
+            <t t-if="widget.pos.config.use_pricelist and pricelist.id != widget.pos.default_pricelist.id 
+                and product.get_price(widget.pos.default_pricelist, 1) != product.get_price(pricelist, 1)">
+                <br/>
+                <span style="text-decoration: line-through;color: red;"><t t-esc="widget.format_currency(product.get_price(widget.pos.default_pricelist, 1),'Product Price')"/></span>
+            </t>
+        </t>
+        <t t-jquery="[t-if='product.to_weight'] .price-tag" t-operation="append">
+            <t t-if="widget.pos.config.use_pricelist and pricelist.id != widget.pos.default_pricelist.id 
+                and product.get_price(widget.pos.default_pricelist, 1) != product.get_price(pricelist, 1)">
+                <br/>
+                <span style="text-decoration: line-through;color: red;"><t t-esc="widget.format_currency(product.get_price(widget.pos.default_pricelist, 1),'Product Price')+'/'+widget.pos.units_by_id[product.uom_id[0]].name"/></span>
+            </t>
+        </t>
+        <t t-jquery="div.product-img" t-operation="replace">
+            <div class="product-img">
+                <img t-att-src='image_url' />
+                <t t-if="!product.to_weight">
+                    <span class="price-tag price-tag1">
+                        <t t-esc="widget.format_currency(product.list_price)"/>
+                    </span>
+                    <t t-if="widget.pos.config.show_qty and widget.pos.get_cashier().access_show_qty">
+                        <t t-if="product.qty_available &gt; 0 and product.type != 'service'">
+                            <span class="product-qty" >
+                                <t t-esc="product.qty_available"/>
+                            </span>
+                        </t>
+                        <t t-if="product.qty_available &lt;= 0 and product.type != 'service'">
+                            <span class="product-qty-low" >
+                                <t t-esc="product.qty_available"/>
+                            </span>
+                        </t>
+                    </t>
+                </t>
+                <t t-if="product.to_weight">
+                    <span class="price-tag price-tag1">
+                        <t t-esc="widget.format_currency(product.list_price)+'/Kg'"/>
+                    </span>
+                    <t t-if="widget.pos.config.show_qty and widget.pos.get_cashier().access_show_qty">
+                        <t t-if="product.qty_available >= 0" >
+                            <span class="product-qty" >
+                                <t t-esc="product.qty_available + ' Kgs'"/>
+                            </span>
+                        </t>
+                        <t t-if="product.qty_available &lt;= 0">
+                            <span class="product-qty-low" >
+                                <t t-esc="product.qty_available + ' Kgs'"/>
+                            </span>
+                        </t>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </t>
+
+	<t t-name="ProductExpiryDeshboardWidget">
+        <div class="graph-screen screen" style="background: #ffff;">
+            <div class="screen-content" style="max-width: 1254px !important;">
+                <div class="top-screen-container">
+                	<section class="top-content" style="height:55px;top:-10px;">
+	                    <span class='button back'>
+	                        <i class='fa fa-angle-double-left'></i>
+	                        Back
+	                    </span>
+	                </section>
+                </div>
+                <div class="main-screen-container">
+                	<div class="report-header">
+               			<div class="user-welcome-message">
+               				<br/>
+               				<span style="margin:20px;">
+               					Hello,
+               				</span>
+               				<br/>
+               				<span style="margin:20px;" id="login_user_expire_screen">
+               					Admin
+               				</span>
+               			</div>
+               			<div class="summary-expiry-product" stlye="color:#68C2BD">
+               				<br/>
+               				<div align="center" style="margin-top=30px;">
+               					<span>
+	               					Today Nearly Expire Product
+	               				</span>
+               				</div>
+               				<br/>
+               				<div align="center">
+               					<span id="near_expired" style="cursor: pointer;"/>
+               				</div>
+               			</div>
+                	</div>
+                	<div class="expired-by-product-container">
+                		<div class="expired-by-product-title">
+                			<div style="margin: 0px;">
+                				<span style="font-size: 21px;padding: 5px;">
+		               				Nearly Expire By Product
+		               			</span>
+                			</div>
+                		</div>
+                		<div class="expired-by-product-list">
+                			<div class="expired-detail-container">
+                				<div class="expired-detail-details">
+                					<div class="expired-product-count" style="background:#FFFDB9;" t-att-data-id="60">
+	                					<br/>
+	                					<br/>
+	                					<span class="count-text" id="60days">
+	                					</span>
+	                				</div>
+	                				<div class="day-in-expiry">
+	                					<div align="center" style="margin-top: 10px;">
+			                				<br/>
+	                						<br/>
+			                				<span style="font-size: 15px;">
+					               				Expire In 60 Days
+					               			</span>
+			                			</div>
+	                				</div>
+                				</div>
+                			</div>
+                			<div class="expired-detail-container">
+                				<div class="expired-detail-details">
+                					<div class="expired-product-count" style="background:#F0C4D7;" t-att-data-id="30">
+                						<br/>
+	                					<br/>
+                						<span class="count-text" id="30days">
+	                					</span>
+	                				</div>
+	                				<div class="day-in-expiry">
+	                					<div align="center" style="margin-top: 35px;">
+			                				<span style="font-size: 15px;">
+					               				Expire In 30 Days
+					               			</span>
+			                			</div>
+	                				</div>
+                				</div>
+                			</div>
+                			<div class="expired-detail-container">
+                				<div class="expired-detail-details">
+                					<div class="expired-product-count" style="background:#D5FEB9;" t-att-data-id="15">
+                						<br/>
+	                					<br/>
+                						<span class="count-text" id="15days">
+	                					</span>
+	                				</div>
+	                				<div class="day-in-expiry">
+	                					<div align="center" style="margin-top: 35px;">
+			                				<span style="font-size: 15px;">
+					               				Expire In 15 Days
+					               			</span>
+			                			</div>
+	                				</div>
+                				</div>
+                			</div>
+                			<div class="expired-detail-container">
+                				<div class="expired-detail-details">
+                					<div class="expired-product-count" style="background:#D5FEB9;" t-att-data-id="10">
+	                					<br/>
+	                					<br/>
+	                					<span class="count-text" id="10days">
+	                					</span>
+	                				</div>
+	                				<div class="day-in-expiry">
+	                					<div align="center" style="margin-top: 35px;">
+			                				<span style="font-size: 15px;">
+					               				Expire In 10 Days
+					               			</span>
+			                			</div>
+	                				</div>
+                				</div>
+                			</div>
+                			<div class="expired-detail-container">
+                				<div class="expired-detail-details">
+                					<div class="expired-product-count" style="background:#CCFFFF;" t-att-data-id="5">
+	                					<br/>
+	                					<br/>
+	                					<span class="count-text" id="5days">
+	                					</span>
+	                				</div>
+	                				<div class="day-in-expiry">
+	                					<div align="center" style="margin-top: 35px;">
+			                				<span style="font-size: 15px;">
+					               				Expire In 5 Days
+					               			</span>
+			                			</div>
+	                				</div>
+                				</div>
+                			</div>
+                			<div class="expired-detail-container">
+                				<div class="expired-detail-details">
+                					<div class="expired-product-count" style="background:#FFFDB9;" t-att-data-id="1">
+	                					<br/>
+	                					<br/>
+	                					<span class="count-text" id="1day">
+	                					</span>
+	                				</div>
+	                				<div class="day-in-expiry">
+	                					<div align="center" style="margin-top: 35px;">
+			                				<span style="font-size: 15px;">
+					               				Expire In Tomorrow
+					               			</span>
+			                			</div>
+	                				</div>
+                				</div>
+                			</div>
+                		</div>
+                		<div class="expired-by-product-footer">
+                			<div style="margin: 5px;color: blue;">
+                				<span id="explorable_div" class="hidden" style="font-size: 13px;padding: 15px;cursor: pointer;">
+		               				<span id="explorer_text"></span>
+		               			</span>
+                			</div>
+                		</div>
+                	</div>
+                	<div class="Graphical-report-container">
+                		<div class="date-filter">
+                			<span>
+		                        <input type="text" placeholder="Start Date" class="input-textbox" id="start_date_expire_deshboard"/>
+		                        <input type="text" placeholder="End Date" class="input-textbox" id="end_date_expire_deshboard" />
+		                    </span>
+		                    <span class='custom_button button bar_chart selected_chart' id="bar_chart_expire_dashboard">
+		                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+		                        Bar Chart
+		                    </span>
+		                    <span class='custom_button button pie_chart' id="pie_chart_expire_dashboard">
+		                        <i class="fa fa-pie-chart" aria-hidden="true"></i>
+		                        Pie Chart
+		                    </span>
+                		</div>
+                		<div class="chart-view-container">
+                			<div id="container">
+							    <div style="width: 100%;height: 551px;position: relative;">
+							        <div id="chart" style="margin-top:16px;width: 100%;height: 400px;">
+			                            <div id="chartContainer_expiry_dashboard" style="overflow:auto;max-width:100%;height:350px;"/>
+			                        </div>
+							    </div>
+							</div>
+                		</div>
+                	</div>
+                	<div class="expired-by-product-category-container">
+                		<div class="warehouse-container-title-bar">
+           					<div class="title-text" style="font-size: 21px;padding: 5px;">
+           						Nearly Expire By Category
+              				</div>
+              			</div>
+                		<div class="search_near_expire_block" style="float:right;">
+           					<input type="text" id="search_category" placeholder="Search Category"/>
+           				</div>
+           				<br/>
+           				<br/>
+                		<div class="categories-view-container">
+                		</div>
+                	</div>
+                	<div class="filter-report-container">
+                		<div class="filter-by-warehouse-container">
+                			<div class="warehouse-container-title-bar">
+               					<div class="title-text" style="font-size: 21px;padding: 5px;">
+               						Nearly Expire By Warehouse
+                				</div>
+                			</div>
+              				<div class="warehouse-wise-product-expire">
+              					<table class='warehouse-list'>
+                                     <thead>
+                                         <tr>
+                                             <th>Name</th>
+                                             <th>Expire Count</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody class='warehouse-list-contents'>
+                                     </tbody>
+                                 </table>
+                			</div>
+                		</div>
+                		<div class="filter-by-location-container">
+                			<div class="location-container-title-bar">
+                				<div class="title-text" style="font-size: 21px;padding: 5px;">
+               						Nearly Expire By Location
+                				</div>
+                			</div>
+               				<div class="location-wise-product-expire">
+               					<table class='location-list'>
+                                     <thead>
+                                         <tr>
+                                             <th>Name</th>
+                                             <th>Expire Count</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody class='location-list-contents'>
+                                     </tbody>
+                                 </table>
+               				</div>
+                		</div>
+                	</div>
+				</div>
+            </div>
+        </div>
+    </t>
+
+	<t t-name="ExpireByCategory">
+		<t t-if="category">
+			<div class="expired-detail-container">
+				<div class="expired-detail-details">
+					<div class="expired-product-count-category" style="background:#D5FEB9;" t-att-data-id="category.categ_id">
+						<br/>
+						<br/>
+						<span class="count-text" id="10days">
+							<t t-esc="category.qty"/>
+						</span>
+					</div>
+					<div class="day-in-expiry">
+						<div align="center" style="margin-top: 35px;">
+							<span style="font-size: 15px;">
+			 					<t t-esc="category.categ_name"/>
+			 				</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</t>
+	</t>
+
+	<t t-name="LocationLine">
+        <tr class='location-line' t-att-data-id='location.location_id'>
+            <t t-if='location.location_name'>
+            	<td><t t-esc='location.location_name' /></td>
+            </t>
+            <t t-if='location.expire_count'>
+            	<td><t t-esc='location.expire_count' /></td>
+            </t>
+        </tr>
+    </t>
+
+    <t t-name="WarehouseLine">
+        <tr class='warehouse-line' t-att-data-id='warehouse.location_id'>
+            <t t-if='warehouse.warehouse_name'>
+            	<td class="warehouse_name"><t t-esc='warehouse.warehouse_name' /></td>
+            </t>
+            <t t-if='warehouse.expire_count'>
+            	<td class="warehouse_count"><t t-esc='warehouse.expire_count' /></td>
+            </t>
+        </tr>
+    </t>
+
+	<t t-name="ProductDetailListScreen">
+		<div class="product_detail-screen screen">
+            <div class="screen-content" style="max-width: 1254px !important;">
+                <div class="top-screen-container">
+                	<section class="top-content" style="height:55px;top:-10px;">
+	                    <div class="main-title-container">
+	                    	<div class="back-button-container" style="width: 33.33%;float: left;">
+	                    		<span class='button back'>
+			                        <i class='fa fa-angle-double-left'></i>
+			                        Back
+			                    </span>
+	                    	</div>
+	                    	<div id="screen_title" style="font-size: 21px;"/>
+		                    <div style="float: right;margin-right: 10px;">
+	           					<input type="text" style="width: 120px;" id="search_product_detail_exp" placeholder="Search Product/Lot"/>
+	           				</div>
+	                    </div>
+	                </section>
+                </div>
+                <div class="main-screen-container main_screen_fix">
+                	<div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                        <table class='product-detail-list'>
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Lot/Serial</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody class='product-detail-list-contents'>
+                            </tbody>
+                        </table>
+                    </div>
+               	</div>
+            </div>
+        </div>
+	</t>
+
+	<t t-name="ProductDetailLine">
+        <tr class='product-line' t-att-data-id='product.id'>
+        	<t t-if="product.display_name">
+        		<td>
+        			<t t-esc="product.display_name"/>
+        		</td>
+        	</t>
+        	<t t-if="product.lot_id[1]">
+        		<td>
+        			<t t-esc="product.lot_id[1]"/>
+        		</td>
+        	</t>
+        	<t t-if="product.quantity">
+        		<td>
+        			<t t-esc="product.quantity"/>
+        		</td>
+        	</t>
+        </tr>
+    </t>
+
+    <t t-name="OutStockProductsScreenWidget">
+        <div class="productlist-screen screen">
+            <section class="top-content top-content_finalset">
+            	<div class="stock_list_part1">
+            	 	<span class='button back'>
+                    <i class='fa fa-angle-double-left'></i>
+                    Back
+                </span>
+                </div>
+                <div class="stock_list_part2">
+	            	<div class="select_location">
+	                    <select class='select_location_type'>
+	                        <option value="">Select Location</option>
+	                        <t t-foreach="widget.pos.all_locations" t-as="location">
+	                            <option t-att-value='location.id'>
+	                                <t t-esc='location.name' />
+	                            </option>
+	                        </t>
+	                    </select>
+	                </div>
+	                <div class="searchbox">
+		                <input placeholder="Search Products"/>
+		                <span class="search-clear"></span>
+		            </div>
+	                <div class="searchbox out_stock_search_category">
+		                <input placeholder="Search Category"/>
+		                <span class="out_stock_category_clear"></span>
+		            </div>
+	                <span class="button btn_create_po" title="Create Purchase Order">
+	                     Create Purchase Order
+	                </span>
+	                <span class="button btn_receipt" title="Receipt">
+	                    Receipt
+	                </span>
+	                <span class="button btn_list" title="List View">
+	                    <i class='fa fa-list-ul'></i>
+	                </span>
+	                <span class="button btn_kanban highlight" title="Kanban View">
+	                    <i class='fa fa-th-large'></i>
+	                </span>
+	             </div>
+            </section>
+            <section class="full-content" style="top: 75px;">
+                <div class='window'>
+                    <section class='subwindow'>
+                        <div class='subwindow-container'>
+                            <div>
+                                <div class="out_stock_product_kanban_view">
+                                    <div class="manage_kanban_view"></div>
+                                </div>
+                                <div class="out_stock_product_list_view" style="display: none;">
+                                    <span class="out_stock_header">
+                                        <div class="out-stock-product-img-lable">Image</div>
+                                        <div class="out-stock-product-name">Product Name</div>
+                                        <div class="out-stock-product-referance">Internal Reference</div>
+                                        <div class="out-stock-product-cost-price">Cost Price</div>
+                                        <div class="out-stock-product-price-tag">Sale Price</div>
+                                    </span>
+                                    <div class="manage_list_view"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </t>
+
+    <t t-name="OutStockProductsList">
+        <t t-foreach='products' t-as='product'>
+           <span class='product out-stock-main-product' t-att-data-product-id="product.id">
+                <div class="product-img main-product-image" style="margin:auto;">
+                   <img t-att-src='widget.pos.chrome.screens.products.product_list_widget.get_product_image_url(product)' />
+                </div>
+                <div class="product-name" style="text-align: center;bottom: 30px;">
+                    <t t-esc="product.display_name" /><br />
+                </div>
+                <div class="product-price-tag">
+                    <t t-esc="widget.format_currency(product.list_price,'Product Price')" />
+                </div>
+           </span>
+       </t>
+    </t>
+
+    <t t-name="OutStockListView">
+        <t t-foreach='products' t-as='product'>
+           <span class='out-stock-list-product main-product' t-att-data-product-id="product.id">
+                <div class="stock_list_product-image">
+                   <img t-att-src='widget.pos.chrome.screens.products.product_list_widget.get_product_image_url(product)' />
+                </div>
+                <div class="stock_list_product-name" style="text-align: center;bottom: 30px;">
+                    <t t-esc="product.display_name" /><br />
+                </div>
+                <div class="stock_list_product-referance">
+                    <t t-esc="product.default_code or '-'" />
+                </div>
+                <div class="stock_list_product-cost-price">
+                    <t t-esc="widget.format_currency(product.standard_price,'Product Cost Price')" />
+                </div>
+                <div class="stock_list_product-price-tag">
+                    <t t-esc="widget.format_currency(product.list_price,'Product Price')" />
+                </div>
+           </span>
+       </t>
+    </t>
+
+</templates>

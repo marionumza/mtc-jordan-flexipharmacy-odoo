@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="LoginScreenWidget">
+          <div class="pos-login page_containerset_main">
+		    <div class="page-container page_containerset">
+		        <div class="panel-container page_containerset1">
+		            <div class="logo-container">
+		            </div>
+		            <div class="login-fields">
+		                <form action="main-page.html">
+		                    <div class="input-fields">
+		                        <input type="text" placeholder="Enter Username" id="username" 
+		                              onpaste="return false" ondrop="return false" ondrag="return false" 
+		                              oncopy="return false" oncut="return false" autocomplete="off"
+		                              style="box-shadow: none !important;"/>
+		                        <input type="password" placeholder="Enter PIN" id="password" 
+		                              onpaste="return false" ondrop="return false" ondrag="return false" 
+		                              oncopy="return false" oncut="return false" autocomplete="off"
+		                              style="box-shadow: none !important;"/>
+		                    </div>
+		                    <div class="action">
+		                        <input type="button" value="login" id="login"/>
+		                    </div>
+		                </form>
+		            </div>
+		        </div>
+		         <div class="virtual-keyboard page_containerset2">
+		            <div class="login_key_bord">
+		                <div class="div_style">
+		                    <span class="is_numpad display_none">
+		                                <button class="btn btn-default btn-lg number_pad_button">1</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">2</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">3</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">4</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">5</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">6</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">7</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">8</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">9</button>
+		                                <button class="btn btn-default btn-lg number_pad_button ">0</button>
+		                            </span>
+		                    <span class="is_charpad display_none">
+		                                <button class="btn btn-default btn-lg number_pad_button">Q</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">W</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">E</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">R</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">T</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">Y</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">U</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">I</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">O</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">P</button>
+		                            </span>
+		                    <span class="is_smallcharpad">
+		                                <button class="btn btn-default btn-lg number_pad_button">q</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">w</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">e</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">r</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">t</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">y</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">u</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">i</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">o</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">p</button>
+		                            </span>
+		                </div>
+		                <div class="div_style">
+		                    <span class="is_numpad display_none">
+		                                <button class="btn btn-default btn-lg number_pad_button">@</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">#</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">%</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">*</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">/</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">-</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">+</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">(</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">)</button>
+		                            </span>
+		                    <span class="is_charpad display_none">
+		                                <button class="btn btn-default btn-lg number_pad_button">A</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">S</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">D</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">F</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">G</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">H</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">J</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">K</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">L</button>
+		                            </span>
+		                    <span class="is_smallcharpad">
+		                                <button class="btn btn-default btn-lg number_pad_button">a</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">s</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">d</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">f</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">g</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">h</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">j</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">k</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">l</button>
+		                            </span>
+		                </div>
+		                <div class="div_style">
+		                    <span class="is_numpad display_none">
+		                                <button class="btn btn-default btn-lg number_pad_button">?</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">!</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">"</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">'</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">:</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">;</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">,</button>
+		                            </span>
+		                    <span class="is_charpad display_none">
+		                                <button class="btn btn-default btn-lg number_pad_button">Z</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">X</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">C</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">V</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">B</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">N</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">M</button>
+		                            </span>
+		                    <span class="is_smallcharpad">
+		                                <button class="btn btn-default btn-lg number_pad_button">z</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">x</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">c</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">v</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">b</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">n</button>
+		                                <button class="btn btn-default btn-lg number_pad_button">m</button>
+		                            </span>
+		                    <button class="btn btn-default btn-lg number_pad_button back-button">
+		                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+		                    </button>
+		                </div>
+		                <div class="div_style">
+		                    <button class="btn btn-default btn-lg change_smallChar display_none">Caps</button>
+		                    <button class="btn btn-default btn-lg change_char">ABC</button>
+		                    <button class="btn btn-default btn-lg change_num display_none">123</button>
+		                    <button class="btn btn-default btn-lg number_pad_button login_space">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</button>
+		                    <button class="btn btn-default btn-lg number_pad_button">.</button>
+		                    <button class="btn btn-default btn-lg number_pad_button ac-clear-data">C</button>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+    </t>
+
+</templates>

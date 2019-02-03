@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="email_template_pos_ereceipt_reservation" model="mail.template">
+            <field name="name">POS Order - Reservation Send by Email</field>
+            <field name="email_from">${(object.company_id.email or 'noreply@localhost')|safe}</field>
+            <field name="subject">Order Reference ${object.name or ''}</field>
+            <field name="email_to">${object.customer_email}</field>
+            <field name="model_id" ref="point_of_sale.model_pos_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="report_name">Order_${object.name or ''}</field>
+            <field name="body_html"><![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                
+                    <p>Hello ${object.partner_id and object.partner_id.name or ''},</p>
+                
+                    <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
+                       &nbsp;&nbsp;<strong>REFERENCES</strong><br />
+                       &nbsp;&nbsp;Order number: <strong>${object.name}</strong><br />
+                       &nbsp;&nbsp;Order total: <strong>${object.amount_total} ${object.company_id.currency_id.name}</strong><br />
+                       &nbsp;&nbsp;Order date: ${object.date_order}<br />
+                       &nbsp;&nbsp;Delivery date: ${object.reserve_delivery_date or '-'}<br />
+                       % if object.user_id:
+                       &nbsp;&nbsp;Cashier: ${object.user_id.name}
+                       % endif
+                    </p>
+                    <p> Product Details </p>
+                    % if object.lines:
+                        <table class="table" style="width:60%;">
+                            <tbody>
+                                <tr>
+                                    <th style="text-align:left;">Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Discount %</th>
+                                    <th style="width: 130px;">Total(${object.company_id.currency_id.name})</td>
+                                <tr>
+                                % for line in object.lines:
+                                    <tr>
+                                        <td style="text-align:left;">${line.product_id.name}</td>
+                                        <td style="text-align:center">${line.qty}</td>
+                                        <td style="text-align:center">${line.price_unit}</td>
+                                        <td style="text-align:center">${line.discount}</td>
+                                        <td style="text-align:center">${line.price_subtotal_incl}</td>
+                                    </tr>
+                                % endfor
+                                <tr>
+                                    <td colspan="4"><strong>Tax</strong></td>
+                                    <td style="text-align:center">${round(object.amount_tax, 2)}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><strong>Amount Paid</strong></td>
+                                    <td style="text-align:center">${round(object.amount_paid, 2)}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><strong>Amount Due</strong></td>
+                                    <td style="text-align:center">${round(object.amount_due, 2)}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><strong>Total Amount</strong></td>
+                                    <td style="text-align:center">${round(object.amount_total, 2)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    % endif
+                    % if object.note:
+                        <br/>
+                        Note: ${object.note}
+                        <br/>
+                    % endif
+                    <br/>
+                    <p>Thank you for choosing ${object.company_id.name or 'us'} !</p>
+                    <br/>
+                    <br/>
+                    <div style="width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;">
+                        <h3 style="margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;">
+                            <strong style="text-transform:uppercase;">${object.company_id.name}</strong></h3>
+                    </div>
+                    <div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;">
+                        <span style="color: #222; margin-bottom: 5px; display: block; ">
+                        % if object.company_id.street:
+                            ${object.company_id.street}<br/>
+                        % endif
+                        % if object.company_id.street2:
+                            ${object.company_id.street2}<br/>
+                        % endif
+                        % if object.company_id.city or object.company_id.zip:
+                            ${object.company_id.zip} ${object.company_id.city}<br/>
+                        % endif
+                        % if object.company_id.country_id:
+                            ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>
+                        % endif
+                        </span>
+                        % if object.company_id.phone:
+                            <div style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; ">
+                                Phone:&nbsp; ${object.company_id.phone}
+                            </div>
+                        % endif
+                        % if object.company_id.website:
+                            <div>
+                                Web :&nbsp;<a href="${object.company_id.website}">${object.company_id.website}</a>
+                            </div>
+                        %endif
+                        <p></p>
+                    </div>
+                </div>
+            ]]></field>
+        </record>
+
+        <record id="email_template_pos_ereceipt" model="mail.template">
+            <field name="name">POS Order - Send by Email</field>
+            <field name="email_from">${(object.company_id.email or 'noreply@localhost')|safe}</field>
+            <field name="subject">Order Reference ${object.name or ''}</field>
+            <field name="email_to">${object.customer_email}</field>
+            <field name="model_id" ref="point_of_sale.model_pos_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="report_name">Order_${object.name or ''}</field>
+            <field name="body_html"><![CDATA[
+				<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+				
+				    <p>Hello ${object.partner_id and object.partner_id.name or ''},</p>
+				
+				    <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
+				       &nbsp;&nbsp;<strong>REFERENCES</strong><br />
+				       &nbsp;&nbsp;Order number: <strong>${object.name}</strong><br />
+				       &nbsp;&nbsp;Order total: <strong>${object.amount_total} ${object.company_id.currency_id.name}</strong><br />
+   				       &nbsp;&nbsp;Order date: ${object.get_timezone_date_order()[0]}<br />
+				       % if object.reserve_delivery_date:
+                           &nbsp;&nbsp;Delivery date: ${object.reserve_delivery_date or '-'}<br />
+                       % endif
+				       
+				       % if object.user_id:
+				       &nbsp;&nbsp;Cashier: ${object.user_id.name}
+				       % endif
+				    </p>
+				    <p> Product Details </p>
+				    % if object.lines:
+				        <table border=1>
+				            <tbody border=1>
+				            <tr>
+				                <th>Product Name</th>
+				                <th>Quantity</th>
+				                <th>Unit Price</th>
+				                <th>Discount %</th>
+				                <th>Total(${object.company_id.currency_id.name})</td>
+				            <tr>
+				            % for line in object.lines:
+				                <tr>
+				                    <td>${line.product_id.name}</td>
+				                    <td style="text-align:right">${line.qty}</td>
+				                    <td style="text-align:right">${line.price_unit}</td>
+				                    <td style="text-align:right">${line.discount}</td>
+				                    <td style="text-align:right">${line.price_subtotal_incl}</td>
+				                </tr>
+				             % endfor
+				             <tr>
+				                <td colspan="4"><strong>Tax</strong></td>
+				                <td style="text-align:right">${object.amount_tax}</td>
+				             </tr>
+				             <tr>
+                                    <td colspan="4"><strong>Amount Paid</strong></td>
+                                    <td style="text-align:right">${round(object.amount_paid, 2)}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><strong>Amount Due</strong></td>
+                                    <td style="text-align:right">${round(object.amount_due, 2)}</td>
+                                </tr>
+				             <tr>
+				                <td colspan="4"><strong>Total Amount</strong></td>
+				                <td style="text-align:right">${object.amount_total}</td>
+				             </tr>
+				             </tbody>
+				        </table>
+				    % endif
+				    % if object.note:
+                        <br/>
+                        Note: ${object.note}
+                        <br/>
+                    % endif
+				    <br/>
+				    <p>Thank you for choosing ${object.company_id.name or 'us'} !</p>
+				    <br/>
+				    <br/>
+				    <div style="width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;">
+				        <h3 style="margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;">
+				            <strong style="text-transform:uppercase;">${object.company_id.name}</strong></h3>
+				    </div>
+				    <div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;">
+				        <span style="color: #222; margin-bottom: 5px; display: block; ">
+				        % if object.company_id.street:
+				            ${object.company_id.street}<br/>
+				        % endif
+				        % if object.company_id.street2:
+				            ${object.company_id.street2}<br/>
+				        % endif
+				        % if object.company_id.city or object.company_id.zip:
+				            ${object.company_id.zip} ${object.company_id.city}<br/>
+				        % endif
+				        % if object.company_id.country_id:
+				            ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>
+				        % endif
+				        </span>
+				        % if object.company_id.phone:
+				            <div style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; ">
+				                Phone:&nbsp; ${object.company_id.phone}
+				            </div>
+				        % endif
+				        % if object.company_id.website:
+				            <div>
+				                Web :&nbsp;<a href="${object.company_id.website}">${object.company_id.website}</a>
+				            </div>
+				        %endif
+				        <p></p>
+				    </div>
+				</div>
+            ]]></field>
+        </record> 
+
+        <record id="email_template_for_coupon_expire_7" model="mail.template">
+          <field name="name">Coupon Expire</field>
+          <field name="email_from">${(user.email or '')}</field>
+          <field name="subject">Regarding expired your gift card</field>
+          <field name="email_to">${object.customer_id.email}</field>
+          <field name="model_id" ref="flexipharmacy.model_aspl_gift_card"/>
+          <field name="auto_delete" eval="False"/>
+          <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+   <p>Hello ${object.customer_id.name}
+   <br/>
+   <p style="margin-left: 50px;">
+       Your card will be expired on ${object.expire_date}.Please renew your card ${object.card_no}.<br/>
+       Thanks for using our services.
+   </p>
+   </p>
+   <br/>
+   Thank You,
+   <br/>
+   ${user.name}
+</div>
+           ]]></field>
+      </record>
+
+        <record id="email_template_regarding_balance" model="mail.template">
+          <field name="name">Regarding balance of your gift card</field>
+          <field name="email_from">${(user.email or '')}</field>
+          <field name="subject">Regarding balance of your gift card</field>
+          <field name="email_to">${object.customer_id.email}</field>
+          <field name="model_id" ref="flexipharmacy.model_aspl_gift_card"/>
+          <field name="auto_delete" eval="False"/>
+          <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+   <p>Hello ${object.customer_id.name}
+   <br/>
+   <p style="margin-left: 50px;">
+       Your card ${object.card_no} have balance ${object.card_value}.<br/>
+       Thanks for using our services.
+   </p>
+   </p>
+   <br/>
+   Thank You,
+   <br/>
+   ${user.name}
+</div>
+           ]]></field>
+      </record>
+
+        <record id="email_template_exchange_number" model="mail.template">
+          <field name="name">Regarding change gift card number</field>
+          <field name="email_from">${(user.email or '')}</field>
+          <field name="subject">Regarding change gift card number</field>
+          <field name="email_to">${object.customer_id.email}</field>
+          <field name="model_id" ref="flexipharmacy.model_aspl_gift_card"/>
+          <field name="auto_delete" eval="False"/>
+          <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+   <p>Hello ${object.customer_id.name}
+   <br/>
+   <p style="margin-left: 50px;">
+       Your card number has been updated. It has been changed to ${object.card_no}.<br/>
+       Thanks for using our services.
+   </p>
+   </p>
+   <br/>
+   Thank You,
+   <br/>
+   ${user.name}
+</div>
+           ]]></field>
+      </record>
+
+        <record id="email_template_regarding_card_use" model="mail.template">
+          <field name="name">Regarding Card Use</field>
+          <field name="email_from">${(user.email or '')}</field>
+          <field name="subject">Regarding Card Use</field>
+          <field name="email_to">${object.customer_id.email}</field>
+          <field name="model_id" ref="flexipharmacy.model_aspl_gift_card_use"/>
+          <field name="auto_delete" eval="False"/>
+          <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+   <p>Hello ${object.customer_id.name}
+   <br/>
+   <p style="margin-left: 50px;">
+       <p>Your card ${object.card_id.card_no} has been used at our store with following details.</p><br/>
+                                  <b>Receipt Reference </b>: ${object.pos_order_id.pos_reference}<br/>
+                                  <b>Order No</b>     : ${object.pos_order_id.name}<br/>
+                                  <b>Order Date</b>   : ${object.order_date}<br/>
+                                  <b>Order Amount</b> : ${object.pos_order_id.amount_total}<br/>
+                                  <b>Card Amount</b>  : ${object.amount}
+                                <p>Thanks for using our services.</p>
+                                <p>Regards,</p>
+                                <p> ${user.name}</p>
+   </p>
+   </p>
+</div>
+           ]]></field>
+      </record>
+
+        <record id="aspl_gift_card_product" model="product.product">
+            <field name="name">Gift Card Product</field>
+            <field name="available_in_pos">True</field>
+            <field name="type">service</field>
+            <field name="sale_ok">True</field>
+            <field name="is_dummy_product">True</field>
+            <field name="taxes_id"/>
+            <field name="supplier_taxes_id" />
+        </record>
+        <record id="aspl_gift_card_product_type_gold" model="aspl.gift.card.type">
+            <field name="name">Gold</field>
+            <field name="code">001</field>
+        </record>
+        <record id="aspl_gift_card_product_type_silver" model="aspl.gift.card.type">
+            <field name="name">Silver</field>
+            <field name="code">002</field>
+        </record>
+        <record id="aspl_gift_card_product_type_platinum" model="aspl.gift.card.type">
+            <field name="name">Platinum</field>
+            <field name="code">003</field>
+        </record>
+        <record id="aspl_gift_card_product" model="product.product">
+            <field name="name">Gift Card Product</field>
+            <field name="available_in_pos">True</field>
+            <field name="type">service</field>
+            <field name="sale_ok">True</field>
+            <field name="is_dummy_product">True</field>
+            <field name="taxes_id"/>
+            <field name="supplier_taxes_id" />
+        </record>
+        <record id="wallet_product_1" model="product.product">
+            <field name="name">From Wallet</field>
+            <field name="default_code">Wallet</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="is_dummy_product">True</field>
+            <field name="available_in_pos" eval="True"/>
+            <field name="list_price">0</field>
+            <field name="type">service</field>
+<!--             <field name="uom_id" ref="product.product_uom_unit"/> -->
+            <field name="taxes_id"/>
+            <field name="supplier_taxes_id"/>
+        </record>
+    </data>
+
+    <data noupdate='1'>
+
+        <record forcecreate="True" id="expiration_coupon" model="ir.cron">
+            <field name="name">Expiration Coupon Mail</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False" />
+            <field name="model_id" ref="model_aspl_gift_card"/>
+            <field name="state">code</field>
+            <field name="code">model._send_mail_balance_and_expired_coupon(True, False)</field>
+            <field name="args">(True,False)</field>
+        </record>
+
+        <record forcecreate="True" id="regarding_balance" model="ir.cron">
+            <field name="name">Regarding Balance</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False" />
+            <field name="model_id" ref="model_aspl_gift_card"/>
+            <field name="state">code</field>
+            <field name="code">model._send_mail_balance_and_expired_coupon(False, True)</field>
+        </record>
+
+         <record id="product_paid" model="product.product">
+            <field name="name">Paid Amount</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="available_in_pos" eval="True"/>
+            <field name="list_price">0</field>
+            <field name="type">service</field>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="description">This is a dummy product used when a customer pays partially. This is a workaround to the fact that Odoo needs to have at least one product on the order to validate the transaction.</field>
+            <field name="taxes_id"/>
+            <field name="supplier_taxes_id"/>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+<!--     <t t-name="POSDashboard"> -->
+<!--         <span class="control-button"> -->
+<!--             <i class="fa fa-sticky-note"></i> -->
+<!--                 Dashboard -->
+<!--         </span> -->
+<!--     </t> -->
+
+	<t t-name="POSDashboardGraphScreenWidget">
+        <div class="sales-deshboard-graph-screen screen" style="background: #ffff;">
+            <div class="screen-content" style="max-width: 1254px !important;">
+                <div class="top-screen-container">
+                	<section class="top-content" style="height:55px;top:-10px;">
+	                    <span class='button back'>
+	                        <i class='fa fa-angle-double-left'></i>
+	                        Back
+	                    </span>
+	                </section>
+                </div>
+                <div class="main-screen-container">
+                	<div class="report-header">
+               			<div class="user-welcome-message">
+               				<br/>
+               				<div align="center">
+               					<span style="margin:20px;">
+	              					Today's Sales
+	              				</span>
+               				</div>
+               				<br/>
+               				<div align="center">
+               					<span style="margin:20px;" id="total_sale_amount"/>
+               				</div>
+               			</div>
+               			<div class="summary-expiry-product" stlye="color:#68C2BD">
+               				<br/>
+               				<div align="center" style="margin-top=30px;">
+               					<span>
+	               					Total Orders
+	               				</span>
+               				</div>
+               				<br/>
+               				<div align="center">
+               					<span style="margin:20px;" id="total_sale_count"/>
+               				</div>
+               			</div>
+               			<div class="summary-active-session" stlye="color:#68C2BD">
+               				<br/>
+               				<div align="center" style="margin-top=30px;">
+               					<span>
+	               					Active Sessions
+	               				</span>
+               				</div>
+               				<br/>
+               				<div align="center">
+               					<span style="margin:20px;" id="total_active_session"/>
+               				</div>
+               			</div>
+               			<div class="summary-closed-session" stlye="color:#68C2BD">
+               				<br/>
+               				<div align="center" style="margin-top=30px;">
+               					<span>
+	               					Closed Sessions
+	               				</span>
+               				</div>
+               				<br/>
+               				<div align="center">
+               					<span style="margin:20px;" id="total_closed_session"/>
+               				</div>
+               			</div>
+                	</div>
+<!--                 	<div class="Graphical-report-container" style="height: 375px !important;"> -->
+<!--                 		<div class="date-filter" style="margin-top: 5px;float: right;margin-right: 5px;"> -->
+<!--                 			<span> -->
+<!-- 		                        <select type="text" id="selection_session_data"> -->
+<!-- 		                        	<option value="active_session_sales" selected="selected">Active Sessions Sales</option> -->
+<!-- 		                        	<option value="closed_session_sales">Closed Sessions Sales</option> -->
+<!-- 		                        </select> -->
+<!-- 		                    </span> -->
+<!--                 		</div> -->
+<!--                 		<div class="chart-view-container-session-wise-sale"> -->
+<!--                 			<div id="container_session_wise_sale"> -->
+<!-- 							    <div id="right"> -->
+<!-- 							        <div id="chart_session_wise_sale" style="margin-top:16px;width: 100%;height: 400px;float:left;"> -->
+<!-- 			                            <div id="chartContainer_session_wise_sale" style="overflow:auto;max-width:100%;height:320px;"/> -->
+<!-- 			                        </div> -->
+<!-- 							    </div> -->
+<!-- 							</div> -->
+<!--                 		</div> -->
+<!--                 	</div> -->
+<!--                 	<div class="Graphical-report-container" style="height: 375px !important;"> -->
+<!--                 		<div class="chart-view-container-closed-session-wise-sale"> -->
+<!--                 			<div id="container_closed_session_wise_sale"> -->
+<!-- 							    <div id="right"> -->
+<!-- 							        <div id="chart_closed_session_wise_sale" style="margin-top:16px;width: 100%;height: 400px;float:left;"> -->
+<!-- 			                            <div id="chartContainer_closed_session_wise_sale" style="overflow:auto;max-width:100%;height:320px;"/> -->
+<!-- 			                        </div> -->
+<!-- 							    </div> -->
+<!-- 							</div> -->
+<!--                 		</div> -->
+<!--                 	</div> -->
+                	<div class="Graphical-report-container">
+                		<div class="expired-by-product-title">
+                			<div style="margin: 0px;">
+                				<span style="font-size: 20px;padding: 5px;">
+		               				Payment By Journals
+		               			</span>
+                			</div>
+                		</div>
+                		<div class="date-filter">
+                			<span>
+		                        <input type="text" placeholder="Start Date" class="input-textbox" id="start_date_journal" readonly="true"/>
+		                        <input type="text" placeholder="End Date" class="input-textbox" id="end_date_journal" readonly="true"/>
+		                    </span>
+                		</div>
+                		<div class="chart-view-container">
+                			<div id="container">
+							    <div id="right_graph_journal" style="width: 100%;height: 330px;position: relative;">
+							        <div id="chart" style="margin-top:16px;width: 45%;height: 400px;float:left;">
+			                            <div id="chartContainer_journal" style="overflow:auto;max-width:100%;height:320px;"/>
+			                        </div>
+			                        <div id="detailed_account_journal_data" class="account_journal_details">
+                                     	<table class='warehouse-list'>
+		                                     <thead>
+		                                         <tr>
+		                                             <th>Name</th>
+		                                             <th>Amount</th>
+		                                             <th>Percentage(%)</th>
+		                                         </tr>
+		                                     </thead>
+		                                     <tbody class='journal-list-contents'>
+                                     		</tbody>
+		                                 </table>
+			                        </div>
+							    </div>
+							</div>
+                		</div>
+                	</div>
+                	<div class="Graphical-report-container" style="height: 375px !important;">
+                		<div class="chart-view-container-hourly-sale">
+                			<div id="container_hourly">
+							    <div id="right_graph_hourly_sale">
+							        <div id="chart_hourly_sale" style="margin-top:16px;width: 100%;height: 400px;float:left;">
+			                            <div id="chartContainer_hourly_sale" style="overflow:auto;max-width:100%;height:320px;"/>
+			                        </div>
+							    </div>
+							</div>
+                		</div>
+                	</div>
+                	<div class="Graphical-report-container" style="height: 375px !important;">
+                		<div class="chart-view-container-monthly-sale">
+                			<div id="container_monthly">
+							    <div id="right_graph_mpnthly_sale">
+							        <div id="chart_monthly_sale" style="margin-top:16px;width: 100%;height: 400px;float:left;">
+			                            <div id="chartContainer_monthly_sale" style="overflow:auto;max-width:100%;height:320px;"/>
+			                        </div>
+							    </div>
+							</div>
+                		</div>
+                	</div>
+                	<div class="Graphical-report-container" style="height: 375px !important;">
+                		<div class="chart-view-container-six-month-sale">
+                			<div id="container_six_month">
+							    <div id="right_graph_six_month">
+							        <div id="chart_six_month_sale" style="margin-top:16px;width: 100%;height: 400px;float:left;">
+			                            <div id="chartContainer_six_month_sale" style="overflow:auto;max-width:100%;height:320px;"/>
+			                        </div>
+							    </div>
+							</div>
+                		</div>
+                	</div>
+                	<div class="Graphical-report-container">
+                		<div class="expired-by-product-title">
+                			<div style="margin: 0px;">
+                				<span style="font-size: 20px;padding: 5px;">
+		               			Today's	Existing / New Customers
+		               			</span>
+                			</div>
+                		</div>
+                		<div class="chart-view-container">
+                			<div id="container">
+							    <div id="right_graph_based_customer" style="width: 100%;height: 380px;position: relative;">
+							        <div id="chart_based_customer" style="margin-top:16px;width: 100%;height: 375px;float:left;">
+			                            <div id="chartContainer_based_customer" style="overflow:auto;max-width:100%;height:350px;"/>
+			                        </div>
+							    </div>
+							</div>
+                		</div>
+                	</div>
+                	<div class="Graphical-report-container">
+                		<div class="expired-by-product-title">
+                			<div style="margin: 0px;">
+                				<span style="font-size: 20px;padding: 5px;">
+		               				Top 50 Products
+		               			</span>
+                			</div>
+                		</div>
+                		<div class="date-filter">
+                			<span>
+		                        <input type="text" placeholder="Start Date" class="input-textbox" id="start_date_top_product" readonly="true"/>
+		                        <input type="text" placeholder="End Date" class="input-textbox" id="end_date_top_product" readonly="true"/>
+		                    </span>
+                		</div>
+                		<div class="chart-view-container">
+                			<div id="container_top_product">
+							    <div id="right_graph_top_products">
+							        <div id="chart_top_product" style="margin-top:16px;width: 45%;height: 400px;float:left;">
+			                            <div id="chartContainer_top_product" style="overflow:auto;max-width:100%;height:320px;"/>
+			                        </div>
+			                        <div id="detailed_top_product_data" class="account_journal_details">
+                                     	<table class='warehouse-list'>
+		                                     <thead>
+		                                         <tr>
+		                                             <th>Product</th>
+		                                             <th><center>Quantity</center></th>
+		                                             <th>Amount</th>
+		                                         </tr>
+		                                     </thead>
+		                                     <tbody class='top-product-list-contents'>
+                                     		</tbody>
+		                                 </table>
+			                        </div>
+							    </div>
+							</div>
+                		</div>
+                	</div>
+                	<div class="Graphical-report-container">
+                		<div class="expired-by-product-title">
+                			<div style="margin: 0px;">
+                				<span style="font-size: 20px;padding: 5px;">
+		               				Sales By Sales Person
+		               			</span>
+                			</div>
+                		</div>
+                		<div class="date-filter">
+                			<span>
+		                        <input type="text" placeholder="Start Date" class="input-textbox" id="start_date_sales_by_user" readonly="true"/>
+		                        <input type="text" placeholder="End Date" class="input-textbox" id="end_date_sales_by_user" readonly="true"/>
+		                    </span>
+                		</div>
+                		<div class="chart-view-container">
+                			<div id="container_top_product">
+							    <div id="right_graph_top_product">
+			                        <div id="detailed_sales_by_sales_person" class="account_journal_details">
+                                     	<table class='warehouse-list'>
+		                                     <thead>
+		                                         <tr>
+		                                             <th>Name</th>
+		                                             <th><center>Orders</center></th>
+		                                             <th>Amount</th>
+		                                         </tr>
+		                                     </thead>
+		                                     <tbody class='user-wise-sales-list-contents'>
+                                     		</tbody>
+		                                 </table>
+			                        </div>
+							    </div>
+							</div>
+                		</div>
+                	</div>
+				</div>
+            </div>
+        </div>
+    </t>
+
+	<t t-name="JornalLine">
+        <tr class='location-line' t-att-data-id='journal.id'>
+            <t t-if='journal.name'>
+            	<td><t t-esc='journal.name' /></td>
+            </t>
+            <t t-if='journal.sum'>
+            	<td><t t-esc='widget.format_currency(journal.sum)' /></td>
+            </t>
+            <t t-if="journal.per">
+            	<td><t t-esc='widget.format_currency_no_symbol(journal.per)' /> %</td>
+            </t>
+        </tr>
+    </t>
+
+	<t t-name="TopProductLine">
+        <tr class='location-line'>
+            <t t-if='top_product.name'>
+            	<td><t t-esc='top_product.name' /></td>
+            </t>
+            <t t-if='top_product.sum'>
+            	<td><center><t t-esc='top_product.sum' /></center></td>
+            </t>
+            <t t-if="top_product.price_total">
+            	<td><t t-esc='widget.format_currency(top_product.price_total)' /></td>
+            </t>
+        </tr>
+    </t>
+
+	<t t-name="UserSalesLine">
+        <tr class='location-line'>
+        	<t t-foreach="widget.pos.users" t-as="user">
+        		<t t-if="user.id == user_sales.user_id">
+	            	<td><t t-esc='user.name' /></td>
+		            <t t-if='user_sales.total_orders'>
+		            	<td><center><t t-esc='user_sales.total_orders' /></center></td>
+		            </t>
+		            <t t-if="user_sales.price_total">
+		            	<td><t t-esc='widget.format_currency(user_sales.price_total)' /></td>
+		            </t>
+        		</t>
+        	</t> 
+            
+        </tr>
+    </t>
+
+</templates>

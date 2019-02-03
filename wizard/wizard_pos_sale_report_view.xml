@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="wizard_pos_sale_report_form_view" model="ir.ui.view">
+            <field name="name">wizard.pos.sale.report.form.view</field>
+            <field name="model">wizard.pos.sale.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="session_ids" widget="many2many_tags" required="1"
+                            domain="[('state', 'in', ['closed'])]"/>
+                    </group>
+                    <group>
+                        <field name="report_type" invisible='1'/>
+                    </group>
+                    <group attrs="{'invisible':[('report_type' ,'!=','thermal')]}">
+                        <field name="proxy_ip" 
+                               placeholder="http://1.1.1.1:8069" 
+                               attrs="{'required':[('report_type' ,'=','thermal')]}"/>
+                    </group>
+                    <footer>
+                        <button type="object" id="main_print_button" name="print_receipt"
+                                string="Print" class="main_print_button" style="height:100%;"/>
+                            or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_pos_sale_report" model="ir.actions.act_window">
+            <field name="name">Z Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.pos.sale.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="action_wizard_pos_x_report" model="ir.actions.act_window">
+            <field name="name">X Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.pos.x.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+<!--         <menuitem id="menu_main_print_pos_sale_report" name="ASPL Reports" 
+                  parent="point_of_sale.menu_point_root" sequence='13'/> -->
+
+        <menuitem action="action_wizard_pos_x_report" id="menu_print_x_report"
+                  name="X Report" parent="point_of_sale.menu_point_rep" sequence='5'/>
+
+        <menuitem action="action_wizard_pos_sale_report" id="menu_print_pos_sale_report"
+                  name="Z Report" parent="point_of_sale.menu_point_rep" sequence='6'/>
+
+    </data>
+</openerp>

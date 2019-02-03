@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	
+<!-- **** Payment Screen related Code Here **** -->
+	 <t t-name="PaymentScreen-Numpad">
+         <t
+	t-if="widget.pos.config.enable_quick_cash_payment and widget.pos.get_cashier().access_quick_cash_payment">
+            <div class="payment_first_part">
+	            <div class="quickpay">
+	                <t t-raw="widget.div_btns" />
+	            </div>
+                <t t-if="widget.pos.get_client() and widget.pos.config.enable_credit">
+                    <div class="quickpay_credit">
+	                    <t t-set="total_credit" t-value="0"/>
+	                    <table class="quickpay_credit_paymenttable">
+	                        <!-- <colgroup>
+	                            <col width='70%' />
+	                            <col width='30%' />
+	                        </colgroup> -->
+	                        <t t-if="widget.pos.get_client().deposite_info">
+	                            <t t-foreach="widget.pos.get_client().deposite_info['content']" t-as="deposite_info">
+	                               <tr style="font-size: 13px;font-style: italic;font-weight:bold;">
+	                                   <t t-set="total_credit" t-value="deposite_info.amount+total_credit"/>
+	                                   <td style="float:left;"><t t-esc="deposite_info.journal_name"/></td>
+	                                   <td><button type="submit" class="button credit_assign" use_amt="0"
+	                                           t-att-journal_id = "deposite_info.id"
+	                                           t-att-journal = "deposite_info.journal_name"
+	                                           t-att-amt = "deposite_info.amount"
+	                                           style="font-weight:bold;font-size: 15px;float: right;">
+	                                   <t t-esc="deposite_info.amount.toFixed(0)"/></button></td>
+	                               </tr>
+	                            </t>
+	                        </t>
+	                    </table>
+                        <table class="quickpay_credit_paymenttable1">
+	                       <!--   <colgroup>
+	                            <col width='70%' />
+	                            <col width='30%' />
+	                        </colgroup> -->
+	                        <t t-if="total_credit">
+	                            <tr>
+	                                <div>
+	                                    <td style="font-size: 20px;float: left;">Total</td>
+	                                </div>
+	                                <div>
+	                                   <td style="font-size: 20px;float: right;"><t t-esc="widget.format_currency(total_credit.toFixed(2))"/></td>
+	                                </div>
+	                            </tr>
+	                        </t>
+                        </table>
+                        <br/>
+                    </div>
+               </t>
+            </div>
+         </t>
+         <div class="payment_second_part">
+	   		<div class="numpad">
+	            <button class="input-button number-char"
+	data-action='1'>1</button>
+	            <button class="input-button number-char"
+	data-action='2'>2</button>
+	            <button class="input-button number-char"
+	data-action='3'>3</button>
+	            <button class="mode-button" data-action='+10'>+10</button>
+	            <br />
+	            <button class="input-button number-char"
+	data-action='4'>4</button>
+	            <button class="input-button number-char"
+	data-action='5'>5</button>
+	            <button class="input-button number-char"
+	data-action='6'>6</button>
+	            <button class="mode-button" data-action='+20'>+20</button>
+	            <br />
+	            <button class="input-button number-char"
+	data-action='7'>7</button>
+	            <button class="input-button number-char"
+	data-action='8'>8</button>
+	            <button class="input-button number-char"
+	data-action='9'>9</button>
+	            <button class="mode-button" data-action='+50'>+50</button>
+	            <br />
+	            <button class="input-button numpad-char"
+	data-action='CLEAR'>C</button>
+	            <button class="input-button number-char"
+	data-action='0'>0</button>
+	            <button class="input-button number-char"
+	t-att-data-action='widget.decimal_point'><t t-esc='widget.decimal_point' /></button>
+	            <button class="input-button numpad-backspace"
+	data-action='BACKSPACE'>
+	                <img src="/point_of_sale/static/src/img/backspace.png"
+	width="24" height="21" />
+	            </button>
+	        </div>
+        </div>
+    </t>
+
+    <t t-name="FromCredit">
+        <t t-if="widget.pos.config.enable_credit">
+            <section class="section_credit">
+                <div style="height:auto;width:100%;font-size: 15px;">
+                    <div class="foreign_infoline">
+                        <t t-if="widget.pos.get_order() and widget.pos.get_order().get_credit_detail()">
+                            <t t-if="widget.pos.get_order().get_credit_detail().length != 0">
+                                <t t-set="credit_used" t-value="0"/>
+                                <h3 align="center" id="from_credit">
+                                    From Credit :<t t-esc="widget.format_currency(-widget.pos.credit_amount)"/><br />
+                                    Amount Due :<t t-esc="widget.format_currency(widget.pos.get_order().get_total_with_tax())"/><br />
+                                </h3>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </section>
+        </t>
+    </t>
+
+	<t t-name="PaymentScreen-Paymentmethods">
+        <div class='paymentmethods'>
+            <t t-foreach="widget.pos.cashregisters" t-as="cashregister">
+                <t t-if="!cashregister.journal.jr_use_for or cashregister.journal.id != widget.pos.config.pos_journal_id[0]">
+	                <div class="control-button paymentmethod"	t-att-data-id="cashregister.journal_id[0]">
+	                    <t t-esc="cashregister.journal_id[1]" />
+	                    <t t-if="cashregister.journal.type == 'cash'">
+	                        <i class="fa fa-money" aria-hidden="true"></i>
+	                    </t>
+	                    <t t-if="cashregister.journal.type == 'bank'">
+	                        <i class="fa fa-university" aria-hidden="true"></i>
+	                    </t>
+	                </div>
+	            </t>
+            </t>
+        </div>
+    </t>
+	
+	<t t-name="PaymentScreenWidget">
+        <div class='payment-screen screen'>
+            <div class='screen-content'>
+                <div class='top-content top-content_finalset'>
+                    <div class="payment_btn_top">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                    </div>
+                     <div class="payment_btn_top1">
+                    <span class="button js_set_customer payment_btn_top2">
+                                <i class='fa fa-user' /> 
+                                <span class='js_customer_name'> 
+                                    <t t-if="widget.pos.get_client()">
+                                        <t
+	t-esc="widget.pos.get_client().name" />
+                                    </t>
+                                    <t t-if="!widget.pos.get_client()">
+                                        Customer
+                                    </t>
+                                </span>
+                            </span>
+                         
+                    <h1 class="paymenttotalset">Payment of <span id="payment_total" /></h1>
+                    <t
+	t-if="widget.pos.config.enable_rounding and widget.pos.get_cashier().access_rounding">
+                    <span
+	class='button rounding rounding_btn payment_btn_top3'>
+ 	                        Rounding
+	                        <i
+	t-att-class="widget.pos.get_order().get_rounding_status() ? 'fa fa-toggle-on' : 'fa fa-toggle-off'"
+	id="pos-rounding" aria-hidden="true" style="color: #838271"></i>
+	                    </span>
+                    </t>
+                    <t t-if="widget.pos.config and widget.pos.config.enable_order_reservation">
+			            <t t-if="widget.pos.get_order() and widget.pos.get_order().get_reservation_mode()">
+                            <span class='button' id="partial_pay">
+                                Reserve
+                                <i class='fa fa-angle-double-right'></i>
+                            </span>
+                        </t>
+                        <t t-else="">
+                            <span class='button' id="partial_pay">
+                                Partial Pay
+                                <i class='fa fa-angle-double-right'></i>
+                            </span>
+                        </t>
+			        </t>
+                     <t t-if="widget.pos.config.enable_debit">
+                        <span id="pos-debit" class='button rounding_btn'>
+ 	                        Debit
+	                    </span>
+                    </t>
+                    <span class='button next payment_btn_top5'>
+                        Validate
+                        <i class='fa fa-angle-double-right'></i>
+                    </span>
+                </div>
+                </div>
+                <div class='left-content pc40 touch-scrollable scrollable-y'
+	style="right: 30%;">
+                	<div>
+                        <div class='paymentmethods-container' />
+                        <t t-call="FromCredit"/>
+                        <section class='paymentlines-container'>
+                        </section>
+                    </div>
+                    <section class='payment-numpad'></section>
+                    <!--<t t-if="widget.pos.config.enable_quick_cash_payment and widget.pos.get_cashier().access_quick_cash_payment">
+                        <div class="quickpay">
+                            <t t-raw="widget.div_btns" />
+                        </div>
+                    </t>-->
+	            </div>
+                <div class='right-content pc60 touch-scrollable scrollable-y'
+	style="left: 70%;">
+                    <selection class="payment-other-buttons">
+                        <div class="payment-buttons payment_center_right">
+                            <!-- <div class="control-button js_set_customer">
+                                <i class='fa fa-user' /> 
+                                <span class='js_customer_name'> 
+                                    <t t-if="widget.pos.get_client()">
+                                        <t t-esc="widget.pos.get_client().name" />
+                                    </t>
+                                    <t t-if="!widget.pos.get_client()">
+                                        Customer
+                                    </t>
+                                </span>
+                            </div> -->
+                            <t
+	t-if='widget.pos.config.enable_journal_id and widget.pos.config.enable_gift_card'>
+			                    <div class="control-button js_gift_card">
+			                        <i class="fa fa-credit-card-alt"
+	aria-hidden="true"></i>
+			                        Gift Card
+			                    </div>
+			                </t>
+                            <t t-if='widget.pos.config.iface_invoicing'>
+                                <t t-if='widget.pos.get_order()'>
+                                    <div
+	t-attf-class='control-button js_invoice #{ widget.pos.get_order().is_to_invoice() ? "highlight" : ""} '>
+                                        <i class='fa fa-file-text-o' /> Invoice
+                                    </div>
+                                </t>
+                            </t>
+                            <t
+	t-if="widget.pos.config.enable_wallet and widget.pos.get_cashier().access_wallet">
+                                <div
+	t-attf-class='control-button js_use_wallet #{ widget.pos.get_order().get_use_wallet() ? "highlight" : ""} '>
+                                  <i class="fa fa-tags" aria-hidden="true"></i>
+                                  <span class='js_use_wallet'>
+                                        Use Wallet
+                                  </span>
+                                </div>
+                            </t>
+			                <t
+	t-if="widget.pos.config and widget.pos.config.enable_gift_voucher">
+				                <div class="control-button js_gift_voucher">
+				                    <i class="fa fa-credit-card" aria-hidden="true"></i>
+				                        Gift Voucher
+				                </div>
+				            </t>
+                            
+                            <t t-if='widget.pos.config.tip_product_id'>
+                                <div class='control-button js_tip'>
+                                    <i class='fa fa-heart' /> Tip 
+                                </div>
+                            </t>
+                            <t t-if='widget.pos.config.iface_cashdrawer'>
+                                <div class='control-button js_cashdrawer'>
+                                    <i class='fa fa-archive' /> Open Cashbox
+                                </div>
+                            </t>
+                            <t
+	t-if="widget.pos.config.enable_pos_loyalty and widget.pos.get_cashier().access_pos_loyalty">
+								<div class='control-button js_redeem_loyalty'>
+					                <i class='fa fa-gift' /> Redeem Loyalty
+					            </div>
+							</t>
+                        </div>
+                    </selection>
+                    
+                    <t t-if="widget.pos.config.enable_pos_serial">
+                                <div style="padding: 6px 26px;">
+                                    <input type="checkbox"
+	checked="checked" name="is_serial" id='is_serial' />
+                                    <span
+	style="font-size: 16px;color: #333;">Print Serial On Receipt</span>
+                                </div>
+                            </t>
+                    <t
+	t-if="widget.pos.config and widget.pos.config.enable_order_note and widget.pos.get_cashier().access_order_note">
+                        <div class="order_note_css1">
+                        	<details style="width: 100%;">
+                                <summary class="order-note-header">Order Note:</summary>
+	                                <textarea style="font-size:14px;"
+												id="order_note" placeholder="Order Notes Here">
+									</textarea>
+                            </details>
+                        </div>
+                    </t>
+                    <div
+	style="position: relative; width: 100%; max-width: 90%;margin: 0 11px;"
+	id="delivery_details">
+                        <details class="delivery_css_set">
+                            <summary class="delivery-details">Delivery Details:</summary>
+                            <table class="delivery_table">
+	                            <tr>
+	                                <td style="vertical-align: middle;">Date</td>
+	                                <td>
+	                                    <input class="pos-input" id="txt_del_date"
+	type="text">
+	                                    	<span
+	class="fa fa-times emptybox_del_date" />
+	                                    </input>
+	                                </td>
+	                                <td style="vertical-align: middle;">Time</td>
+	                                <td>
+	                                    <input class="pos-input" id="txt_del_time"
+	type="text" style="border-left: 1px solid;font-size:14px;    border-radius: 0;">
+	                                    	<span
+	class="fa fa-times emptybox_del_time" />
+	                                    </input>
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <td style="width:56px;">Address</td>
+	                                <td colspan="3">
+	                                    <textarea rows="3" cols="10"
+	id="txt_del_add"></textarea>
+	                                </td>
+	                            </tr>
+	                        </table>
+                        </details>
+                    </div>
+                    <t
+	t-if="widget.pos.config and widget.pos.config.enable_ereceipt and widget.pos.get_cashier().access_ereceipt">
+                        <div
+	style="padding-left: 10px;position:relative;padding: 0 16px;">
+                            <table style="width:100%">
+                                <tr>
+                                    <td style="padding: 2px 10px;">
+                                        <input type="checkbox"
+	name="is_ereciept" id='is_ereciept' />
+                                        <span
+	style="font-size: 16px;margin-left: 2px;">Prefer E-receipt</span>
+                                    </td>
+                                </tr>
+                                <tr style="display:none" id="update_email_tr">
+                                     <td style="padding: 10px 10px;">
+                                        <input type="checkbox"
+	name="update_email" id='update_email' />
+                                        <span
+	style="font-size: 14px;margin-left: 10px;">Update Email</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input class="pos-input email_input_css"
+	 type="text" name="e-mail"
+	id='email_id' placeholder="Enter Email Address" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </div>
+             </div>
+         </div>
+     </t>
+
+    <t t-extend="PaymentScreen-Paymentlines">
+        <t t-jquery=".total" t-operation="replace">
+            <div class='total'>
+                <t
+	t-esc="widget.format_currency(order.getNetTotalTaxIncluded())" />
+            </div>
+        </t>
+        <t t-jquery="td.col-name" t-operation="replace">
+            <td class="col-name">
+                <t t-esc="line.name" />
+                <t t-if="line.get_giftcard_line_code()">
+                    (<t t-esc="line.get_giftcard_line_code()" />)
+                </t>
+                <t t-if="line.get_gift_voucher_line_code()">
+                    (<t t-esc='line.get_gift_voucher_line_code()' />)
+                </t>
+            </td>
+        </t>
+        <t t-jquery="colgroup col.tendered" t-operation="after">
+            <t
+	t-if="widget.pos.config.enable_card_charges and widget.pos.get_cashier().access_card_charges">
+                <col class='payment_charge' />
+            </t>
+        </t>
+        <t t-jquery="table.paymentlines thead" t-operation="replace">
+            <thead>
+                <tr class='label'>
+                    <th>Due</th>
+                    <th>Tendered</th>
+                    <t
+	t-if="widget.pos.config.enable_card_charges and widget.pos.get_cashier().access_card_charges">
+                        <th>Payment Charge</th>
+                    </t>
+                    <th>Change</th>
+                    <th>Method</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </t>
+        <t t-jquery="[t-if='line.selected'] td.col-tendered.edit"
+	t-operation="after">
+            <t
+	t-if="widget.pos.config.enable_card_charges and widget.pos.get_cashier().access_card_charges">
+                <t
+	t-if="line.cashregister.journal.apply_charges and line.cashregister.journal.optional">
+                    <td class='col-payment_charge edit_payment_charge'>
+<!--                                            <t t-esc="line.get_payment_charge()" /> -->
+                        <input class="payment_charge_input" type="text"
+	t-att-value="line.get_payment_charge()" />
+                    </td>
+                </t>
+                <t
+	t-if="line.cashregister.journal.apply_charges and !line.cashregister.journal.optional">
+                    <td class='col-payment_charge'>
+<!--                                            <t t-esc="line.get_payment_charge()" /> -->
+                        <input class="payment_charge_input" type="text"
+	t-att-value="line.get_payment_charge()" readonly="true" />
+                    </td>
+                </t>
+                <t t-if="!line.cashregister.journal.apply_charges">
+                    <td class='col-payment_charge'>
+                    N/A
+                    </td>
+                </t>
+            </t>
+        </t>
+        <t t-jquery="[t-if='!line.selected'] td.col-tendered"
+	t-operation="after">
+            <t
+	t-if="widget.pos.config.enable_card_charges and widget.pos.get_cashier().access_card_charges">
+                 <t
+	t-if="line.cashregister.journal.apply_charges and line.cashregister.journal.optional">
+                    <td class='col-payment_charge'>
+<!--                                            <t t-esc="line.get_payment_charge()" /> -->
+                        <input class="payment_charge_input" type="text"
+	t-att-value="line.get_payment_charge()" />
+                    </td>
+                </t>
+                <t
+	t-if="line.cashregister.journal.apply_charges and !line.cashregister.journal.optional">
+                    <td class='col-payment_charge'>
+<!--                                            <t t-esc="line.get_payment_charge()" /> -->
+                        <input class="payment_charge_input" type="text"
+	t-att-value="line.get_payment_charge()" />
+                    </td>
+                </t>
+                <t t-if="!line.cashregister.journal.apply_charges">
+                    <td class='col-payment_charge'>
+                    N/A
+                    </td>
+                </t>
+            </t>
+        </t>
+        <t t-jquery='[t-if="!paymentlines.length"] div.total'
+	t-operation="before">
+            <div class="from_wallet_txt">
+                <t t-if="order.get_used_amount_from_wallet()">
+                    <span style="font-size: 16px;color: #000;">From Wallet</span>
+                    <br />
+                    <span class="font_proper"><t
+	t-esc="widget.format_currency(order.get_used_amount_from_wallet())" /></span>
+                </t>
+            </div>
+        </t>
+        <t t-jquery='[t-if="paymentlines.length"] table.paymentlines'
+	t-operation="before">
+            <div class="from_wallet_txt">
+                <t t-if="order.get_used_amount_from_wallet()">
+                    <span style="font-size: 16px;color: #000;">From Wallet</span>
+                    <br />
+                    <t
+	t-esc="widget.format_currency(order.get_used_amount_from_wallet())" />
+                </t>
+            </div>
+        </t>
+        <!-- <t t-jquery='[t-if="!paymentlines.length"] div.total' t-operation="before">
+            <t t-if="widget.pos.config.enable_rounding">
+                <div>
+                    <table style="position: absolute;width: 112px;">
+                        <tr>
+                            <td style="font-size: large;">
+                                Rounding:
+                            </td>
+                            <td style="font-size: x-large;">
+                                <i t-att-class="order.get_rounding_status() ? 'fa fa-toggle-on' : 'fa fa-toggle-off'" id="pos-rounding" aria-hidden="true" style="color: #ACCE45"></i>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t> -->
+    </t>
+</templates>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cash_payment_acesh" model="ir.ui.view">
+        <field name="name">cash_payment_amt_form_view</field>
+        <field name="model">quick.cash.payment</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="order_inherited_form_view" model="ir.ui.view">
+        <field name="name">pos.order.inherited.view</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <field name="fiscal_position_id" position="after">
+                <field name="shop_id" options="{'no_create':True}"/>
+                <field name="reserved"/>
+            </field>
+            <field name="price_unit" position="before">
+                <field name="line_note"/>
+                <field name="deliver"/>
+                <field name="serial_nums"/>
+                <field name="cost_price"/>
+            </field>
+            <field name="product_id" position="after">
+                <field name="back_order"/>
+            </field>
+            <field name="pos_reference" position="after">
+                <field name="back_order"/>
+                <field name="delivery_date"/>
+                <field name="delivery_time"/>
+                <field name="delivery_address"/>
+                <field name="reserved"/>
+                <field name="partial_pay" />
+                <field name="unreserved" invisible="1"/>
+                <field name="reserve_delivery_date" />
+                <field name="order_status" />
+                <field name="is_debit"/>
+            </field>
+            <field name="amount_tax" position="after">
+                <field name="rounding"/>
+            </field>
+            <field name="amount_total" position="after">
+                <field name="amount_due"/>
+            </field>
+            <button name="%(point_of_sale.action_pos_payment)d" position="replace">
+                <button name="%(point_of_sale.action_pos_payment)d" string="Payment"
+                        class="oe_highlight" attrs="{'invisible': ['|',('reserved', '=', True),('state','!=', 'draft')]}"
+                        type="action" context="{'pos_session_id' : session_id}"/>
+            </button>
+            <!-- <field name="partner_id" position="after">
+                <field name="total_loyalty_earned_points" />
+                <field name="total_loyalty_earned_amount" />
+                <field name="total_loyalty_redeem_points" />
+                <field name="total_loyalty_redeem_amount" />
+            </field> -->
+             <notebook>
+                 <page string="Loyalty">
+                     <group col="4">
+	                     <field name="total_loyalty_earned_points" />
+		                 <field name="total_loyalty_earned_amount" />
+		                 <field name="total_loyalty_redeem_points" />
+		                 <field name="total_loyalty_redeem_amount" />
+	                 </group>
+                 </page>
+             </notebook>
+            <field name="picking_id" position="after">
+                <field name="picking_ids" widget="many2many_tags" readonly="1"/>
+            </field>
+            <field name="picking_id" position="replace"/>
+        </field>
+    </record>
+    
+    <record id="view_pos_order_filter_inherit" model="ir.ui.view">
+        <field name="name">pos.order.list.select.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter" />
+        <field name="arch" type="xml">
+            <field name="user_id" position="before">
+                <filter string="Reserved" name="reserved" domain="[('reserved', '=', True)]" />
+            </field>
+        </field>
+    </record>
+    
+    <record id="res_partner_view_form_aspl" model="ir.ui.view">
+        <field name="name">res.partner.view.form.aspl</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="lang" position="after">
+                <field name="credit_limit"/>
+                <field name="remaining_credit_limit"/>
+            </field>
+        </field>
+    </record>
+	
+    <record id="return_view_pos_tree" model="ir.ui.view" >
+        <field name="name">ret.pos.order.tree</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+           <field name="pos_reference" position="after">
+               <field name="back_order"/>
+            </field>
+        </field>
+    </record>
+
+	<record id="view_pos_session_form" model="ir.ui.view">
+        <field name="name">pos.session.form.view.inherit</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+        <field name="arch" type="xml">
+<!--             <field name="start_at" position="after"> -->
+<!--                 <field name="current_cashier_id"/> -->
+<!--                 <field name="locked_by_user_id"/> -->
+<!--                 <field name="locked" /> -->
+<!--             </field> -->
+            <field name="statement_ids" position="after">
+                <separator string="Cash Control Line"/>
+                <field name="cashcontrol_ids">
+                    <tree editable="bottom">
+                        <field name="coin_value"/>
+                        <field name="number_of_coins"/>
+                        <field name="subtotal"/>
+                        <field name="pos_session_id"/>
+                    </tree>
+                </field>
+            </field>
+        </field>
+    </record>
+
+    <record id="acespritech_retail9_account_journal_form" model="ir.ui.view">
+        <field name="name">acespritech.retail9.account.journal.form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="point_of_sale.view_account_journal_pos_user_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='amount_authorized']" position="after">
+                <group>
+                    <field name="apply_charges" />
+                    <field name="fees_amount" attrs="{'invisible':[('apply_charges' ,'!=',True)],'required':[('apply_charges' ,'=',True)]}"/>
+                </group>
+                <group>
+                <field name="fees_type" attrs="{'invisible':[('apply_charges' ,'!=',True)],'required':[('apply_charges' ,'=',True)]}"/>
+                    <field name="optional" attrs="{'invisible':[('apply_charges' ,'!=',True)]}"/>
+                </group>
+            </xpath>
+        </field>
+        </record>
+
+</odoo>

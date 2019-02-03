@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+	<t t-name="DiscardProductScreenWidget">
+        <div class="stock-picking-screen screen">
+            <div class="screen-content pickinglist-screen">
+                <section class="top-content picking_list_screen">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                    <span class="date-filter" style="margin-top: 13px;margin-left: 12px;width: 150px;height: 27px">
+                    	<input type="text" class="issue_date_filter" placeholder="YYYY-MM-DD" />
+                    </span>
+                   <span class='searchbox'>
+                        <input placeholder='Search Refrence' />
+                        <span class='search-clear'></span>
+                    </span>
+                    <span class='searchbox'></span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class="subwindow collapsed">
+                            <div class='subwindow-container collapsed'>
+                                <div class='subwindow-container-fix stock-picking-details-contents'>
+                                </div>
+                            </div>
+                        </section>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                                    <table class='table stock-picking-list'>
+                                        <thead>
+                                            <tr>
+                                                <th>Reference</th>
+                                                <th>Source Location</th>
+                                                <th>Destination Location</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody  class='stockpicking-list-contents'>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="StockPickinglistLine">
+        <tr class='stock-line' t-att-data-id='stock_picking.id'>
+            <td><t t-esc='stock_picking.name' /></td>
+            <t t-if="stock_picking.location_id">
+                <td><t t-esc='stock_picking.location_id[1]' /></td>
+            </t>
+            <t t-if="stock_picking.location_dest_id">
+            	<td><t t-esc='stock_picking.location_dest_id[1]' /></td>
+            </t>
+            <td><t t-esc='stock_picking.scheduled_date' /></td>
+            <t t-if="stock_picking.state == 'done'">
+                <td>Done</td>
+            </t>
+            <t t-if="stock_picking.state == 'draft'">
+                <td>Draft</td>
+            </t>
+            <t t-if="stock_picking.state == 'waiting'">
+                <td>Waiting Another Operation</td>
+            </t>
+            <t t-if="stock_picking.state == 'confirmed'">
+                <td>Waiting</td>
+            </t>
+            <t t-if="stock_picking.state == 'assigned'">
+                <td>Ready</td>
+            </t>
+            <t t-if="stock_picking.state == 'cancel'">
+                <td>Cancelled</td>
+            </t>
+        </tr>
+    </t>
+
+    <t t-name="StockPickingDetails">
+        <section class='picking-details'>
+            <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                <table class='stock-picking-list'>
+                    <colgroup>
+                            <col width='40%' />
+                            <col width='30%' />
+                            <col width='30%' />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Order Qty</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <t t-foreach="stock" t-as="move_detail">
+                        <tr>
+                            <td><t t-esc='move_detail.name' /></td>
+                            <td><t t-esc='move_detail.quantity_done' /></td>
+                            <t t-if="move_detail.state == 'done'">
+                                <td>Done</td>
+                            </t>
+                            <t t-if="move_detail.state == 'draft'">
+                                <td>New</td>
+                            </t>
+                            <t t-if="move_detail.state == 'cancel'">
+                                <td>Cancelled</td>
+                            </t>
+                            <t t-if="move_detail.state == 'waiting'">
+                                <td>Waiting Another Move</td>
+                            </t>
+                            <t t-if="move_detail.state == 'confirmed'">
+                                <td>Waiting Availability</td>
+                            </t>
+                            <t t-if="move_detail.state == 'assigned'">
+                                <td>Available</td>
+                            </t>
+                            <t t-if="move_detail.state == 'partially_available'">
+                                <td>Partially Available</td>
+                            </t>
+                        </tr>
+                    </t>
+                </table>
+            </div>
+        </section>
+    </t>
+</templates>

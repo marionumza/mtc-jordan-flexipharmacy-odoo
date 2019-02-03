@@ -1,0 +1,421 @@
+.pos .leftpane .pads {
+	background: #fff none repeat scroll 0 0;
+	border-top: 3px solid #59697D;
+}
+
+.pos button, .pos a.button {
+	background: #fff none repeat scroll 0 0;
+}
+
+.pos .mode-button.selected-mode {
+	background: #6b9ee8 none repeat scroll 0 0;
+	border-color: transparent;
+	color: #333;
+}
+
+.pos .actionpad .button.pay:hover .pay-circle .fa.fa-chevron-right {
+	color: #333;
+}
+
+.pos .actionpad .button.pay:hover .pay-circle {
+	background: #fff none repeat scroll 0 0;
+}
+
+.pos .actionpad .button:hover {
+	background: #ff7f67 none repeat scroll 0 0;
+	color: #fff;
+}
+
+.pos .numpad button:hover {
+	background: #fd8267 none repeat scroll 0 0;
+	color: #fff;
+}
+
+.pos .mode-button.selected-mode:hover {
+	background: #ff7f67 none repeat scroll 0 0;
+	border-color: #333;
+	color: white;
+}
+
+.pos *::-webkit-scrollbar-thumb {
+	background-color: #333;
+}
+
+.pos *::-webkit-scrollbar-track {
+	background-color: #fff;
+}
+
+.pos .rightpane-header {
+	background: #fff none repeat scroll 0 0;
+}
+
+.pos .categories {
+	border-bottom: 3px solid #59697D;
+	position: relative;
+}
+
+.pos .category-simple-button {
+	background: #fff;
+}
+
+.pos .screen .content-row {
+	background: #fff none repeat scroll 0 0;
+}
+
+.pos .category-simple-button:active {
+	background: #FD8267 none repeat scroll 0 0
+}
+
+.pos .order .orderline.selected {
+	background: rgba(172, 206, 69, 0.3);
+}
+/*body .pos .clientlist-screen .client-list tr.highlight{
+     background: rgba(172, 206, 69, 0.3) none repeat scroll 0 0 !important;
+    color: #333;
+}*/
+body .pos .clientlist-screen .client-details {
+	border-bottom: 5px solid #59697d !important;
+}
+/* body .pos .control-button.highlight, .pos .button.highlight{
+    background: #2581c4 none repeat scroll 0 0 !important;
+} */
+/*body .screen .top-content .button.highlight:hover {
+    background: #fd8267 !important;
+    color: #fff !important;
+}*/
+.pos .screen {
+	background: #fff none repeat scroll 0 0;
+}
+
+.pos .searchbox input:focus {
+	outline: none;
+	box-shadow: 0px 0px 0px 2px #2581c4 inset;
+	color: #2581c4;
+}
+
+.payment-screen .paymentlines-empty .total {
+	color: #fd8267;
+}
+
+.screen .top-content .button {
+	background: #fff none repeat scroll 0 0;
+	border: 1px solid #59697d;
+	color: #333;
+}
+/*.screen .top-content .button:hover{
+    background: #fd8267 none repeat scroll 0 0;
+    border: 1px solid #fd8267;
+    color: #fff;
+}*/
+.pos .order-button.selected {
+	background: #acce45 none repeat scroll 0 0;
+	border-bottom: 1px solid #59697D;
+	color: #fff;
+}
+
+.pos .order-button.square {
+	background: #59697d none repeat scroll 0 0;
+	color: #fff;
+}
+
+.pos .pos-branding .username {
+	color: #333;
+}
+
+.pos .clientlist-screen .client-list tr {
+	background: #fff none repeat scroll 0 0;
+}
+
+.pos .pos-topheader {
+	background: #fff none repeat scroll 0 0;
+}
+
+.pos .pos-content {
+	top: 50px;
+}
+/*.pos .pos-rightheader > * {
+    border-right: 1px solid #59697D;
+}*/
+.pos .pos-rightheader .header-button:last-child {
+	border-left: 1px solid #59697D;
+}
+
+.pos .pos-rightheader .header-button {
+	border-right: 1px solid #59697D;
+}
+
+.pos .pos-branding {
+	border-right: 1px solid #59697D;
+}
+
+.pos .pos-rightheader .header-button:active {
+	background: #2581c4;
+	color: #fff;
+}
+
+.pos .pos-rightheader .header-button {
+	color: #333;
+}
+
+.pos .clientlist-screen .client-list tr:nth-child(even) {
+	background: #fff;
+}
+/*.pos .clientlist-screen .edit-buttons .button {
+    color: #fd8267;
+}*/
+.pos .leftpane {
+	border-right: solid 1px #75af49;
+}
+
+.pos .paymentline.selected {
+	background: rgba(172, 206, 69, 0.3) none repeat scroll 0 0;
+	color: #555;
+}
+
+.pos .paymentline.selected .edit {
+	box-shadow: 0px 0px 0px 3px #59697d;
+	color: #59697d;
+}
+
+.paymentmethods .button:active {
+	background: #2581C4;
+	border-color: #2581C4;
+}
+
+.payment-screen .payment-buttons .button:active {
+	background: #2581c4;
+	border-color
+	/*.screen .top-content .button.next, .screen .top-content .button.rounding{
+    background: #56616F none repeat scroll 0 0;
+    border: 1px solid #56616F;
+    color: #fff;
+}*/
+
+	/*.paymentmethods .paymentmethod {
+    background: #acce45 none repeat scroll 0 0;
+    border-color: #fff;
+    border-radius: 20px;
+    color: #fff;
+}*/
+	:
+	#2581c4;
+}
+
+.pos .receipt-screen .centered-content .button {
+	background: #ACCE45;
+	color: #fff;
+}
+
+.payment-screen .payment-buttons .button {
+	background: #fff;
+}
+
+.paymentmethods .button {
+	background: #fff;
+}
+
+.pos .popup.popup-selection .selection {
+	border-top: solid 3px #59697d;
+}
+
+.pos .modal-dialog .popup {
+	background-color: #fff;
+}
+
+.pos .popup.popup-selection .selection-item {
+	background: #fff;
+	border-bottom: 1px solid #eee;
+}
+
+.pos .popup.popup-selection .selection-item:nth-child(even) {
+	background: #fff;
+}
+/*.pos .popup .button:active{
+    background: #ACCE45;
+    border-color: #ACCE45;
+}*/
+.pos .popup .button {
+	background: #59697d;
+	color: #fff;
+}
+
+.payment-screen .payment-buttons .button:hover {
+	background-color: #fd8267;
+	color: #fff;
+	border-color: #fff;
+}
+
+.button.paymentmethod:hover {
+	background: #FD8267;
+	color: #fff;
+}
+
+.pos .breadcrumb-button.breadcrumb-home {
+	color: rgb(86, 86, 86);
+}
+
+.pos .clientlist-screen .client-list thead>tr {
+	background: #acce45;
+	color: #fff;
+}
+/* .pos .button.highlight { */
+/*     background: #acce45 none repeat scroll 0 0 !important; */
+/*     border-color: #acce45 !important; */
+/*     color: #fff !important; */
+/* } */
+.pos .popup .title {
+	background: #5690ca;
+	color: #fff;
+	padding: 15px;
+}
+
+.control-button.paymentmethod {
+	background: #fff;
+	border: 1px solid #fd8267;
+}
+
+.pos .control-button {
+	background: #fff;
+}
+/*.pos .control-button:hover {
+	background: #fd8267;
+	color: #fff;
+}
+*/
+.payment-buttons .control-button {
+	background: #dedbdb;
+	border: 1px solid #fd8267;
+}
+
+.quickpay .control-button {
+	background: #2581C4;
+	color: #fff;
+	border: 1px solid #59697D;
+}
+
+.quickpay .control-button:hover {
+	background: #fff none repeat scroll 0 0;
+	color: #fd8267;
+}
+
+.pos .paymentline .col-change.highlight {
+	background: #fd8267 none repeat scroll 0 0;
+	color: #fff;
+}
+
+.paymentline.extra td.col-due {
+	background: #eee;
+}
+
+.pos .map-address-popup input:focus {
+	box-shadow: 0px 0px 0px 3px #2581C4;
+}
+
+.footer .button.confirm {
+	background: #acce45;
+	color: #fff;
+}
+/*.control-button.paymentmethod {
+	background: #fff;
+	border: 1px solid #fd8267;
+}*/
+/*.pos .control-button:hover {
+	background: #fd8267;
+	color: #fff;
+}
+*/
+.payment-buttons .control-button {
+	/*background: #fd8267 none repeat scroll 0 0;*/
+	border: 1px solid #fd8267;
+	color: #fff;
+}
+
+.quickpay .control-button {
+	background: #fd8267 none repeat scroll 0 0;
+	border: 1px solid #fd8267;
+	color: #fff;
+	float: left;
+	margin: 5px;
+	/* min-width: 70px;*/
+	padding: 0;
+	width: 70px;
+}
+
+.quickpay .control-button:hover {
+	background: #fff none repeat scroll 0 0;
+	color: #fd8267;
+	float: left;
+}
+
+---------------------------
+.pos .paymentline .col-change.highlight {
+	background: #fd8267;
+}
+
+.pos .map-address-popup input:focus {
+	box-shadow: 0px 0px 0px 3px #2581C4;
+}
+/*.screen .top-content .button.back:hover {
+    background: #59697d none repeat scroll 0 0;
+    border: 1px solid #59697d;
+    color: #fff;
+}*/
+.screen .top-content .button.back {
+	background: #59697d none repeat scroll 0 0;
+	color: #fff;
+	left: 0;
+	margin-left: 16px;
+}
+
+.pos .clientlist-screen .client-list tr.lowlight {
+	background: rgba(172, 206, 69, 0.3) !important;
+}
+/* .pos  .client-details.edit input:focus {
+    border: 2px solid #8a62a9;
+} */
+/*.button.save {
+    color: #acce45 !important;
+}*/
+.button.undo {
+	color: #59697d !important;
+}
+/*.pos .screen .screen-content {
+    border-left: 1px dashed #58677b;
+    border-right: 1px dashed #58677b;
+}*/
+/*.pos .screen .top-content {
+    border-bottom: 1px dashed #58677b;
+}
+*/
+.screen .left-content {
+	border-right: 1px dashed #58677b;
+}
+
+.pos .pos-rightheader .header-button.confirm {
+	background: #acce45 none repeat scroll 0 0;
+}
+
+.pos .clientlist-screen .button.new-customer {
+	background: #fd8267 none repeat scroll 0 0;
+	border: 1px solid #fd8267;
+	/* color: #fff;*/
+}
+
+.payment-screen .payment-buttons .button {
+	background: #5690ca none repeat scroll 0 0;
+	color: #fff;
+}
+
+.pos .popup input:focus, .pos .popup-input.active {
+	box-shadow: 0 0 0 3px #5690ca;
+	outline: medium none;
+}
+
+.pos .popup.popup-selection .selection-item.selected {
+	background: #d2ca7a;
+	color: #333;
+}
+
+.txt_address:focus {
+	box-shadow: 0 0 0 3px #5690ca !important;
+}

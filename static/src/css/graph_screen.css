@@ -1,0 +1,136 @@
+#container {
+	display: flex;
+}
+
+#left {
+	width: 15%;
+	height: 551px;
+	position: relative;
+}
+
+#right {
+	width: 80%;
+	height: 551px;
+	position: relative;
+}
+
+.custom_button {
+	top: 0px;
+	line-height: 32px;
+	padding: 3px 13px;
+	font-size: 20px;
+	background: rgb(230, 230, 230);
+	margin: 12px;
+	border-radius: 3px;
+	border: solid 1px rgb(209, 209, 209);
+	cursor: pointer;
+	transition: all 150ms linear;
+}
+/* menu */
+#divMenu, ul, li, li li {
+	margin: 0;
+	padding: 0;
+}
+
+#divMenu {
+	width: 150px;
+	height: 27px;
+}
+
+#divMenu ul {
+	line-height: 25px;
+}
+
+#divMenu li {
+	list-style: none;
+	position: relative;
+}
+
+#divMenu li li {
+	list-style: none;
+	position: relative;
+	background: rgb(230, 230, 230);
+	left: 148px;
+	top: -27px;
+}
+
+#divMenu ul li {
+	width: 142px;
+}
+
+/* #divMenu ul li a {
+	width: 141px;
+	height: 30px;
+	display: block;
+	text-decoration: none;
+	text-align: center;
+	color: #555555;
+	border: 2px solid #eee;
+	font-size: 15px;
+} */
+#divMenu ul ul {
+	position: absolute;
+	visibility: hidden;
+	top: 27px;
+}
+
+#divMenu ul li:hover ul {
+	visibility: visible;
+}
+
+#divMenu ul li:hover ul li a:hover {
+	background-color: #6EC89B;
+}
+
+#divMenu a:hover {
+	/* font-weight: bold; */
+	
+}
+
+.selected_chart {
+	background: #8d3a67 !important;
+	color: white !important;
+}
+
+.menu_selected {
+	background: #375d96 !important;
+	color: white !important;
+}
+
+#duration_selection, #limit_selection {
+	top: 0px;
+	line-height: 32px;
+	padding: 9px 5px;
+	font-size: 14px;
+	background: transparent;
+	margin: 12px 3px;
+	border-radius: 3px;
+	border: 1px solid #a9a9a9;
+	cursor: pointer;
+	transition: all 150ms linear 0s;
+	touch-action: none;
+}
+
+.graph-screen.screen .top-content .button.back {
+	float: left;
+	left: 0;
+	margin-left: 16px;
+	position: relative;
+}
+
+.graph-screen.screen .top-content .button {
+	float: left;
+	margin-left: 0;
+	position: relative;
+}
+
+.input-textbox {
+	width: 75px;
+	line-height: 19px;
+	padding: 9px 15px;
+	font-size: 14px;
+	background: transparent;
+	border-radius: 3px;
+	border: 1px solid #a9a9a9;
+	transition: all 150ms linear 0s;
+}

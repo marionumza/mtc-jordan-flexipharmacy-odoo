@@ -1,0 +1,143 @@
+<odoo>
+    <data>
+        <record id="promotion_view_id" model="ir.ui.view">
+            <field name="name">pos promotion</field>
+            <field name="model">pos.promotion</field>
+            <field name="arch" type="xml">
+                <form string="Pos Promotion">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object"
+                                    class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button"
+                                    options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <group>
+                            <field name="promotion_code" required="1"/>
+                            <field name="promotion_type" required="1"/>
+                            <field name="from_date" style="width:20%;"/>
+                            <field name="to_date" style="width:20%;"/>
+                            <field name="sequence"/>
+                        </group>
+                        <notebook>
+                            <page name="promotion_collection" string="Condition" attrs="{'invisible':[('promotion_type',
+                                '!=','buy_x_get_y')]}" autofocus="True" >
+                                <field name="pos_condition_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_x_id" domain="[('available_in_pos','=', True)]"/>
+                                        <field name="operator"/>
+                                        <field name="quantity"/>
+                                        <field name="product_y_id" domain="[('available_in_pos','=', True)]"/>
+                                        <field name="quantity_y"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="promotion_invoice" string="Invoice" attrs="{'invisible': [('promotion_type',
+                                '!=','dicount_total')]}" >
+                                <group>
+                                    <field name="total_amount" style="width:20%"/>
+                                    <field name="operator"/>
+                                    <field name="total_discount" style="width:20%"/>
+                                    <field name="discount_product" domain="[('available_in_pos','=', True)]"/>
+                                </group>
+                            </page>
+                            <page name="buy_x_get_dis_y" string="Condition" attrs="{'invisible': [('promotion_type',
+                                '!=','buy_x_get_dis_y')]}" >
+                                <group>
+                                    <!-- <field name="product_id_x_y" domain="[('available_in_pos','=', True)]"/> -->
+                                    <field name="parent_product_ids" widget="many2many_tags" domain="[('available_in_pos','=', True)]"/>
+                                </group>
+                                <field name="pos_quntity_dis_ids">
+                                    <tree editable="bottom" >
+                                        <field name="product_id_dis" domain="[('available_in_pos','=', True)]"/>
+                                        <field name="discount_dis_x"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="quntity_discount" string="Quantity Discount (%)" attrs="{'invisible': [('promotion_type',
+                                '!=', 'quantity_discount')]}" >
+                                <group>
+                                    <field name="product_id_qty" domain="[('available_in_pos','=', True)]"/>
+                                </group>
+                                <field name="pos_quntity_ids">
+                                    
+                                    <tree editable="bottom" >
+                                        <field name="quantity_dis"/>
+                                        <field name="discount_dis"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="quntity_discount" string="Quantity discount(Amt.)" attrs="{'invisible':
+                                [('promotion_type', '!=', 'quantity_price')]}">
+                                <group>
+                                    <field name="product_id_amt" domain="[('available_in_pos','=', True)]"/>
+                                </group>
+                                <field name="pos_quntity_amt_ids">
+                                    
+                                    <tree editable="bottom" >
+                                        <field name="quantity_amt"/>
+                                        <field name="discount_price"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="quntity_discount" string="Discount on Products(%)" attrs="{'invisible':
+                                [('promotion_type', '!=', 'discount_on_multi_product')]}">
+                                <field name="multi_products_discount_ids">
+                                    <tree editable="bottom" >
+                                        <field name="product_ids" widget="many2many_tags" domain="[('available_in_pos','=', True)]"/>
+                                        <field name="products_discount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="quntity_discount" string="Discount on Categories(%)" attrs="{'invisible':
+                                [('promotion_type', '!=', 'discount_on_multi_categ')]}">
+                                <field name="multi_categ_discount_ids">
+                                    <tree editable="bottom" >
+                                        <field name="categ_ids" widget="many2many_tags"/>
+                                        <field name="categ_discount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Discount on Above Price" attrs="{'invisible':
+                                [('promotion_type', '!=', 'discount_on_above_price')]}">
+                                <field name="discount_price_ids">
+                                    <tree editable="bottom" >
+                                        <field name="product_categ_ids" widget="many2many_tags"/>
+                                        <field name="product_brand_ids" widget="many2many_tags"/>
+                                        <field name="discount"/>
+                                        <field name="price"/>
+                                        <field name="pos_promotion_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="pos_promotion_tree" model="ir.ui.view">
+            <field name="name">pos.promotion tree</field>
+            <field name="model">pos.promotion</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="promotion_code"/>
+                    <field name="promotion_type"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id='promotion_view_action_id' model='ir.actions.act_window'>
+            <field name='name'>Pos Promotion</field>
+            <field name="res_model">pos.promotion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="pos_promotion_menu" parent="point_of_sale.menu_point_root" name="Promotion"/>
+        <menuitem id="pos_promotion_sub_menu" parent="pos_promotion_menu" action="promotion_view_action_id"
+            name="Promotion"/>
+    </data>
+</odoo>

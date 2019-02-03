@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="product_product_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.purchase</field>
+        <field name="model">product.product</field>
+        <field name="priority" eval="25"/>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <button name="toggle_active" position="before">
+                <button class="oe_stat_button" name="nearly_expired" icon="fa-building-o" type="object">
+                    <field name="near_expire" widget="statinfo" string="Nearly Expire"/>
+                </button>
+                <button class="oe_stat_button" name="product_expired" type="object" icon="fa-building-o">
+                    <field string="Expired" name="expired" widget="statinfo"/>
+                </button>
+            </button>
+        </field>
+        </record>
+
+        <record id="inherit_stock_production_lot_view_tree" model="ir.ui.view">
+        <field name="name">stock.production.lot.tree.view.</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-danger">expiry_state=='expired'</attribute>
+                <attribute name="decoration-warning">expiry_state=='near_expired'</attribute>
+            </xpath>
+            <field name="product_id" position="after">
+                <field name="expiry_state" invisible="1"/>
+            </field>
+        </field>
+        </record>
+    </data>
+</odoo>

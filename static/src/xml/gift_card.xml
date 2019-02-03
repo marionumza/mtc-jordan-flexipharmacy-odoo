@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="GiftCardListScreenWidget">
+        <div class="orderlist-screen screen">
+            <div class="screen-content">
+                <section class="top-content top-content_finalset">
+                    
+                     <div class="gift_order_set">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Cancel
+                    </span>
+                    </div>
+                
+                   <div class="gift_order_set1">
+                    <span class='button create create_set gift_order_set2'>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Create
+                    </span>
+                    <span class="date-filter date-filter_set gift_order_set3">
+                        <input type="text"
+	class="expiry_date_filter expiry_date_set date-filter_set1"
+	placeholder="YYYY-MM-DD(Expire)" />
+                        <input type="text"
+	class="issue_date_filter issue_date_set date-filter_set2" placeholder="YYYY-MM-DD(Issue)" />
+                    </span>
+                    <span class='button reload reload_set gift_order_set4'>
+                        <i class="fa fa-refresh gift_reload"
+	aria-hidden="true"></i>
+                        Reload
+                    </span>
+                    <span class='searchbox gift_search gift_order_set5'>
+                        <input class="Search_giftCard"
+	placeholder='Search Gift Card' />
+                        <span class='search-clear'></span>
+                    </span>
+                    <span class='searchbox'></span>
+                    </div>
+                    
+                    
+                    
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div
+	class='subwindow-container-fix touch-scrollable scrollable-y giftcard-list-scroll'
+	style="height:auto;max-height: 490px !important;">
+                                    <div>
+                                        <table class='giftcard-list'>
+                                            <thead class="bgcolorset1">
+                                                <tr>
+                                                    <th>Card No</th>
+                                                    <th>Card Value</th>
+                                                    <th>Customer</th>
+                                                    <th>Issue Date</th>
+                                                    <th>Expire Date</th>
+                                                    <th>Edit</th>
+                                                    <th>Recharge</th>
+                                                    <th>Exchange</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody
+	class='giftcard-list-contents'>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- <div id="pagination">
+                                         <div><button class="btn btn-danger" id="first"><i class="fa fa-angle-double-left fa-lg"></i></button></div>
+                                         <div><button class="btn btn-danger" id="previous"></button></div>
+                                         <div><span class="text" id="text"></span></div> 
+                                         <div><button class="btn btn-danger" id="next"></button></div>
+                                         <div><button class="btn btn-danger" id="last"><i class="fa fa-angle-double-right fa-lg"></i></button></div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="GiftCardlistLine">
+        <tr class='client-line' t-att-data-id='gift_card.id'>
+            <td><t t-esc='gift_card.card_no' /></td>
+            <td><t t-esc='widget.format_currency(gift_card.card_value)' /></td>
+            <td><t t-esc='gift_card.customer_id[1]' /></td>
+            <td><t t-esc='gift_card.issue_date or ""' /></td>
+            <td><t t-esc='gift_card.expire_date or ""' /></td>
+            <td>
+                <span id="edit_giftcard" title="Edit"
+	t-att-data-id='gift_card.id' style="cursor:pointer">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </span>
+            </td>
+            <td>
+                <span id="recharge_giftcard" title="Recharge"
+	t-att-data-id='gift_card.id' style="cursor:pointer">
+                    <i class="fa fa-credit-card " aria-hidden="true"></i>
+                </span>
+            </td>
+            <td>
+                <span id="exchange_giftcard" title="Exchange"
+	t-att-data-id='gift_card.id' style="cursor:pointer">
+                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                </span>
+            </td>
+        </tr>
+    </t>
+
+</templates>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="res_users_form_view_inherit" model="ir.ui.view">
+            <field name="name">res.users.form.view</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="point_of_sale.res_users_form_view" />
+            <field name="arch" type="xml">
+                <field name="pos_security_pin" position="after">
+                    <field name = "login_with_pos_screen"/>
+                    <field name = "default_pos" 
+                           attrs="{'invisible': [('login_with_pos_screen', '=', False)],
+                                   'required': [('login_with_pos_screen', '=', True)]}"/>
+                </field>
+                <xpath expr="//page[3]" position="inside">
+                    <group string="FlexiPharmacy" col="4">
+                    	<field name="access_pos_dashboard" />
+                    	<field name="access_product_expiry_report" />
+                        <field name="access_ereceipt" />
+                        <field name="access_quick_cash_payment" />
+                        <field name="access_order_note"/>
+                        <field name="access_product_note"/>
+                        <field name="access_pos_return"/>
+                        <field name="access_reorder"/>
+                        <field name="access_draft_order"/>
+                        <field name="access_rounding"/>
+                        <field name="access_bag_charges"/>
+                        <field name="access_delivery_charges"/>
+                        <field name="access_pos_lock"/>
+                        <field name="access_keyboard_shortcut"/>
+                        <field name="access_product_sync"/>
+                        <field name="access_display_warehouse_qty"/>
+                        <field name="access_pos_graph"/>
+                        <field name="access_x_report"/>
+                        <field name="access_pos_loyalty"/>
+                        <field name="access_today_sale_report"/>
+                        <field name="access_money_in_out"/>
+                        <field name="access_print_cash_statement"/>
+                        <field name="access_gift_card"/>
+                        <field name="access_gift_voucher"/>
+                        <field name="access_print_last_receipt"/>
+                        <field name="access_pos_promotion"/>
+                        <field name="lock_terminal"/>
+                    	<field name="delete_msg_log"/>
+                    	<field name="access_show_qty"/>
+                    	<field name="access_print_valid_days"/>
+                    	<field name="access_card_charges"/>
+                    	<field name="access_wallet"/>
+                    	<field name="discard_product"/>
+                    	<field name="can_give_discount"/>
+                    	<!-- <field name="can_change_price"/> -->
+                    	<field name="discount_limit"/>
+                    	<field name="based_on"/>
+                    </group>
+                </xpath>
+                <xpath expr = "//sheet//notebook//page[@name='access_rights']" position="inside">
+                    <group col="2">
+                        <field name="shop_ids" widget="many2many_tags" context="{'company_ids':company_ids}"
+                           options="{'no_create':True}"/>
+                    </group>
+                </xpath>
+                <field name="pos_security_pin" position="replace">
+                    <field name="pos_security_pin" password="True" />
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>
